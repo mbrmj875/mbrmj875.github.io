@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C3_s21_stringplus - Muhammad Al-Baqir</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #00d9ff;
+            --dark-bg: #0a1a2a;
+            --darker-bg: #0d2342;
+            --card-bg: #1a1a1a;
+            --card-border: #404040;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        
+        .back-button {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .back-button:hover {
+            color: #ffffff;
+        }
+        
+        .project-detail-header {
+            background: linear-gradient(135deg, var(--dark-bg), var(--darker-bg));
+            padding: 4rem 0;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .project-badge {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            display: inline-block;
+            font-weight: 600;
+        }
+        
+        .project-feature-card {
+            background: linear-gradient(135deg, var(--card-bg), #2a2a2a);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .project-feature-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        .tech-badge {
+            background: linear-gradient(135deg, var(--primary-color), #0088ff);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 0.3rem;
+            display: inline-block;
+        }
+        
+        .code-example {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            direction: ltr;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .screenshot-container {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .screenshot-container img {
+            max-width: 100%;
+            border-radius: 10px;
+            border: 2px solid var(--card-border);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .screenshot-caption {
+            margin-top: 1rem;
+            color: #cccccc;
+            font-style: italic;
+        }
+        
+        .section-padding {
+            padding: 4rem 0;
+        }
+        
+        .network-diagram {
+            background: var(--dark-bg);
+            border: 2px solid var(--secondary-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .command-example {
+            background: #2a2a2a;
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            direction: ltr;
+        }
+        
+        .lab-step {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .text-cyan { color: #00ffff; }
+        .text-yellow { color: #ffff00; }
+        .text-info { color: var(--secondary-color); }
+        .text-success { color: #00ff00; }
+        .text-warning { color: #ffcc00; }
+        .text-danger { color: #ff3333; }
+        .text-light { color: #e0e0e0; }
+        .text-muted { color: #888888; }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a href="../index.html#academic-projects" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Back to Projects
+            </a>
+        </div>
+    </nav>
+
+    <!-- Project Detail Header -->
+    <section class="project-detail-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="project-badge">C Programming Project</div>
+                    <h1 class="display-4 fw-bold text-white mt-3">C3_s21_stringplus</h1>
+                    <p class="lead text-light mb-4">Comprehensive text processing library in C language with advanced functions and memory management</p>
+                    
+                    <div class="project-meta">
+                        <span class="text-light me-4"><i class="fas fa-calendar me-2"></i>Completed: 2024</span>
+                        <span class="text-light me-4"><i class="fas fa-code me-2"></i>C Programming</span>
+                        <span class="text-light"><i class="fas fa-star me-2"></i>Advanced Project</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="tech-stack">
+                        <span class="tech-badge">C Programming</span>
+                        <span class="tech-badge">Algorithms</span>
+                        <span class="tech-badge">Data Structures</span>
+                        <span class="tech-badge">Memory Management</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Content -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <!-- Main Content -->
+                <div class="col-lg-8">
+                    <!-- Overview -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Project Overview</h3>
+                        <p class="text-light">
+                            The <strong>C3_s21_stringplus</strong> project is a complete implementation of a text processing library in C language, 
+                            rebuilding all standard functions of the <code>string.h</code> library with the addition of advanced functions 
+                            inspired by C# language. The project aims to provide a deep understanding of how text functions work at the memory level 
+                            and resource management.
+                        </p>
+                        
+                        <div class="row mt-4 text-center">
+                            <div class="col-md-3">
+                                <h4 class="text-info">📚 20+ Functions</h4>
+                                <p class="text-light">Complete string.h implementation</p>
+                            </div>
+                            <div class="col-md-3">
+                                <h4 class="text-info">⚡ High Performance</h4>
+                                <p class="text-light">Optimized memory management</p>
+                            </div>
+                            <div class="col-md-3">
+                                <h4 class="text-info">🧪 Comprehensive Tests</h4>
+                                <p class="text-light">85%+ code coverage</p>
+                            </div>
+                            <div class="col-md-3">
+                                <h4 class="text-info">🔧 Advanced Features</h4>
+                                <p class="text-light">C# inspired functions</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Parts -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-functions"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Implemented Functions</h3>
+                        
+                        <div class="lab-step">
+                            <h5 class="text-info">Memory Operations Functions</h5>
+                            <p class="text-light">Complete implementation of memory manipulation functions</p>
+                            <div class="command-example">
+                                <span class="text-success">void *memchr(const void *str, int c, size_t n)</span><br>
+                                <span class="text-success">int memcmp(const void *str1, const void *str2, size_t n)</span><br>
+                                <span class="text-success">void *memcpy(void *dest, const void *src, size_t n)</span><br>
+                                <span class="text-success">void *memmove(void *dest, const void *src, size_t n)</span><br>
+                                <span class="text-success">void *memset(void *str, int c, size_t n)</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">String Manipulation Functions</h5>
+                            <p class="text-light">String copying and concatenation functions</p>
+                            <div class="command-example">
+                                <span class="text-success">char *strcat(char *dest, const char *src)</span><br>
+                                <span class="text-success">char *strncat(char *dest, const char *src, size_t n)</span><br>
+                                <span class="text-success">char *strcpy(char *dest, const char *src)</span><br>
+                                <span class="text-success">char *strncpy(char *dest, const char *src, size_t n)</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">String Examination Functions</h5>
+                            <p class="text-light">String analysis and length calculation</p>
+                            <div class="command-example">
+                                <span class="text-success">size_t strlen(const char *str)</span><br>
+                                <span class="text-success">size_t strcspn(const char *str1, const char *str2)</span><br>
+                                <span class="text-success">size_t strspn(const char *str1, const char *str2)</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">String Search Functions</h5>
+                            <p class="text-light">Character and substring search functions</p>
+                            <div class="command-example">
+                                <span class="text-success">char *strchr(const char *str, int c)</span><br>
+                                <span class="text-success">char *strrchr(const char *str, int c)</span><br>
+                                <span class="text-success">char *strstr(const char *haystack, const char *needle)</span><br>
+                                <span class="text-success">char *strpbrk(const char *str1, const char *str2)</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">Comparison & Tokenization</h5>
+                            <p class="text-light">String comparison and token extraction</p>
+                            <div class="command-example">
+                                <span class="text-success">int strcmp(const char *str1, const char *str2)</span><br>
+                                <span class="text-success">int strncmp(const char *str1, const char *str2, size_t n)</span><br>
+                                <span class="text-success">char *strtok(char *str, const char *delim)</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">Advanced Functions (C# Inspired)</h5>
+                            <p class="text-light">Extended functionality beyond standard library</p>
+                            <div class="command-example">
+                                <span class="text-success">void *to_upper(const char *str)</span><br>
+                                <span class="text-success">void *to_lower(const char *str)</span><br>
+                                <span class="text-success">void *insert(const char *src, const char *str, size_t start_index)</span><br>
+                                <span class="text-success">void *trim(const char *src, const char *trim_chars)</span><br>
+                                <span class="text-success">void *trim_left(const char *src, const char *trim_chars)</span><br>
+                                <span class="text-success">void *trim_right(const char *src, const char *trim_chars)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Code Examples -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Usage Examples</h3>
+                        
+                        <h5 class="text-info">Text Case Conversion Example:</h5>
+                        <div class="code-example">
+                            <span class="text-muted">// Example of using to_upper and to_lower functions</span><br>
+                            <span class="text-primary">#include</span> "s21_string.h"<br>
+                            <span class="text-primary">#include</span> <span class="text-danger">&lt;stdio.h&gt;</span><br>
+                            <span class="text-primary">#include</span> <span class="text-danger">&lt;stdlib.h&gt;</span><br><br>
+                            
+                            <span class="text-info">int</span> main() {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">char</span> *text = <span class="text-danger">"Hello World"</span>;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">char</span> *upper = to_upper(text);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">char</span> *lower = to_lower(text);<br><br>
+                            
+                            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="text-danger">"Original: %s\n"</span>, text);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="text-danger">"Upper: %s\n"</span>, upper);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="text-danger">"Lower: %s\n"</span>, lower);<br><br>
+                            
+                            &nbsp;&nbsp;&nbsp;&nbsp;free(upper);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;free(lower);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">return</span> 0;<br>
+                            }
+                        </div>
+
+                        <h5 class="text-info mt-4">Text Insertion and Trimming Example:</h5>
+                        <div class="code-example">
+                            <span class="text-muted">// Example of using insert and trim functions</span><br>
+                            <span class="text-info">char</span> *result = insert(<span class="text-danger">"Hello"</span>, <span class="text-danger">" Beautiful"</span>, 5);<br>
+                            <span class="text-info">char</span> *trimmed = trim(<span class="text-danger">"   Hello World   "</span>, <span class="text-danger">" "</span>);<br><br>
+                            
+                            printf(<span class="text-danger">"Inserted: %s\n"</span>, result);  <span class="text-muted">// Output: "Hello Beautiful"</span><br>
+                            printf(<span class="text-danger">"Trimmed: '%s'\n"</span>, trimmed); <span class="text-muted">// Output: "Hello World"</span><br><br>
+                            
+                            free(result);<br>
+                            free(trimmed);
+                        </div>
+                    </div>
+
+                    <!-- Testing and Quality -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-vial"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Testing and Quality Assurance</h3>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5 class="text-info">🧪 Unit Testing</h5>
+                                <div class="command-example">
+                                    <span class="text-success">$ make test</span><br>
+                                    <span class="text-muted"># Run all unit tests</span><br><br>
+                                    <span class="text-success">$ make gcov_report</span><br>
+                                    <span class="text-muted"># Generate coverage report</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="text-info">📊 Code Coverage</h5>
+                                <div class="command-example">
+                                    <span class="text-success">Coverage: 85%+</span><br>
+                                    <span class="text-muted"># Comprehensive testing</span><br><br>
+                                    <span class="text-success">All tests passed</span><br>
+                                    <span class="text-muted"># Quality assurance</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h5 class="text-info mt-4">Memory Management:</h5>
+                        <div class="command-example">
+                            <span class="text-success">$ make valgrind</span><br>
+                            <span class="text-muted"># Check for memory leaks</span><br><br>
+                            <span class="text-success">No memory leaks</span><br>
+                            <span class="text-muted"># Proper resource management</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+                    <!-- Technical Information -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-cogs me-2"></i>Technical Information</h4>
+                        <div class="tech-info">
+                            <div class="mb-3">
+                                <strong class="text-info">Programming Language:</strong>
+                                <span class="text-light">C (C11 Standard)</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Platform:</strong>
+                                <span class="text-light">Linux, macOS</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Build Tools:</strong>
+                                <span class="text-light">Make, GCC</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Testing Framework:</strong>
+                                <span class="text-light">Check Framework</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Code Coverage:</strong>
+                                <span class="text-light">>85%</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Documentation:</strong>
+                                <span class="text-light">Detailed code documentation</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Skills Used -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-code me-2"></i>Skills Used</h4>
+                        <div class="skills-used">
+                            <span class="tech-badge">C Programming</span>
+                            <span class="tech-badge">Memory Management</span>
+                            <span class="tech-badge">Algorithms</span>
+                            <span class="tech-badge">Data Structures</span>
+                            <span class="tech-badge">Debugging</span>
+                            <span class="tech-badge">Unit Testing</span>
+                            <span class="tech-badge">Makefiles</span>
+                            <span class="tech-badge">Version Control</span>
+                        </div>
+                    </div>
+
+                    <!-- Tools Used -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-tools me-2"></i>Tools Used</h4>
+                        <ul class="text-light">
+                            <li><strong>GCC</strong> - C Compiler</li>
+                            <li><strong>Make</strong> - Build Automation</li>
+                            <li><strong>Check</strong> - Unit Testing Framework</li>
+                            <li><strong>Valgrind</strong> - Memory Debugging</li>
+                            <li><strong>Gcov</strong> - Code Coverage</li>
+                            <li><strong>Git</strong> - Version Control</li>
+                            <li><strong>CLion</strong> - IDE</li>
+                        </ul>
+                    </div>
+
+                    <!-- Achieved Results -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-trophy me-2"></i>Achieved Results</h4>
+                        <ul class="text-light">
+                            <li>Successful implementation of 20+ functions</li>
+                            <li>Passing all unit tests</li>
+                            <li>Achieving highest quality standards</li>
+                            <li>Complete code documentation</li>
+                            <li>Memory performance optimization</li>
+                            <li>85%+ code coverage</li>
+                            <li>No memory leaks detected</li>
+                        </ul>
+                    </div>
+
+                    <!-- Practical Applications -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-briefcase me-2"></i>Practical Applications</h4>
+                        <ul class="text-light">
+                            <li><strong>System Programming:</strong> Low-level text processing</li>
+                            <li><strong>Embedded Systems:</strong> Resource-constrained environments</li>
+                            <li><strong>Education:</strong> Understanding string manipulation</li>
+                            <li><strong>Library Development:</strong> Custom string libraries</li>
+                            <li><strong>Performance Optimization:</strong> Efficient memory usage</li>
+                        </ul>
+                    </div>
+
+                    <!-- Project Links -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-external-link-alt me-2"></i>Links</h4>
+                        <div class="project-links">
+                            <a href="https://github.com/mbrmj875/stringplus" class="btn btn-outline-primary w-100 mb-2">
+                                <i class="fab fa-github me-2"></i>View Source Code
+                            </a>
+                           
+                            <a href="https://github.com/mbrmj875/stringplus/archive/refs/heads/main.zip" class="btn btn-outline-success w-100">
+                                <i class="fas fa-download me-2"></i>Download Project
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

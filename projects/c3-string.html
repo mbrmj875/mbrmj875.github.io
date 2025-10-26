@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C3_s21_stringplus - محمد الباغر</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .project-detail-header {
+            background: linear-gradient(135deg, #0a1a2a, #0d2342);
+            padding: 4rem 0;
+            border-bottom: 2px solid #0066cc;
+        }
+        
+        .project-feature-card {
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border: 1px solid #404040;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .project-feature-card:hover {
+            border-color: #0066cc;
+            transform: translateY(-5px);
+        }
+        
+        .tech-badge {
+            background: linear-gradient(135deg, #0066cc, #0088ff);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 0.3rem;
+            display: inline-block;
+        }
+        
+        .code-example {
+            background: #1a1a1a;
+            border: 1px solid #404040;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            direction: ltr;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #00d9ff;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- زر العودة -->
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a href="../index.html#academic-projects" class="back-button">
+                <i class="fas fa-arrow-right"></i>
+                العودة للمشاريع
+            </a>
+        </div>
+    </nav>
+
+    <!-- رأس صفحة المشروع -->
+    <section class="project-detail-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="project-badge">مشروع لغة C</div>
+                    <h1 class="display-4 fw-bold text-white mt-3">C3_s21_stringplus</h1>
+                    <p class="lead text-light mb-4">مكتبة متكاملة لمعالجة النصوص في لغة C مع وظائف متقدمة</p>
+                    
+                    <div class="project-meta">
+                        <span class="text-light me-4"><i class="fas fa-calendar me-2"></i>تم الانتهاء: 2024</span>
+                        <span class="text-light me-4"><i class="fas fa-code me-2"></i>لغة C</span>
+                        <span class="text-light"><i class="fas fa-star me-2"></i>مشروع متقدم</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="tech-stack">
+                        <span class="tech-badge">C Programming</span>
+                        <span class="tech-badge">Algorithms</span>
+                        <span class="tech-badge">Data Structures</span>
+                        <span class="tech-badge">Memory Management</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- محتوى المشروع -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <!-- المحتوى الرئيسي -->
+                <div class="col-lg-8">
+                    <!-- نظرة عامة -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <h3 class="text-white mb-3">نظرة عامة على المشروع</h3>
+                        <p class="text-light">
+                            مشروع <strong>C3_s21_stringplus</strong> هو تنفيذ كامل لمكتبة معالجة النصوص في لغة C، 
+                            حيث يقوم بإعادة بناء جميع دوال مكتبة <code>string.h</code> القياسية مع إضافة وظائف متقدمة 
+                            مستوحاة من لغة C#. يهدف المشروع إلى فهم عميق لكيفية عمل دوال النصوص على مستوى الذاكرة 
+                            وإدارة الموارد.
+                        </p>
+                    </div>
+
+                    <!-- المميزات الرئيسية -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h3 class="text-white mb-3">المميزات الرئيسية</h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="text-light">
+                                    <li>تنفيذ كامل لدوال <code>string.h</code></li>
+                                    <li>دوال متقدمة لمعالجة النصوص</li>
+                                    <li>إدارة ذاكرة آمنة وفعالة</li>
+                                    <li>اختبارات شاملة لكل الدوال</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="text-light">
+                                    <li>توثيق مفصل للكود</li>
+                                    <li>تحسين الأداء والكفاءة</li>
+                                    <li>معالجة الأخطاء بشكل محترف</li>
+                                    <li>توافق مع المعايير القياسية</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- الدوال المimplemented -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-functions"></i>
+                        </div>
+                        <h3 class="text-white mb-3">الدوال المطورة</h3>
+                        
+                        <h5 class="text-info mt-4">📝 دوال string.h الأساسية</h5>
+                        <div class="code-example">
+                            <span class="text-success">// Memory Operations</span><br>
+                            void *memchr, memcmp, memcpy, memmove, memset<br><br>
+                            
+                            <span class="text-success">// String Manipulation</span><br>
+                            char *strcat, strncat, strcpy, strncpy<br><br>
+                            
+                            <span class="text-success">// String Examination</span><br>
+                            size_t strlen, strcspn, strspn<br><br>
+                            
+                            <span class="text-success">// String Search</span><br>
+                            char *strchr, strrchr, strstr, strpbrk<br><br>
+                            
+                            <span class="text-success">// Comparison & Tokenization</span><br>
+                            int strcmp, strncmp | char *strtok
+                        </div>
+
+                        <h5 class="text-info mt-4">🚀 دوال متقدمة (مستوحاة من C#)</h5>
+                        <div class="code-example">
+                            <span class="text-success">// Case Conversion</span><br>
+                            void *to_upper(), to_lower()<br><br>
+                            
+                            <span class="text-success">// String Manipulation</span><br>
+                            void *insert(), trim()<br><br>
+                            
+                            <span class="text-success">// Advanced Trimming</span><br>
+                            void *trim_left(), trim_right()
+                        </div>
+                    </div>
+
+                    <!-- أمثلة على الاستخدام -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3 class="text-white mb-3">أمثلة على الاستخدام</h3>
+                        
+                        <h5 class="text-warning">مثال 1: تحويل حالة النصوص</h5>
+                        <div class="code-example">
+                            <span class="text-primary">#include</span> "s21_string.h"<br><br>
+                            
+                            <span class="text-info">int</span> main() {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">char</span> *text = <span class="text-danger">"Hello World"</span>;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">char</span> *upper = to_upper(text);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">char</span> *lower = to_lower(text);<br><br>
+                            
+                            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="text-danger">"Original: %s\n"</span>, text);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="text-danger">"Upper: %s\n"</span>, upper);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="text-danger">"Lower: %s\n"</span>, lower);<br><br>
+                            
+                            &nbsp;&nbsp;&nbsp;&nbsp;free(upper);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;free(lower);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">return</span> 0;<br>
+                            }
+                        </div>
+
+                        <h5 class="text-warning mt-4">مثال 2: إدراج وتقطيع النصوص</h5>
+                        <div class="code-example">
+                            <span class="text-info">char</span> *result = insert(<span class="text-danger">"Hello"</span>, <span class="text-danger">" Beautiful"</span>, 5);<br>
+                            <span class="text-info">char</span> *trimmed = trim(<span class="text-danger">"   Hello World   "</span>, <span class="text-danger">" "</span>);<br><br>
+                            
+                            printf(<span class="text-danger">"Inserted: %s\n"</span>, result);  <span class="text-muted">// "Hello Beautiful"</span><br>
+                            printf(<span class="text-danger">"Trimmed: '%s'\n"</span>, trimmed); <span class="text-muted">// "Hello World"</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- الشريط الجانبي -->
+                <div class="col-lg-4">
+                    <!-- معلومات التقنية -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-cogs me-2"></i>المعلومات التقنية</h4>
+                        <div class="tech-info">
+                            <div class="mb-3">
+                                <strong class="text-info">اللغة:</strong>
+                                <span class="text-light">C (C11 Standard)</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">المنصة:</strong>
+                                <span class="text-light">Linux, macOS</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">أدوات البناء:</strong>
+                                <span class="text-light">Make, GCC</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">الاختبار:</strong>
+                                <span class="text-light">Check Framework</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">التغطية:</strong>
+                                <span class="text-light">>85%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- الإنجازات -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-trophy me-2"></i>الإنجازات</h4>
+                        <ul class="text-light">
+                            <li>تنفيذ 20+ دالة بنجاح</li>
+                            <li>اجتياز جميع الاختبارات</li>
+                            <li>تحقيق أعلى معايير الجودة</li>
+                            <li>توثيق كامل للكود</li>
+                            <li>تحسين أداء الذاكرة</li>
+                        </ul>
+                    </div>
+
+                    <!-- روابط المشروع -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-external-link-alt me-2"></i>الروابط</h4>
+                        <div class="project-links">
+                            <a href="https://github.com/mbrmj875/stringplus" class="btn btn-outline-primary w-100 mb-2">
+                                <i class="fab fa-github me-2"></i>عرض الكود المصدري
+                            </a>
+                          
+                            <a href="https://github.com/mbrmj875/stringplus/archive/refs/heads/main.zip" class="btn btn-outline-success w-100">
+                                <i class="fas fa-download me-2"></i>تحميل المشروع
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- المهارات المستخدمة -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-tools me-2"></i>المهارات المستخدمة</h4>
+                        <div class="skills-used">
+                            <span class="tech-badge">C Programming</span>
+                            <span class="tech-badge">Memory Management</span>
+                            <span class="tech-badge">Algorithms</span>
+                            <span class="tech-badge">Data Structures</span>
+                            <span class="tech-badge">Debugging</span>
+                            <span class="tech-badge">Unit Testing</span>
+                            <span class="tech-badge">Makefiles</span>
+                            <span class="tech-badge">Version Control</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

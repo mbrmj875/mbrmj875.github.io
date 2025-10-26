@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C5_s21_decimal - محمد الباغر</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .project-detail-header {
+            background: linear-gradient(135deg, #0a1a2a, #0d2342);
+            padding: 4rem 0;
+            border-bottom: 2px solid #0066cc;
+        }
+        
+        .project-feature-card {
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border: 1px solid #404040;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .project-feature-card:hover {
+            border-color: #0066cc;
+            transform: translateY(-5px);
+        }
+        
+        .tech-badge {
+            background: linear-gradient(135deg, #0066cc, #0088ff);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 0.3rem;
+            display: inline-block;
+        }
+        
+        .code-example {
+            background: #1a1a1a;
+            border: 1px solid #404040;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            direction: ltr;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #00d9ff;
+            margin-bottom: 1rem;
+        }
+        
+        .decimal-structure {
+            background: #0d2342;
+            border: 2px solid #00d9ff;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .bit-visualization {
+            display: grid;
+            grid-template-columns: repeat(32, 1fr);
+            gap: 2px;
+            margin: 1rem 0;
+        }
+        
+        .bit-cell {
+            width: 20px;
+            height: 20px;
+            background: #2a2a2a;
+            border: 1px solid #404040;
+            font-size: 0.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: help;
+        }
+        
+        .bit-cell.used {
+            background: #0066cc;
+        }
+        
+        .bit-cell.sign {
+            background: #ff6b6b;
+        }
+        
+        .bit-cell.exponent {
+            background: #51cf66;
+        }
+    </style>
+</head>
+<body>
+    <!-- زر العودة -->
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a href="../index.html#academic-projects" class="back-button">
+                <i class="fas fa-arrow-right"></i>
+                العودة للمشاريع
+            </a>
+        </div>
+    </nav>
+
+    <!-- رأس صفحة المشروع -->
+    <section class="project-detail-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="project-badge">مشروع لغة C</div>
+                    <h1 class="display-4 fw-bold text-white mt-3">C5_s21_decimal</h1>
+                    <p class="lead text-light mb-4">مكتبة متقدمة للعمليات الحسابية الدقيقة باستخدام النوع العشري في لغة C</p>
+                    
+                    <div class="project-meta">
+                        <span class="text-light me-4"><i class="fas fa-calendar me-2"></i>تم الانتهاء: 2024</span>
+                        <span class="text-light me-4"><i class="fas fa-code me-2"></i>لغة C</span>
+                        <span class="text-light"><i class="fas fa-star me-2"></i>مشروع متقدم</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="tech-stack">
+                        <span class="tech-badge">C Programming</span>
+                        <span class="tech-badge">Data Structures</span>
+                        <span class="tech-badge">Bit Manipulation</span>
+                        <span class="tech-badge">Financial Math</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- محتوى المشروع -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <!-- المحتوى الرئيسي -->
+                <div class="col-lg-8">
+                    <!-- نظرة عامة -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <h3 class="text-white mb-3">نظرة عامة على المشروع</h3>
+                        <p class="text-light">
+                            مشروع <strong>C5_s21_decimal</strong> هو تنفيذ متكامل لنوع البيانات العشري في لغة C، 
+                            مصمم خصيصاً للحسابات المالية والعلمية التي تتطلب دقة كاملة بدون أخطاء التقريب 
+                            الموجودة في أنواع الفاصلة العائمة التقليدية.
+                        </p>
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <div class="text-center p-3">
+                                    <h4 class="text-info">🎯 النطاق الرقمي</h4>
+                                    <p class="text-light">
+                                        من -79,228,162,514,264,337,593,543,950,335<br>
+                                        إلى +79,228,162,514,264,337,593,543,950,335
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="text-center p-3">
+                                    <h4 class="text-info">📊 الدقة</h4>
+                                    <p class="text-light">
+                                        28-29 رقم معنوي<br>
+                                        معامل تحجيم: 10^(0-28)
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- هيكل البيانات -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <h3 class="text-white mb-3">هيكل البيانات والتخزين</h3>
+                        
+                        <div class="decimal-structure">
+                            <h5 class="text-warning">📐 بنية s21_decimal</h5>
+                            <div class="code-example">
+                                <span class="text-info">typedef struct</span> {<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">unsigned int</span> bits[4];<br>
+                                } <span class="text-success">s21_decimal</span>;
+                            </div>
+                            
+                            <h5 class="text-warning mt-4">🧮 التمثيل الثنائي</h5>
+                            <div class="bit-visualization">
+                                <!-- bits[3] - Scale and Sign -->
+                                <div class="bit-cell sign" title="Sign Bit (0=+, 1=-)">S</div>
+                                <div class="bit-cell" title="Unused">0</div><div class="bit-cell" title="Unused">0</div>
+                                <div class="bit-cell" title="Unused">0</div><div class="bit-cell" title="Unused">0</div>
+                                <div class="bit-cell" title="Unused">0</div><div class="bit-cell" title="Unused">0</div>
+                                <div class="bit-cell" title="Unused">0</div>
+                                <div class="bit-cell exponent" title="Exponent Bit">E</div><div class="bit-cell exponent" title="Exponent Bit">E</div>
+                                <div class="bit-cell exponent" title="Exponent Bit">E</div><div class="bit-cell exponent" title="Exponent Bit">E</div>
+                                <div class="bit-cell exponent" title="Exponent Bit">E</div><div class="bit-cell exponent" title="Exponent Bit">E</div>
+                                <div class="bit-cell exponent" title="Exponent Bit">E</div><div class="bit-cell exponent" title="Exponent Bit">E</div>
+                                <div class="bit-cell" title="Unused">0</div><div class="bit-cell" title="Unused">0</div>
+                                <div class="bit-cell" title="Unused">0</div><div class="bit-cell" title="Unused">0</div>
+                                <div class="bit-cell" title="Unused">0</div><div class="bit-cell" title="Unused">0</div>
+                                <div class="bit-cell" title="Unused">0</div><div class="bit-cell" title="Unused">0</div>
+                                <div class="bit-cell" title="Unused">0</div><div class="bit-cell" title="Unused">0</div>
+                                <div class="bit-cell" title="Unused">0</div><div class="bit-cell" title="Unused">0</div>
+                                <div class="bit-cell" title="Unused">0</div><div class="bit-cell" title="Unused">0</div>
+                                <div class="bit-cell" title="Unused">0</div><div class="bit-cell" title="Unused">0</div>
+                                <div class="bit-cell" title="Unused">0</div><div class="bit-cell" title="Unused">0</div>
+                            </div>
+                            
+                            <div class="row mt-3">
+                                <div class="col-md-4">
+                                    <div class="text-center">
+                                        <span class="tech-badge">bits[0-2]</span>
+                                        <p class="text-light mt-2">96-bit القيمة الصحيحة</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="text-center">
+                                        <span class="tech-badge">bits[3]</span>
+                                        <p class="text-light mt-2">معامل التحجيم والإشارة</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="text-center">
+                                        <span class="tech-badge">128-bit</span>
+                                        <p class="text-light mt-2">الحجم الإجمالي</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- العمليات الحسابية -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-plus-minus"></i>
+                        </div>
+                        <h3 class="text-white mb-3">العمليات الحسابية المطورة</h3>
+                        
+                        <h5 class="text-info mt-4">🧮 العمليات الأساسية</h5>
+                        <div class="code-example">
+                            <span class="text-success">// Arithmetic Operations</span><br>
+                            <span class="text-info">int</span> <span class="text-warning">s21_add</span>(s21_decimal, s21_decimal, s21_decimal*);<br>
+                            <span class="text-info">int</span> <span class="text-warning">s21_sub</span>(s21_decimal, s21_decimal, s21_decimal*);<br>
+                            <span class="text-info">int</span> <span class="text-warning">s21_mul</span>(s21_decimal, s21_decimal, s21_decimal*);<br>
+                            <span class="text-info">int</span> <span class="text-warning">s21_div</span>(s21_decimal, s21_decimal, s21_decimal*);<br><br>
+                            
+                            <span class="text-success">// Return Codes:</span><br>
+                            <span class="text-muted">0 = Success, 1 = Overflow, 2 = Underflow, 3 = Division by zero</span>
+                        </div>
+
+                        <h5 class="text-info mt-4">⚖️ عمليات المقارنة</h5>
+                        <div class="code-example">
+                            <span class="text-info">int</span> <span class="text-warning">s21_is_equal</span>(s21_decimal, s21_decimal);<br>
+                            <span class="text-info">int</span> <span class="text-warning">s21_is_not_equal</span>(s21_decimal, s21_decimal);<br>
+                            <span class="text-info">int</span> <span class="text-warning">s21_is_less</span>(s21_decimal, s21_decimal);<br>
+                            <span class="text-info">int</span> <span class="text-warning">s21_is_greater</span>(s21_decimal, s21_decimal);<br>
+                            <span class="text-info">int</span> <span class="text-warning">s21_is_less_or_equal</span>(s21_decimal, s21_decimal);<br>
+                            <span class="text-info">int</span> <span class="text-warning">s21_is_greater_or_equal</span>(s21_decimal, s21_decimal);
+                        </div>
+                    </div>
+
+                    <!-- أمثلة على الاستخدام -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3 class="text-white mb-3">أمثلة عملية على الاستخدام</h3>
+                        
+                        <h5 class="text-warning">مثال 1: الحسابات المالية الدقيقة</h5>
+                        <div class="code-example">
+                            <span class="text-primary">#include</span> "s21_decimal.h"<br><br>
+                            
+                            <span class="text-info">void</span> financial_calculations() {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;s21_decimal price, quantity, discount, total, final_price;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">float</span> float_price;<br><br>
+                            
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-success">// تعيين القيم</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;s21_from_float_to_decimal(19.99f, &price);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;s21_from_int_to_decimal(100, &quantity);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;s21_from_float_to_decimal(0.10f, &discount);  <span class="text-muted">// خصم 10%</span><br><br>
+                            
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-success">// حساب الإجمالي: السعر × الكمية</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;s21_mul(price, quantity, &total);<br><br>
+                            
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-success">// تطبيق الخصم: الإجمالي - (الإجمالي × الخصم)</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;s21_decimal discount_amount;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;s21_mul(total, discount, &discount_amount);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;s21_sub(total, discount_amount, &final_price);<br><br>
+                            
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-success">// التحويل للعرض</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;s21_from_decimal_to_float(final_price, &float_price);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="text-danger">"السعر النهائي: $%.2f\n"</span>, float_price);  <span class="text-muted">// $1,799.10</span><br>
+                            }
+                        </div>
+
+                        <h5 class="text-warning mt-4">مثال 2: عمليات التقريب المختلفة</h5>
+                        <div class="code-example">
+                            <span class="text-info">void</span> rounding_examples() {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;s21_decimal value, rounded, floored, truncated;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">int</span> int_result;<br><br>
+                            
+                            &nbsp;&nbsp;&nbsp;&nbsp;s21_from_float_to_decimal(123.456789f, &value);<br><br>
+                            
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-success">// طرق التقريب المختلفة</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;s21_round(value, &rounded);        <span class="text-muted">// 123</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;s21_floor(value, &floored);        <span class="text-muted">// 123</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;s21_truncate(value, &truncated);   <span class="text-muted">// 123</span><br><br>
+                            
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-success">// للقيم السالبة</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;s21_decimal negative_value;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;s21_from_float_to_decimal(-123.456789f, &negative_value);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;s21_floor(negative_value, &floored);  <span class="text-muted">// -124</span><br>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- حالات الاستخدام -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <h3 class="text-white mb-3">حالات الاستخدام العملية</h3>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="p-3">
+                                    <h5 class="text-info">🏦 الأنظمة المالية</h5>
+                                    <p class="text-light">
+                                        حسابات البنوك والمعاملات المالية التي تتطلب دقة كاملة بدون أخطاء التقريب
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3">
+                                    <h5 class="text-info">🛒 أنظمة البيع</h5>
+                                    <p class="text-light">
+                                        حسابات الضرائب والخصومات والعروض الخاصة في أنظمة نقاط البيع
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3">
+                                    <h5 class="text-info">🔬 الحسابات العلمية</h5>
+                                    <p class="text-light">
+                                        التطبيقات التي تتطلب دقة عالية في الحسابات الرياضية والعلمية
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3">
+                                    <h5 class="text-info">📊 قواعد البيانات</h5>
+                                    <p class="text-light">
+                                        تخزين ومعالجة البيانات الرقمية بدقة في أنظمة قواعد البيانات
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- الشريط الجانبي -->
+                <div class="col-lg-4">
+                    <!-- معلومات التقنية -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-cogs me-2"></i>المعلومات التقنية</h4>
+                        <div class="tech-info">
+                            <div class="mb-3">
+                                <strong class="text-info">اللغة:</strong>
+                                <span class="text-light">C (C11 Standard)</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">المنصة:</strong>
+                                <span class="text-light">Linux, macOS</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">الحجم:</strong>
+                                <span class="text-light">128-bit</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">الدقة:</strong>
+                                <span class="text-light">28-29 رقم</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">الاختبار:</strong>
+                                <span class="text-light">Check Framework</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">التغطية:</strong>
+                                <span class="text-light">>85%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- الدوال المساعدة -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-tools me-2"></i>الدوال المساعدة</h4>
+                        <div class="code-example">
+                            <span class="text-success">// Conversion Functions</span><br>
+                            s21_from_int_to_decimal()<br>
+                            s21_from_float_to_decimal()<br>
+                            s21_from_decimal_to_int()<br>
+                            s21_from_decimal_to_float()<br><br>
+                            
+                            <span class="text-success">// Utility Functions</span><br>
+                            s21_round(), s21_floor()<br>
+                            s21_truncate(), s21_negate()<br>
+                            s21_copy()
+                        </div>
+                    </div>
+
+                    <!-- الإنجازات -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-trophy me-2"></i>الإنجازات</h4>
+                        <ul class="text-light">
+                            <li>تنفيذ 15+ دالة بنجاح</li>
+                            <li>معالجة جميع حالات الخطأ</li>
+                            <li>تحقيق أعلى معايير الدقة</li>
+                            <li>اختبارات شاملة للحدود</li>
+                            <li>تحسين أداء العمليات</li>
+                            <li>توثيق كامل للخوارزميات</li>
+                        </ul>
+                    </div>
+
+                    <!-- المهارات المستخدمة -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-code me-2"></i>المهارات المستخدمة</h4>
+                        <div class="skills-used">
+                            <span class="tech-badge">C Programming</span>
+                            <span class="tech-badge">Bit Manipulation</span>
+                            <span class="tech-badge">Data Structures</span>
+                            <span class="tech-badge">Algorithms</span>
+                            <span class="tech-badge">Memory Management</span>
+                            <span class="tech-badge">Unit Testing</span>
+                            <span class="tech-badge">Debugging</span>
+                            <span class="tech-badge">Mathematical Logic</span>
+                        </div>
+                    </div>
+
+                    <!-- روابط المشروع -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-external-link-alt me-2"></i>الروابط</h4>
+                        <div class="project-links">
+                            <a href="https://github.com/mbrmj875/decimal" class="btn btn-outline-primary w-100 mb-2">
+                                <i class="fab fa-github me-2"></i>عرض الكود المصدري
+                            </a>
+                      
+                            <a href="https://github.com/mbrmj875/decimal/archive/refs/heads/main.zip" class="btn btn-outline-success w-100">
+                                <i class="fas fa-download me-2"></i>تحميل المشروع
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

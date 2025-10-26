@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DO2_Linux Network - Мухаммад Аль-Багер</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #00d9ff;
+            --dark-bg: #0a1a2a;
+            --darker-bg: #0d2342;
+            --card-bg: #1a1a1a;
+            --card-border: #404040;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        
+        .back-button {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .back-button:hover {
+            color: #ffffff;
+        }
+        
+        .project-detail-header {
+            background: linear-gradient(135deg, var(--dark-bg), var(--darker-bg));
+            padding: 4rem 0;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .project-badge {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            display: inline-block;
+            font-weight: 600;
+        }
+        
+        .project-feature-card {
+            background: linear-gradient(135deg, var(--card-bg), #2a2a2a);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .project-feature-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        .tech-badge {
+            background: linear-gradient(135deg, var(--primary-color), #0088ff);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 0.3rem;
+            display: inline-block;
+        }
+        
+        .code-example {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            direction: ltr;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .screenshot-container {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .screenshot-container img {
+            max-width: 100%;
+            border-radius: 10px;
+            border: 2px solid var(--card-border);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .screenshot-caption {
+            margin-top: 1rem;
+            color: #cccccc;
+            font-style: italic;
+        }
+        
+        .section-padding {
+            padding: 4rem 0;
+        }
+        
+        .network-diagram {
+            background: var(--dark-bg);
+            border: 2px solid var(--secondary-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .command-example {
+            background: #2a2a2a;
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            direction: ltr;
+        }
+        
+        .lab-step {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .text-cyan { color: #00ffff; }
+        .text-yellow { color: #ffff00; }
+        .text-info { color: var(--secondary-color); }
+        .text-success { color: #00ff00; }
+        .text-warning { color: #ffcc00; }
+        .text-danger { color: #ff3333; }
+        .text-light { color: #e0e0e0; }
+        .text-muted { color: #888888; }
+    </style>
+</head>
+<body>
+    <!-- Кнопка возврата -->
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a href="../index.html#academic-projects" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Вернуться к проектам
+            </a>
+        </div>
+    </nav>
+
+    <!-- Заголовок страницы проекта -->
+    <section class="project-detail-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="project-badge">Проект управления системами Linux</div>
+                    <h1 class="display-4 fw-bold text-white mt-3">DO2_Linux Network</h1>
+                    <p class="lead text-light mb-4">Комплексная лабораторная работа по управлению системами Linux, охватывающая установку, управление пользователями, настройку сети, настройку сервисов и мониторинг системы</p>
+                    
+                    <div class="project-meta">
+                        <span class="text-light me-4"><i class="fas fa-calendar me-2"></i>Завершено: 2024</span>
+                        <span class="text-light me-4"><i class="fas fa-code me-2"></i>Администрирование систем Linux</span>
+                        <span class="text-light"><i class="fas fa-star me-2"></i>Продвинутый проект</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="tech-stack">
+                        <span class="tech-badge">Ubuntu Server</span>
+                        <span class="tech-badge">Системное администрирование</span>
+                        <span class="tech-badge">Конфигурация сети</span>
+                        <span class="tech-badge">Управление сервисами</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Содержание проекта -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <!-- Основное содержание -->
+                <div class="col-lg-8">
+                    <!-- Обзор -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Обзор проекта</h3>
+                        <p class="text-light">
+                            Проект <strong>DO2_Linux Network</strong> - это практическое комплексное руководство по управлению системами Linux, охватывающее все основные аспекты 
+                            от первоначальной установки до расширенного управления сетями и сервисами. Проект отличается практическим подходом, включающим 
+                            управление пользователями, настройку сети, настройку сервисов, мониторинг, устранение неисправностей и их решение.
+                        </p>
+                        
+                        <div class="row mt-4 text-center">
+                            <div class="col-md-3">
+                                <h4 class="text-info">🖥️ 15 частей</h4>
+                                <p class="text-light">Комплексное управление системой</p>
+                            </div>
+                            <div class="col-md-3">
+                                <h4 class="text-info">⚙️ Полная настройка</h4>
+                                <p class="text-light">От установки до производства</p>
+                            </div>
+                            <div class="col-md-3">
+                                <h4 class="text-info">🔧 Продвинутые инструменты</h4>
+                                <p class="text-light">Интегрированный мониторинг и управление</p>
+                            </div>
+                            <div class="col-md-3">
+                                <h4 class="text-info">📊 Подробная документация</h4>
+                                <p class="text-light">Полные процедуры и результаты</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Части проекта -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Основные части проекта</h3>
+                        
+                        <div class="lab-step">
+                            <h5 class="text-info">Часть 1: Установка операционной системы</h5>
+                            <p class="text-light">Установка Ubuntu Server 20.04 LTS без графического интерфейса и проверка версии</p>
+                            <div class="command-example">
+                                <span class="text-success">$ cat /etc/issue</span><br>
+                                <span class="text-muted"># Проверка версии Ubuntu</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">Часть 2: Управление пользователями</h5>
+                            <p class="text-light">Создание новых пользователей и добавление их в административные группы</p>
+                            <div class="command-example">
+                                <span class="text-success">$ sudo adduser baqer-1</span><br>
+                                <span class="text-success">$ sudo usermod -aG adm baqer-1</span><br>
+                                <span class="text-success">$ cat /etc/passwd</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">Часть 3: Настройка сети</h5>
+                            <p class="text-light">Настройка имени хоста, часового пояса и сетевых интерфейсов</p>
+                            <div class="command-example">
+                                <span class="text-success">$ sudo hostnamectl set-hostname user-1</span><br>
+                                <span class="text-success">$ sudo timedatectl set-timezone Europe/Moscow</span><br>
+                                <span class="text-success">$ ip link show</span><br>
+                                <span class="text-success">$ ping 1.1.1.1</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">Часть 4: Обновления системы</h5>
+                            <p class="text-light">Обновление списка пакетов и обновление системы</p>
+                            <div class="command-example">
+                                <span class="text-success">$ sudo apt update</span><br>
+                                <span class="text-success">$ sudo apt upgrade</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">Часть 5: Права Sudo</h5>
+                            <p class="text-light">Предоставление административных прав пользователям и изменение имени хоста</p>
+                            <div class="command-example">
+                                <span class="text-success">$ sudo usermod -aG sudo username</span><br>
+                                <span class="text-success">$ sudo hostnamectl set-hostname new-hostname</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">Часть 6: Служба времени</h5>
+                            <p class="text-light">Настройка автоматической синхронизации времени через NTP</p>
+                            <div class="command-example">
+                                <span class="text-success">$ sudo apt install ntp -y</span><br>
+                                <span class="text-success">$ timedatectl show</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">Часть 7: Текстовые редакторы</h5>
+                            <p class="text-light">Установка и использование VIM, NANO и MCEDIT</p>
+                            <div class="command-example">
+                                <span class="text-success">$ sudo apt install vim nano joe mc -y</span><br>
+                                <span class="text-success">$ vim test_VIM.txt</span><br>
+                                <span class="text-muted"># i для вставки, ESC для команд, :wq для сохранения и выхода</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">Часть 8: Служба SSH</h5>
+                            <p class="text-light">Настройка OpenSSH с пользовательским портом и автозапуском</p>
+                            <div class="command-example">
+                                <span class="text-success">$ sudo apt install openssh-server -y</span><br>
+                                <span class="text-success">$ sudo systemctl enable ssh</span><br>
+                                <span class="text-success">$ netstat -tan | grep 2022</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">Часть 9: Мониторинг системы</h5>
+                            <p class="text-light">Использование top и htop для мониторинга процессов и ресурсов</p>
+                            <div class="command-example">
+                                <span class="text-success">$ sudo apt install htop</span><br>
+                                <span class="text-success">$ top</span><br>
+                                <span class="text-success">$ htop</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">Часть 10: Управление дисками</h5>
+                            <p class="text-light">Анализ разделов диска с помощью fdisk</p>
+                            <div class="command-example">
+                                <span class="text-success">$ sudo fdisk -l</span><br>
+                                <span class="text-muted"># Отображение информации о диске и разделах</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">Часть 11: Анализ использования файловой системы</h5>
+                            <p class="text-light">Мониторинг дискового пространства с помощью df</p>
+                            <div class="command-example">
+                                <span class="text-success">$ df -Th /</span><br>
+                                <span class="text-muted"># Отображение использования пространства в читаемом формате</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">Часть 12: Анализ пространства папок</h5>
+                            <p class="text-light">Отслеживание потребления хранилища с помощью du</p>
+                            <div class="command-example">
+                                <span class="text-success">$ du -sh /home</span><br>
+                                <span class="text-success">$ du -sh /var/log</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">Часть 13: Интерактивный анализ использования диска</h5>
+                            <p class="text-light">Использование ncdu для визуального анализа хранилища</p>
+                            <div class="command-example">
+                                <span class="text-success">$ sudo apt install ncdu -y</span><br>
+                                <span class="text-success">$ ncdu /home</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">Часть 14: Анализ системных журналов</h5>
+                            <p class="text-light">Мониторинг и управление системными журналами и журналами безопасности</p>
+                            <div class="command-example">
+                                <span class="text-success">$ less /var/log/syslog</span><br>
+                                <span class="text-success">$ grep "sshd" /var/log/auth.log</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">Часть 15: Планирование задач</h5>
+                            <p class="text-light">Управление автоматическими задачами с помощью Cron</p>
+                            <div class="command-example">
+                                <span class="text-success">$ crontab -e</span><br>
+                                <span class="text-muted"># */2 * * * * /usr/bin/uptime</span><br>
+                                <span class="text-success">$ crontab -l</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Примеры расширенной конфигурации -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Примеры расширенной конфигурации</h3>
+                        
+                        <h5 class="text-info">Статическая конфигурация сети:</h5>
+                        <div class="code-example">
+                            <span class="text-muted"># /etc/netplan/00-installer-config.yaml</span><br>
+                            <span class="text-info">network</span>:<br>
+                            &nbsp;&nbsp;<span class="text-info">version</span>: <span class="text-danger">2</span><br>
+                            &nbsp;&nbsp;<span class="text-info">ethernets</span>:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">ens33</span>:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">dhcp4</span>: <span class="text-danger">no</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">addresses</span>: [<span class="text-danger">192.168.1.100/24</span>]<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">gateway4</span>: <span class="text-danger">192.168.1.1</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">nameservers</span>:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">addresses</span>: [<span class="text-danger">8.8.8.8</span>, <span class="text-danger">1.1.1.1</span>]<br>
+                            &nbsp;&nbsp;<span class="text-info">renderer</span>: <span class="text-danger">networkd</span>
+                        </div>
+                        
+                        <h5 class="text-info mt-4">Безопасная конфигурация SSH:</h5>
+                        <div class="code-example">
+                            <span class="text-muted"># /etc/ssh/sshd_config</span><br>
+                            <span class="text-info">Port</span> <span class="text-danger">2022</span><br>
+                            <span class="text-info">PermitRootLogin</span> <span class="text-danger">no</span><br>
+                            <span class="text-info">PasswordAuthentication</span> <span class="text-danger">yes</span><br>
+                            <span class="text-info">X11Forwarding</span> <span class="text-danger">no</span><br>
+                            <span class="text-info">MaxAuthTries</span> <span class="text-danger">3</span><br>
+                            <span class="text-info">ClientAliveInterval</span> <span class="text-danger">300</span><br>
+                            <span class="text-info">ClientAliveCountMax</span> <span class="text-danger">2</span>
+                        </div>
+                    </div>
+
+                    <!-- Мониторинг и устранение неисправностей -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Мониторинг системы и устранение неисправностей</h3>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5 class="text-info">🔍 Мониторинг процессов</h5>
+                                <div class="command-example">
+                                    <span class="text-success">$ ps aux | grep ssh</span><br>
+                                    <span class="text-success">$ top -p 1234</span><br>
+                                    <span class="text-success">$ htop -u username</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="text-info">📊 Мониторинг ресурсов</h5>
+                                <div class="command-example">
+                                    <span class="text-success">$ free -h</span><br>
+                                    <span class="text-success">$ df -h</span><br>
+                                    <span class="text-success">$ iostat -x 1</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h5 class="text-info mt-4">Анализ журналов:</h5>
+                        <div class="command-example">
+                            <span class="text-success">$ journalctl -u ssh -f</span><br>
+                            <span class="text-success">$ tail -f /var/log/syslog</span><br>
+                            <span class="text-success">$ grep -i error /var/log/syslog</span>
+                        </div>
+                        
+                        <h5 class="text-info mt-4">Проверка сети:</h5>
+                        <div class="command-example">
+                            <span class="text-success">$ ss -tuln</span><br>
+                            <span class="text-success">$ netstat -tulpn</span><br>
+                            <span class="text-success">$ ip addr show</span><br>
+                            <span class="text-success">$ ping -c 4 google.com</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Боковая панель -->
+                <div class="col-lg-4">
+                    <!-- Техническая информация -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-cogs me-2"></i>Техническая информация</h4>
+                        <div class="tech-info">
+                            <div class="mb-3">
+                                <strong class="text-info">Операционная система:</strong>
+                                <span class="text-light">Ubuntu Server 20.04 LTS</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Интерфейс:</strong>
+                                <span class="text-light">Только командная строка (CLI)</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Среда:</strong>
+                                <span class="text-light">Виртуальная машина VirtualBox</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Сервисы:</strong>
+                                <span class="text-light">SSH, NTP, Cron</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Инструменты:</strong>
+                                <span class="text-light">netplan, systemd, apt</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Документация:</strong>
+                                <span class="text-light">Подробный отчет с командами и результатами</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Используемые навыки -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-code me-2"></i>Используемые навыки</h4>
+                        <div class="skills-used">
+                            <span class="tech-badge">Администрирование Linux</span>
+                            <span class="tech-badge">Управление пользователями</span>
+                            <span class="tech-badge">Конфигурация сети</span>
+                            <span class="tech-badge">Управление сервисами</span>
+                            <span class="tech-badge">Мониторинг системы</span>
+                            <span class="tech-badge">Усиление безопасности</span>
+                            <span class="tech-badge">Устранение неисправностей</span>
+                            <span class="tech-badge">Автоматизация</span>
+                        </div>
+                    </div>
+
+                    <!-- Используемые инструменты -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-tools me-2"></i>Используемые инструменты</h4>
+                        <ul class="text-light">
+                            <li><strong>apt</strong> - Управление пакетами в Ubuntu</li>
+                            <li><strong>netplan</strong> - Конфигурация сети</li>
+                            <li><strong>systemctl</strong> - Управление сервисами systemd</li>
+                            <li><strong>ssh</strong> - Безопасный удаленный доступ</li>
+                            <li><strong>top/htop</strong> - Мониторинг процессов</li>
+                            <li><strong>cron</strong> - Планирование задач</li>
+                            <li><strong>vim/nano</strong> - Редактирование текста</li>
+                            <li><strong>journalctl</strong> - Просмотр журналов</li>
+                        </ul>
+                    </div>
+
+                    <!-- Примененные лучшие практики -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-shield-alt me-2"></i>Примененные лучшие практики</h4>
+                        <ul class="text-light">
+                            <li>Принцип наименьших привилегий для пользователей</li>
+                            <li>Регулярные обновления безопасности</li>
+                            <li>Безопасная конфигурация сервисов</li>
+                            <li>Непрерывный мониторинг системы</li>
+                            <li>Резервное копирование и документация</li>
+                            <li>Комплексное управление журналами</li>
+                            <li>Автоматизация повторяющихся задач</li>
+                        </ul>
+                    </div>
+
+                    <!-- Достигнутые результаты -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-trophy me-2"></i>Достигнутые результаты</h4>
+                        <ul class="text-light">
+                            <li>Настройка эффективного и безопасного сервера Linux</li>
+                            <li>Комплексное управление пользователями и правами</li>
+                            <li>Надежная и гибкая конфигурация сети</li>
+                            <li>Комплексный мониторинг производительности системы</li>
+                            <li>Автоматизация административных задач</li>
+                            <li>Продвинутые навыки устранения неисправностей</li>
+                            <li>Профессиональная документация процедур</li>
+                        </ul>
+                    </div>
+
+                    <!-- Практические приложения -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-briefcase me-2"></i>Практические приложения</h4>
+                        <ul class="text-light">
+                            <li><strong>Системные администраторы:</strong> Управление серверами Linux</li>
+                            <li><strong>Сетевые инженеры:</strong> Настройка сетевых сервисов</li>
+                            <li><strong>Разработчики DevOps:</strong> Автоматизация инфраструктуры</li>
+                            <li><strong>Специалисты по безопасности:</strong> Защита систем</li>
+                            <li><strong>Техническая поддержка:</strong> Устранение неисправностей</li>
+                        </ul>
+                    </div>
+
+                    <!-- Ссылки проекта -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-external-link-alt me-2"></i>Ссылки</h4>
+                        <div class="project-links">
+                            <a href="https://github.com/mbrmj875/Linux" class="btn btn-outline-primary w-100 mb-2">
+                                <i class="fab fa-github me-2"></i>Просмотреть исходный код
+                            </a>
+                           
+                            <a href="https://github.com/mbrmj875/Linux/archive/refs/heads/main.zip" class="btn btn-outline-success w-100">
+                                <i class="fas fa-download me-2"></i>Скачать документацию
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

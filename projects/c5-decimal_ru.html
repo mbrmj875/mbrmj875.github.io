@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C5_s21_decimal - Мухаммад Аль-Бакир</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #00d9ff;
+            --dark-bg: #0a1a2a;
+            --darker-bg: #0d2342;
+            --card-bg: #1a1a1a;
+            --card-border: #404040;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        
+        .back-button {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .back-button:hover {
+            color: #ffffff;
+        }
+        
+        .project-detail-header {
+            background: linear-gradient(135deg, var(--dark-bg), var(--darker-bg));
+            padding: 4rem 0;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .project-badge {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            display: inline-block;
+            font-weight: 600;
+        }
+        
+        .project-feature-card {
+            background: linear-gradient(135deg, var(--card-bg), #2a2a2a);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .project-feature-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        .tech-badge {
+            background: linear-gradient(135deg, var(--primary-color), #0088ff);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 0.3rem;
+            display: inline-block;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+        
+        .code-example {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            direction: ltr;
+            word-wrap: break-word;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .decimal-structure {
+            background: var(--darker-bg);
+            border: 2px solid var(--secondary-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            word-wrap: break-word;
+        }
+        
+        .bit-visualization {
+            display: grid;
+            grid-template-columns: repeat(16, 1fr);
+            gap: 2px;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        
+        .bit-cell {
+            min-width: 25px;
+            height: 25px;
+            background: #2a2a2a;
+            border: 1px solid var(--card-border);
+            font-size: 0.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: help;
+            word-break: break-all;
+        }
+        
+        .bit-cell.used {
+            background: var(--primary-color);
+        }
+        
+        .bit-cell.sign {
+            background: #ff6b6b;
+        }
+        
+        .bit-cell.exponent {
+            background: #51cf66;
+        }
+        
+        .section-padding {
+            padding: 4rem 0;
+        }
+        
+        .command-example {
+            background: #2a2a2a;
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            direction: ltr;
+            word-wrap: break-word;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .lab-step {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--secondary-color);
+            word-wrap: break-word;
+        }
+        
+        .text-wrap {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .long-number {
+            font-size: 0.85rem;
+            word-break: break-all;
+            line-height: 1.3;
+        }
+        
+        .code-line {
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+        
+        .text-cyan { color: #00ffff; }
+        .text-yellow { color: #ffff00; }
+        .text-info { color: var(--secondary-color); }
+        .text-success { color: #00ff00; }
+        .text-warning { color: #ffcc00; }
+        .text-danger { color: #ff3333; }
+        .text-light { color: #e0e0e0; }
+        .text-muted { color: #888888; }
+
+        /* تحسينات للاستجابة على الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .bit-visualization {
+                grid-template-columns: repeat(8, 1fr);
+            }
+            
+            .project-feature-card {
+                padding: 1.5rem;
+            }
+            
+            .code-example, .command-example {
+                padding: 1rem;
+                font-size: 0.85rem;
+            }
+            
+            .long-number {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Кнопка возврата -->
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a href="../index.html#academic-projects" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Вернуться к проектам
+            </a>
+        </div>
+    </nav>
+
+    <!-- Заголовок страницы проекта -->
+    <section class="project-detail-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="project-badge">Проект на языке C</div>
+                    <h1 class="display-4 fw-bold text-white mt-3">C5_s21_decimal</h1>
+                    <p class="lead text-light mb-4">Продвинутая библиотека для точных арифметических операций с использованием десятичного типа в языке C</p>
+                    
+                    <div class="project-meta">
+                        <span class="text-light me-4"><i class="fas fa-calendar me-2"></i>Завершен: 2024</span>
+                        <span class="text-light me-4"><i class="fas fa-code me-2"></i>Язык C</span>
+                        <span class="text-light"><i class="fas fa-star me-2"></i>Продвинутый проект</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="tech-stack">
+                        <span class="tech-badge">Программирование на C</span>
+                        <span class="tech-badge">Структуры данных</span>
+                        <span class="tech-badge">Битовые операции</span>
+                        <span class="tech-badge">Финансовая математика</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Содержание проекта -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <!-- Основное содержание -->
+                <div class="col-lg-8">
+                    <!-- Обзор -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Обзор проекта</h3>
+                        <p class="text-light text-wrap">
+                            Проект <strong>C5_s21_decimal</strong> представляет собой комплексную реализацию десятичного типа данных в языке C, 
+                            специально разработанную для финансовых и научных вычислений, требующих полной точности без ошибок округления, 
+                            присутствующих в традиционных типах с плавающей запятой.
+                        </p>
+                        <div class="row mt-4 text-center">
+                            <div class="col-md-6">
+                                <h4 class="text-info">🎯 Числовой диапазон</h4>
+                                <p class="text-light long-number">
+                                    от -79,228,162,514,264,337,593,543,950,335<br>
+                                    до +79,228,162,514,264,337,593,543,950,335
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="text-info">📊 Точность</h4>
+                                <p class="text-light">
+                                    28-29 значащих цифр<br>
+                                    Масштабный коэффициент: 10^(0-28)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Структура данных -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Структура данных и хранение</h3>
+                        
+                        <div class="decimal-structure">
+                            <h5 class="text-warning">📐 Структура s21_decimal</h5>
+                            <div class="code-example">
+                                <span class="text-info">typedef struct</span> {<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">unsigned int</span> bits[4];<br>
+                                } <span class="text-success">s21_decimal</span>;
+                            </div>
+                            
+                            <h5 class="text-warning mt-4">🧮 Бинарное представление</h5>
+                            <div class="bit-visualization">
+                                <!-- bits[3] - Scale and Sign -->
+                                <div class="bit-cell sign" title="Бит знака (0=+, 1=-)">S</div>
+                                <div class="bit-cell" title="Не используется">0</div>
+                                <div class="bit-cell" title="Не используется">0</div>
+                                <div class="bit-cell" title="Не используется">0</div>
+                                <div class="bit-cell" title="Не используется">0</div>
+                                <div class="bit-cell" title="Не используется">0</div>
+                                <div class="bit-cell" title="Не используется">0</div>
+                                <div class="bit-cell" title="Не используется">0</div>
+                                <div class="bit-cell exponent" title="Бит экспоненты">E</div>
+                                <div class="bit-cell exponent" title="Бит экспоненты">E</div>
+                                <div class="bit-cell exponent" title="Бит экспоненты">E</div>
+                                <div class="bit-cell exponent" title="Бит экспоненты">E</div>
+                                <div class="bit-cell exponent" title="Бит экспоненты">E</div>
+                                <div class="bit-cell exponent" title="Бит экспоненты">E</div>
+                                <div class="bit-cell exponent" title="Бит экспоненты">E</div>
+                                <div class="bit-cell exponent" title="Бит экспоненты">E</div>
+                                <div class="bit-cell" title="Не используется">0</div>
+                                <div class="bit-cell" title="Не используется">0</div>
+                                <div class="bit-cell" title="Не используется">0</div>
+                                <div class="bit-cell" title="Не используется">0</div>
+                                <div class="bit-cell" title="Не используется">0</div>
+                                <div class="bit-cell" title="Не используется">0</div>
+                                <div class="bit-cell" title="Не используется">0</div>
+                                <div class="bit-cell" title="Не используется">0</div>
+                                <div class="bit-cell" title="Не используется">0</div>
+                                <div class="bit-cell" title="Не используется">0</div>
+                                <div class="bit-cell" title="Не используется">0</div>
+                                <div class="bit-cell" title="Не используется">0</div>
+                                <div class="bit-cell" title="Не используется">0</div>
+                                <div class="bit-cell" title="Не используется">0</div>
+                                <div class="bit-cell" title="Не используется">0</div>
+                                <div class="bit-cell" title="Не используется">0</div>
+                            </div>
+                            
+                            <div class="row mt-3 text-center">
+                                <div class="col-md-4">
+                                    <span class="tech-badge">bits[0-2]</span>
+                                    <p class="text-light mt-2">96-битное целое значение</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <span class="tech-badge">bits[3]</span>
+                                    <p class="text-light mt-2">Масштабный коэффициент и знак</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <span class="tech-badge">128-bit</span>
+                                    <p class="text-light mt-2">Общий размер</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Арифметические операции -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-plus-minus"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Разработанные арифметические операции</h3>
+                        
+                        <div class="lab-step">
+                            <h5 class="text-info">🧮 Основные операции</h5>
+                            <p class="text-light">Полная реализация арифметических функций</p>
+                            <div class="command-example">
+                                <span class="text-success code-line">// Арифметические операции</span>
+                                <span class="text-info code-line">int</span> <span class="text-warning code-line">s21_add</span>(s21_decimal, s21_decimal, s21_decimal*);
+                                <span class="text-info code-line">int</span> <span class="text-warning code-line">s21_sub</span>(s21_decimal, s21_decimal, s21_decimal*);
+                                <span class="text-info code-line">int</span> <span class="text-warning code-line">s21_mul</span>(s21_decimal, s21_decimal, s21_decimal*);
+                                <span class="text-info code-line">int</span> <span class="text-warning code-line">s21_div</span>(s21_decimal, s21_decimal, s21_decimal*);
+                                <span class="text-success code-line">// Коды возврата:</span>
+                                <span class="text-muted code-line">0 = Успех, 1 = Переполнение, 2 = Потеря значимости, 3 = Деление на ноль</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">⚖️ Операции сравнения</h5>
+                            <p class="text-light">Полный набор функций сравнения</p>
+                            <div class="command-example">
+                                <span class="text-info code-line">int</span> <span class="text-warning code-line">s21_is_equal</span>(s21_decimal, s21_decimal);
+                                <span class="text-info code-line">int</span> <span class="text-warning code-line">s21_is_not_equal</span>(s21_decimal, s21_decimal);
+                                <span class="text-info code-line">int</span> <span class="text-warning code-line">s21_is_less</span>(s21_decimal, s21_decimal);
+                                <span class="text-info code-line">int</span> <span class="text-warning code-line">s21_is_greater</span>(s21_decimal, s21_decimal);
+                                <span class="text-info code-line">int</span> <span class="text-warning code-line">s21_is_less_or_equal</span>(s21_decimal, s21_decimal);
+                                <span class="text-info code-line">int</span> <span class="text-warning code-line">s21_is_greater_or_equal</span>(s21_decimal, s21_decimal);
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Примеры использования -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Практические примеры использования</h3>
+                        
+                        <div class="lab-step">
+                            <h5 class="text-warning">Пример 1: Точные финансовые расчеты</h5>
+                            <div class="code-example">
+                                <span class="text-primary code-line">#include "s21_decimal.h"</span>
+                                <span class="text-info code-line">void financial_calculations() {</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_decimal price, quantity, discount, total, final_price;</span>
+                                <span class="code-line">&nbsp;&nbsp;float float_price;</span>
+                                <span class="text-success code-line">&nbsp;&nbsp;// Установка значений</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_from_float_to_decimal(19.99f, &price);</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_from_int_to_decimal(100, &quantity);</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_from_float_to_decimal(0.10f, &discount);</span>
+                                <span class="text-muted code-line">&nbsp;&nbsp;// скидка 10%</span>
+                                <span class="text-success code-line">&nbsp;&nbsp;// Расчет итога: Цена × Количество</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_mul(price, quantity, &total);</span>
+                                <span class="text-success code-line">&nbsp;&nbsp;// Применение скидки: Итог - (Итог × Скидка)</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_decimal discount_amount;</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_mul(total, discount, &discount_amount);</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_sub(total, discount_amount, &final_price);</span>
+                                <span class="text-success code-line">&nbsp;&nbsp;// Конвертация для отображения</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_from_decimal_to_float(final_price, &float_price);</span>
+                                <span class="code-line">&nbsp;&nbsp;printf("Финальная цена: $%.2f\n", float_price);</span>
+                                <span class="text-muted code-line">&nbsp;&nbsp;// $1,799.10</span>
+                                <span class="code-line">}</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-warning">Пример 2: Различные операции округления</h5>
+                            <div class="code-example">
+                                <span class="text-info code-line">void rounding_examples() {</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_decimal value, rounded, floored, truncated;</span>
+                                <span class="code-line">&nbsp;&nbsp;int int_result;</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_from_float_to_decimal(123.456789f, &value);</span>
+                                <span class="text-success code-line">&nbsp;&nbsp;// Различные методы округления</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_round(value, &rounded);</span>
+                                <span class="text-muted code-line">&nbsp;&nbsp;// 123</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_floor(value, &floored);</span>
+                                <span class="text-muted code-line">&nbsp;&nbsp;// 123</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_truncate(value, &truncated);</span>
+                                <span class="text-muted code-line">&nbsp;&nbsp;// 123</span>
+                                <span class="text-success code-line">&nbsp;&nbsp;// Для отрицательных значений</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_decimal negative_value;</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_from_float_to_decimal(-123.456789f, &negative_value);</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_floor(negative_value, &floored);</span>
+                                <span class="text-muted code-line">&nbsp;&nbsp;// -124</span>
+                                <span class="code-line">}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Практические случаи использования -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Практические случаи использования</h3>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="p-3">
+                                    <h5 class="text-info">🏦 Финансовые системы</h5>
+                                    <p class="text-light text-wrap">
+                                        Банковские расчеты и финансовые операции, требующие полной точности без ошибок округления
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3">
+                                    <h5 class="text-info">🛒 Системы продаж</h5>
+                                    <p class="text-light text-wrap">
+                                        Расчет налогов, скидок и специальных предложений в POS-системах
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3">
+                                    <h5 class="text-info">🔬 Научные расчеты</h5>
+                                    <p class="text-light text-wrap">
+                                        Приложения, требующие высокой точности в математических и научных вычислениях
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3">
+                                    <h5 class="text-info">📊 Базы данных</h5>
+                                    <p class="text-light text-wrap">
+                                        Хранение и обработка числовых данных с точностью в системах баз данных
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Боковая панель -->
+                <div class="col-lg-4">
+                    <!-- Техническая информация -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-cogs me-2"></i>Техническая информация</h4>
+                        <div class="tech-info">
+                            <div class="mb-3">
+                                <strong class="text-info">Язык:</strong>
+                                <span class="text-light">C (Стандарт C11)</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Платформа:</strong>
+                                <span class="text-light">Linux, macOS</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Размер:</strong>
+                                <span class="text-light">128-бит</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Точность:</strong>
+                                <span class="text-light">28-29 цифр</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Тестирование:</strong>
+                                <span class="text-light">Check Framework</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Покрытие:</strong>
+                                <span class="text-light">>85%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Вспомогательные функции -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-tools me-2"></i>Вспомогательные функции</h4>
+                        <div class="code-example">
+                            <span class="text-success code-line">// Функции преобразования</span>
+                            <span class="code-line">s21_from_int_to_decimal()</span>
+                            <span class="code-line">s21_from_float_to_decimal()</span>
+                            <span class="code-line">s21_from_decimal_to_int()</span>
+                            <span class="code-line">s21_from_decimal_to_float()</span>
+                            <span class="text-success code-line">// Сервисные функции</span>
+                            <span class="code-line">s21_round(), s21_floor()</span>
+                            <span class="code-line">s21_truncate(), s21_negate()</span>
+                            <span class="code-line">s21_copy()</span>
+                        </div>
+                    </div>
+
+                    <!-- Достижения -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-trophy me-2"></i>Достижения</h4>
+                        <ul class="text-light">
+                            <li>Успешная реализация 15+ функций</li>
+                            <li>Обработка всех случаев ошибок</li>
+                            <li>Достижение высочайших стандартов точности</li>
+                            <li>Всестороннее тестирование граничных случаев</li>
+                            <li>Оптимизация производительности операций</li>
+                            <li>Полная документация алгоритмов</li>
+                        </ul>
+                    </div>
+
+                    <!-- Использованные навыки -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-code me-2"></i>Использованные навыки</h4>
+                        <div class="skills-used">
+                            <span class="tech-badge">Программирование на C</span>
+                            <span class="tech-badge">Битовые операции</span>
+                            <span class="tech-badge">Структуры данных</span>
+                            <span class="tech-badge">Алгоритмы</span>
+                            <span class="tech-badge">Управление памятью</span>
+                            <span class="tech-badge">Модульное тестирование</span>
+                            <span class="tech-badge">Отладка</span>
+                            <span class="tech-badge">Математическая логика</span>
+                        </div>
+                    </div>
+
+                    <!-- Ссылки проекта -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-external-link-alt me-2"></i>Ссылки</h4>
+                        <div class="project-links">
+                            <a href="https://github.com/mbrmj875/decimal" class="btn btn-outline-primary w-100 mb-2">
+                                <i class="fab fa-github me-2"></i>Просмотр исходного кода
+                            </a>
+                      
+                            <a href="https://github.com/mbrmj875/decimal/archive/refs/heads/main.zip" class="btn btn-outline-success w-100">
+                                <i class="fas fa-download me-2"></i>Скачать проект
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

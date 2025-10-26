@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DO1_Linux Network - محمد الباغر</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #00d9ff;
+            --dark-bg: #0a1a2a;
+            --darker-bg: #0d2342;
+            --card-bg: #1a1a1a;
+            --card-border: #404040;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        
+        .back-button {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .back-button:hover {
+            color: #ffffff;
+        }
+        
+        .project-detail-header {
+            background: linear-gradient(135deg, var(--dark-bg), var(--darker-bg));
+            padding: 4rem 0;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .project-badge {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            display: inline-block;
+            font-weight: 600;
+        }
+        
+        .project-feature-card {
+            background: linear-gradient(135deg, var(--card-bg), #2a2a2a);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .project-feature-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        .tech-badge {
+            background: linear-gradient(135deg, var(--primary-color), #0088ff);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 0.3rem;
+            display: inline-block;
+        }
+        
+        .code-example {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            direction: ltr;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .screenshot-container {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .screenshot-container img {
+            max-width: 100%;
+            border-radius: 10px;
+            border: 2px solid var(--card-border);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .screenshot-caption {
+            margin-top: 1rem;
+            color: #cccccc;
+            font-style: italic;
+        }
+        
+        .section-padding {
+            padding: 4rem 0;
+        }
+        
+        .network-diagram {
+            background: var(--dark-bg);
+            border: 2px solid var(--secondary-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .command-example {
+            background: #2a2a2a;
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            direction: ltr;
+        }
+        
+        .text-cyan { color: #00ffff; }
+        .text-yellow { color: #ffff00; }
+        .text-info { color: var(--secondary-color); }
+        .text-success { color: #00ff00; }
+        .text-warning { color: #ffcc00; }
+        .text-danger { color: #ff3333; }
+        .text-light { color: #e0e0e0; }
+        .text-muted { color: #888888; }
+    </style>
+</head>
+<body>
+    <!-- زر العودة -->
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a href="../index.html#academic-projects" class="back-button">
+                <i class="fas fa-arrow-right"></i>
+                العودة للمشاريع
+            </a>
+        </div>
+    </nav>
+
+    <!-- رأس صفحة المشروع -->
+    <section class="project-detail-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="project-badge">مشروع إدارة الشبكات</div>
+                    <h1 class="display-4 fw-bold text-white mt-3">DO1_Linux Network</h1>
+                    <p class="lead text-light mb-4">عمل معمل شامل لإدارة الشبكات يغطي التوجيه الثابت والديناميكي، الجدران النارية، NAT، وخدمات DHCP</p>
+                    
+                    <div class="project-meta">
+                        <span class="text-light me-4"><i class="fas fa-calendar me-2"></i>تم الانتهاء: 2024</span>
+                        <span class="text-light me-4"><i class="fas fa-code me-2"></i>Linux Networking</span>
+                        <span class="text-light"><i class="fas fa-star me-2"></i>مشروع متقدم</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="tech-stack">
+                        <span class="tech-badge">Linux Administration</span>
+                        <span class="tech-badge">Network Security</span>
+                        <span class="tech-badge">Routing</span>
+                        <span class="tech-badge">Firewalls</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- محتوى المشروع -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <!-- المحتوى الرئيسي -->
+                <div class="col-lg-8">
+                    <!-- نظرة عامة -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <h3 class="text-white mb-3">نظرة عامة على المشروع</h3>
+                        <p class="text-light">
+                            مشروع <strong>DO1_Linux</strong> هو عمل معمل شامل يغطي مفاهيم إدارة الشبكات المتقدمة باستخدام أنظمة Linux. 
+                            يتضمن المشروع تكوين شبكات معقدة، إعداد التوجيه الثابت والديناميكي، تكوين الجدران النارية، 
+                            وخدمات NAT وDHCP، بالإضافة إلى أنفاق SSH الآمنة.
+                        </p>
+                        
+                        <div class="row mt-4 text-center">
+                            <div class="col-md-3">
+                                <h4 class="text-info">🌐 8 أجزاء</h4>
+                                <p class="text-light">شاملة لجميع مفاهيم الشبكات</p>
+                            </div>
+                            <div class="col-md-3">
+                                <h4 class="text-info">🖥️ 5 آلات افتراضية</h4>
+                                <p class="text-light">بيئة شبكية متكاملة</p>
+                            </div>
+                            <div class="col-md-3">
+                                <h4 class="text-info">🔒 أمن متقدم</h4>
+                                <p class="text-light">جدران نارية و NAT</p>
+                            </div>
+                            <div class="col-md-3">
+                                <h4 class="text-info">⚡ أداء</h4>
+                                <p class="text-light">قياس وتحسين الأداء</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- أجزاء المشروع -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-sitemap"></i>
+                        </div>
+                        <h3 class="text-white mb-3">الأجزاء الرئيسية للمشروع</h3>
+                        
+                        <div class="accordion" id="projectParts">
+                            <!-- Part 1 -->
+                            <div class="accordion-item bg-dark text-light">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#part1">
+                                        <strong>الجزء 1: أداة ipcalc - عنونة الشبكات</strong>
+                                    </button>
+                                </h2>
+                                <div id="part1" class="accordion-collapse collapse show" data-bs-parent="#projectParts">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>حساب عناوين الشبكات من IP/CIDR</li>
+                                            <li>تحويل أقنعة الشبكات بين الصيغ المختلفة</li>
+                                            <li>تحديد نطاقات العناوين العامة والخاصة</li>
+                                            <li>تحليل عناوين localhost</li>
+                                        </ul>
+                                        <div class="command-example">
+                                            <span class="text-success">$ ipcalc 192.167.38.54/13</span><br>
+                                            <span class="text-muted"># حساب عنوان الشبكة</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Part 2 -->
+                            <div class="accordion-item bg-dark text-light">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#part2">
+                                        <strong>الجزء 2: التوجيه الثابت بين آلتين</strong>
+                                    </button>
+                                </h2>
+                                <div id="part2" class="accordion-collapse collapse" data-bs-parent="#projectParts">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>تكوين واجهات الشبكة على Ubuntu</li>
+                                            <li>إعداد عناوين IP ثابتة</li>
+                                            <li>إضافة مسارات ثابتة يدوياً</li>
+                                            <li>تكوين مسارات دائمة في netplan</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Part 3 -->
+                            <div class="accordion-item bg-dark text-light">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#part3">
+                                        <strong>الجزء 3: قياس أداء الشبكة بـ iperf3</strong>
+                                    </button>
+                                </h2>
+                                <div id="part3" class="accordion-collapse collapse" data-bs-parent="#projectParts">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>تحويل وحدات عرض النطاق الترددي</li>
+                                            <li>قياس سرعة الاتصال بين المضيفين</li>
+                                            <li>اختبار أداء الشبكة في ظروف مختلفة</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Part 4 -->
+                            <div class="accordion-item bg-dark text-light">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#part4">
+                                        <strong>الجزء 4: الجدران النارية بـ iptables</strong>
+                                    </button>
+                                </h2>
+                                <div id="part4" class="accordion-collapse collapse" data-bs-parent="#projectParts">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>استراتيجيات الجدران النارية (رفض افتراضي vs السماح افتراضي)</li>
+                                            <li>إدارة المنافذ والخدمات</li>
+                                            <li>التحكم في حركة ICMP</li>
+                                            <li>اكتشاف الشبكات باستخدام nmap</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Part 5 -->
+                            <div class="accordion-item bg-dark text-light">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#part5">
+                                        <strong>الجزء 5: التوجيه الثابت للشبكة</strong>
+                                    </button>
+                                </h2>
+                                <div id="part5" class="accordion-collapse collapse" data-bs-parent="#projectParts">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>هندسة شبكات متعددة الأجزاء</li>
+                                            <li>تمكين التوجيه على الموجهات</li>
+                                            <li>تكوين البوابات الافتراضية</li>
+                                            <li>تحليل المسارات باستخدام traceroute</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Part 6 -->
+                            <div class="accordion-item bg-dark text-light">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#part6">
+                                        <strong>الجزء 6: التكوين الديناميكي باستخدام DHCP</strong>
+                                    </button>
+                                </h2>
+                                <div id="part6" class="accordion-collapse collapse" data-bs-parent="#projectParts">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>إعداد خادم DHCP</li>
+                                            <li>إدارة مجمعات العناوين</li>
+                                            <li>تكوين العملاء وتجديد العناوين</li>
+                                            <li>ربط عناوين ثابتة بناءً على عنوان MAC</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Part 7 -->
+                            <div class="accordion-item bg-dark text-light">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#part7">
+                                        <strong>الجزء 7: ترجمة عناوين الشبكة (NAT)</strong>
+                                    </button>
+                                </h2>
+                                <div id="part7" class="accordion-collapse collapse" data-bs-parent="#projectParts">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>SNAT (ترجمة عنوان المصدر)</li>
+                                            <li>DNAT (ترجمة عنوان الوجهة)</li>
+                                            <li>توجيه المنافذ للخدمات</li>
+                                            <li>دمج NAT مع الجدران النارية</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Part 8 -->
+                            <div class="accordion-item bg-dark text-light">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#part8">
+                                        <strong>الجزء 8: أنفاق SSH الآمنة</strong>
+                                    </button>
+                                </h2>
+                                <div id="part8" class="accordion-collapse collapse" data-bs-parent="#projectParts">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>توجيه المنافذ المحلي (Local Port Forwarding)</li>
+                                            <li>توجيه المنافذ عن بُعد (Remote Port Forwarding)</li>
+                                            <li>تجاوز قيود الجدران النارية</li>
+                                            <li>عزل الخدمات وتأمينها</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- بنية الشبكة -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <h3 class="text-white mb-3">هندسة الشبكة</h3>
+                        
+                        <div class="network-diagram">
+                            <span class="text-cyan">┌─────────────────┐</span><br>
+                            <span class="text-cyan">│</span> <span class="text-yellow">الإنترنت</span> <span class="text-cyan">│</span><br>
+                            <span class="text-cyan">└─────────────────┘</span><br>
+                            <span class="text-cyan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│</span><br>
+                            <span class="text-cyan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├──</span> <span class="text-info">المُوجّه r2</span> <span class="text-muted">(10.100.0.12, 10.20.0.1)</span><br>
+                            <span class="text-cyan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;├──</span> <span class="text-success">ws21</span> <span class="text-muted">(DHCP)</span><br>
+                            <span class="text-cyan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;└──</span> <span class="text-success">ws22</span> <span class="text-muted">(10.20.0.10)</span><br>
+                            <span class="text-cyan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│</span><br>
+                            <span class="text-cyan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└──</span> <span class="text-info">المُوجّه r1</span> <span class="text-muted">(10.10.0.1, 10.100.0.11)</span><br>
+                            <span class="text-cyan">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└──</span> <span class="text-success">ws11</span> <span class="text-muted">(10.10.0.2)</span>
+                        </div>
+                        
+                        <h5 class="text-info mt-4">مخطط عنونة IP:</h5>
+                        <ul class="text-light">
+                            <li><strong>الشبكة 10.10.0.0/18:</strong> الشبكة الداخلية 1</li>
+                            <li><strong>الشبكة 10.100.0.0/16:</strong> اتصال بين الموجهات</li>
+                            <li><strong>الشبكة 10.20.0.0/26:</strong> الشبكة الداخلية 2</li>
+                            <li><strong>نطاق DHCP:</strong> 10.20.0.2 - 10.20.0.50</li>
+                        </ul>
+                    </div>
+
+                    <!-- أمثلة تكوين -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3 class="text-white mb-3">أمثلة التكوين</h3>
+                        
+                        <h5 class="text-info">تكوين Netplan:</h5>
+                        <div class="code-example">
+                            <span class="text-muted"># /etc/netplan/00-installer-config.yaml</span><br>
+                            <span class="text-info">network</span>:<br>
+                            &nbsp;&nbsp;<span class="text-info">version</span>: <span class="text-danger">2</span><br>
+                            &nbsp;&nbsp;<span class="text-info">ethernets</span>:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">eth0</span>:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">addresses</span>: [<span class="text-danger">10.10.0.2/18</span>]<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">routes</span>:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="text-info">to</span>: <span class="text-danger">0.0.0.0/0</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">via</span>: <span class="text-danger">10.10.0.1</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">nameservers</span>:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">addresses</span>: [<span class="text-danger">8.8.8.8</span>]
+                        </div>
+                        
+                        <h5 class="text-info mt-4">جدار ناري بـ iptables:</h5>
+                        <div class="code-example">
+                            <span class="text-muted">#!/bin/sh</span><br>
+                            <span class="text-muted"># مسح جميع القواعد</span><br>
+                            <span class="text-info">iptables -F</span><br>
+                            <span class="text-info">iptables -t nat -F</span><br>
+                            <span class="text-info">iptables -X</span><br><br>
+                            <span class="text-muted"># السياسات الافتراضية</span><br>
+                            <span class="text-info">iptables -P INPUT DROP</span><br>
+                            <span class="text-info">iptables -P FORWARD DROP</span><br>
+                            <span class="text-info">iptables -P OUTPUT ACCEPT</span><br><br>
+                            <span class="text-muted"># السماح بالخدمات المحددة</span><br>
+                            <span class="text-info">iptables -A INPUT -p tcp --dport 22 -j ACCEPT</span><br>
+                            <span class="text-info">iptables -A INPUT -p tcp --dport 80 -j ACCEPT</span><br>
+                            <span class="text-info">iptables -A INPUT -p icmp -j ACCEPT</span>
+                        </div>
+                    </div>
+
+                    <!-- اختبارات والتحقق -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-vial"></i>
+                        </div>
+                        <h3 class="text-white mb-3">الاختبارات والتحقق</h3>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5 class="text-info">🔍 اختبارات الاتصال</h5>
+                                <div class="command-example">
+                                    <span class="text-success">$ ping 10.10.0.1</span><br>
+                                    <span class="text-success">$ traceroute 10.20.0.10</span><br>
+                                    <span class="text-success">$ telnet 10.20.0.10 80</span><br>
+                                    <span class="text-success">$ nmap -p 22,80 10.20.0.10</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="text-info">⚡ اختبارات الأداء</h5>
+                                <div class="command-example">
+                                    <span class="text-muted"># على الخادم:</span><br>
+                                    <span class="text-success">$ iperf3 -s</span><br><br>
+                                    <span class="text-muted"># على العميل:</span><br>
+                                    <span class="text-success">$ iperf3 -c 192.168.100.10</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h5 class="text-info mt-4">مراقبة الشبكة:</h5>
+                        <div class="command-example">
+                            <span class="text-success">$ tcpdump -i eth0 -n icmp</span><br>
+                            <span class="text-success">$ netstat -tuln</span><br>
+                            <span class="text-success">$ ss -tuln</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- الشريط الجانبي -->
+                <div class="col-lg-4">
+                    <!-- معلومات التقنية -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-cogs me-2"></i>المعلومات التقنية</h4>
+                        <div class="tech-info">
+                            <div class="mb-3">
+                                <strong class="text-info">النظام:</strong>
+                                <span class="text-light">Ubuntu Server</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">الأدوات:</strong>
+                                <span class="text-light">netplan, iptables, dhcpd</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">البروتوكولات:</strong>
+                                <span class="text-light">TCP/IP, ICMP, DHCP, SSH</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">الخدمات:</strong>
+                                <span class="text-light">Apache2, ISC DHCP, SSH</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">الآلات الافتراضية:</strong>
+                                <span class="text-light">5 VMs</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">التوثيق:</strong>
+                                <span class="text-light">تقرير مفصل مع صور</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- المهارات المستخدمة -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-code me-2"></i>المهارات المستخدمة</h4>
+                        <div class="skills-used">
+                            <span class="tech-badge">Linux Administration</span>
+                            <span class="tech-badge">Network Security</span>
+                            <span class="tech-badge">Routing Protocols</span>
+                            <span class="tech-badge">Firewall Configuration</span>
+                            <span class="tech-badge">DHCP Services</span>
+                            <span class="tech-badge">NAT Configuration</span>
+                            <span class="tech-badge">SSH Tunneling</span>
+                            <span class="tech-badge">Network Troubleshooting</span>
+                        </div>
+                    </div>
+
+                    <!-- الأدوات المستخدمة -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-tools me-2"></i>الأدوات المستخدمة</h4>
+                        <ul class="text-light">
+                            <li><strong>ipcalc</strong> - حساب عناوين الشبكات</li>
+                            <li><strong>netplan</strong> - تكوين الشبكة في Ubuntu</li>
+                            <li><strong>iptables</strong> - جدران نارية و NAT</li>
+                            <li><strong>iperf3</strong> - قياس أداء الشبكة</li>
+                            <li><strong>nmap</strong> - اكتشاف الشبكات وأمنها</li>
+                            <li><strong>tcpdump</strong> - تحليل حركة الشبكة</li>
+                            <li><strong>traceroute</strong> - تتبع مسارات الشبكة</li>
+                            <li><strong>dhcpd</strong> - خادم DHCP</li>
+                        </ul>
+                    </div>
+
+                    <!-- النتائج المتحققة -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-trophy me-2"></i>النتائج المتحققة</h4>
+                        <ul class="text-light">
+                            <li>تصميم وتنفيذ شبكة معقدة متعددة الأجزاء</li>
+                            <li>تكوين توجيه ثابت وديناميكي متقدم</li>
+                            <li>إعداد جدران نارية فعالة وقواعد أمان</li>
+                            <li>تنفيذ خدمات NAT و DHCP قابلة للإنتاج</li>
+                            <li>إنشاء أنفاق SSH آمنة للوصول البعيد</li>
+                            <li>توثيق شامل للإجراءات والاختبارات</li>
+                            <li>مهارات متقدمة في استكشاف الأخطاء وإصلاحها</li>
+                        </ul>
+                    </div>
+
+                    <!-- التطبيقات العملية -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-briefcase me-2"></i>التطبيقات العملية</h4>
+                        <ul class="text-light">
+                            <li><strong>شبكات الشركات:</strong> تصميم شبكات متعددة الأقسام</li>
+                            <li><strong>مراكز البيانات:</strong> تكوين الخوادم والخدمات</li>
+                            <li><strong>الأمن السيبراني:</strong> حماية الشبكات والخدمات</li>
+                            <li><strong>الإدارة السحابية:</strong> مفاهيم الشبكات في السحابة</li>
+                            <li><strong>الدعم الفني:</strong> استكشاف الأخطاء وإصلاحها</li>
+                        </ul>
+                    </div>
+
+                    <!-- روابط المشروع -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-external-link-alt me-2"></i>الروابط</h4>
+                        <div class="project-links">
+                            <a href="https://github.com/mbrmj875/Linux-Network" class="btn btn-outline-primary w-100 mb-2">
+                                <i class="fab fa-github me-2"></i>عرض الكود المصدري
+                            </a>
+                           
+                            <a href="https://github.com/mbrmj875/Linux-Network/archive/refs/heads/main.zip" class="btn btn-outline-success w-100">
+                                <i class="fas fa-download me-2"></i>تحميل التوثيق
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

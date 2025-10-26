@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DO2_Linux Network - محمد الباغر</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #00d9ff;
+            --dark-bg: #0a1a2a;
+            --darker-bg: #0d2342;
+            --card-bg: #1a1a1a;
+            --card-border: #404040;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        
+        .back-button {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .back-button:hover {
+            color: #ffffff;
+        }
+        
+        .project-detail-header {
+            background: linear-gradient(135deg, var(--dark-bg), var(--darker-bg));
+            padding: 4rem 0;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .project-badge {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            display: inline-block;
+            font-weight: 600;
+        }
+        
+        .project-feature-card {
+            background: linear-gradient(135deg, var(--card-bg), #2a2a2a);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .project-feature-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        .tech-badge {
+            background: linear-gradient(135deg, var(--primary-color), #0088ff);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 0.3rem;
+            display: inline-block;
+        }
+        
+        .code-example {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            direction: ltr;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .screenshot-container {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .screenshot-container img {
+            max-width: 100%;
+            border-radius: 10px;
+            border: 2px solid var(--card-border);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .screenshot-caption {
+            margin-top: 1rem;
+            color: #cccccc;
+            font-style: italic;
+        }
+        
+        .section-padding {
+            padding: 4rem 0;
+        }
+        
+        .network-diagram {
+            background: var(--dark-bg);
+            border: 2px solid var(--secondary-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .command-example {
+            background: #2a2a2a;
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            direction: ltr;
+        }
+        
+        .lab-step {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .text-cyan { color: #00ffff; }
+        .text-yellow { color: #ffff00; }
+        .text-info { color: var(--secondary-color); }
+        .text-success { color: #00ff00; }
+        .text-warning { color: #ffcc00; }
+        .text-danger { color: #ff3333; }
+        .text-light { color: #e0e0e0; }
+        .text-muted { color: #888888; }
+    </style>
+</head>
+<body>
+    <!-- زر العودة -->
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a href="../index.html#academic-projects" class="back-button">
+                <i class="fas fa-arrow-right"></i>
+                العودة للمشاريع
+            </a>
+        </div>
+    </nav>
+
+    <!-- رأس صفحة المشروع -->
+    <section class="project-detail-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="project-badge">مشروع إدارة أنظمة Linux</div>
+                    <h1 class="display-4 fw-bold text-white mt-3">DO2_Linux Network</h1>
+                    <p class="lead text-light mb-4">عمل معمل شامل لإدارة أنظمة Linux يغطي التثبيت، إدارة المستخدمين، تكوين الشبكة، إعداد الخدمات، ومراقبة النظام</p>
+                    
+                    <div class="project-meta">
+                        <span class="text-light me-4"><i class="fas fa-calendar me-2"></i>تم الانتهاء: 2024</span>
+                        <span class="text-light me-4"><i class="fas fa-code me-2"></i>Linux System Administration</span>
+                        <span class="text-light"><i class="fas fa-star me-2"></i>مشروع متقدم</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="tech-stack">
+                        <span class="tech-badge">Ubuntu Server</span>
+                        <span class="tech-badge">System Administration</span>
+                        <span class="tech-badge">Network Config</span>
+                        <span class="tech-badge">Service Management</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- محتوى المشروع -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <!-- المحتوى الرئيسي -->
+                <div class="col-lg-8">
+                    <!-- نظرة عامة -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <h3 class="text-white mb-3">نظرة عامة على المشروع</h3>
+                        <p class="text-light">
+                            مشروع <strong>DO2_Linux Network</strong> هو دليل عملي شامل لإدارة أنظمة Linux، يغطي جميع الجوانب الأساسية 
+                            من التثبيت الأولي إلى الإدارة المتقدمة للشبكات والخدمات. يتميز المشروع بنهج عملي يتضمن 
+                            إدارة المستخدمين، تكوين الشبكة، إعداد الخدمات، المراقبة، واستكشاف الأخطاء وإصلاحها.
+                        </p>
+                        
+                        <div class="row mt-4 text-center">
+                            <div class="col-md-3">
+                                <h4 class="text-info">🖥️ 15 جزء</h4>
+                                <p class="text-light">شاملة لإدارة النظام</p>
+                            </div>
+                            <div class="col-md-3">
+                                <h4 class="text-info">⚙️ إعداد كامل</h4>
+                                <p class="text-light">من التثبيت إلى الإنتاج</p>
+                            </div>
+                            <div class="col-md-3">
+                                <h4 class="text-info">🔧 أدوات متقدمة</h4>
+                                <p class="text-light">مراقبة وإدارة متكاملة</p>
+                            </div>
+                            <div class="col-md-3">
+                                <h4 class="text-info">📊 توثيق مفصل</h4>
+                                <p class="text-light">إجراءات ونتائج كاملة</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- أجزاء المشروع -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <h3 class="text-white mb-3">الأجزاء الرئيسية للمشروع</h3>
+                        
+                        <div class="lab-step">
+                            <h5 class="text-info">الجزء 1: تثبيت نظام التشغيل</h5>
+                            <p class="text-light">تثبيت Ubuntu Server 20.04 LTS بدون واجهة رسومية والتحقق من الإصدار</p>
+                            <div class="command-example">
+                                <span class="text-success">$ cat /etc/issue</span><br>
+                                <span class="text-muted"># التحقق من إصدار Ubuntu</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">الجزء 2: إدارة المستخدمين</h5>
+                            <p class="text-light">إنشاء مستخدمين جديدين وإضافتهم إلى مجموعات إدارية</p>
+                            <div class="command-example">
+                                <span class="text-success">$ sudo adduser baqer-1</span><br>
+                                <span class="text-success">$ sudo usermod -aG adm baqer-1</span><br>
+                                <span class="text-success">$ cat /etc/passwd</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">الجزء 3: تكوين الشبكة</h5>
+                            <p class="text-light">إعداد اسم المضيف، المنطقة الزمنية، وواجهات الشبكة</p>
+                            <div class="command-example">
+                                <span class="text-success">$ sudo hostnamectl set-hostname user-1</span><br>
+                                <span class="text-success">$ sudo timedatectl set-timezone Europe/Moscow</span><br>
+                                <span class="text-success">$ ip link show</span><br>
+                                <span class="text-success">$ ping 1.1.1.1</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">الجزء 4: تحديثات النظام</h5>
+                            <p class="text-light">تحديث قائمة الحزم وترقية النظام</p>
+                            <div class="command-example">
+                                <span class="text-success">$ sudo apt update</span><br>
+                                <span class="text-success">$ sudo apt upgrade</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">الجزء 5: صلاحيات Sudo</h5>
+                            <p class="text-light">منح صلاحيات إدارية للمستخدمين وتغيير اسم المضيف</p>
+                            <div class="command-example">
+                                <span class="text-success">$ sudo usermod -aG sudo username</span><br>
+                                <span class="text-success">$ sudo hostnamectl set-hostname new-hostname</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">الجزء 6: خدمة الوقت</h5>
+                            <p class="text-light">إعداد مزامنة الوقت التلقائية عبر NTP</p>
+                            <div class="command-example">
+                                <span class="text-success">$ sudo apt install ntp -y</span><br>
+                                <span class="text-success">$ timedatectl show</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">الجزء 7: محررات النصوص</h5>
+                            <p class="text-light">تثبيت واستخدام VIM، NANO، وMCEDIT</p>
+                            <div class="command-example">
+                                <span class="text-success">$ sudo apt install vim nano joe mc -y</span><br>
+                                <span class="text-success">$ vim test_VIM.txt</span><br>
+                                <span class="text-muted"># i للإدراج، ESC للأوامر، :wq للحفظ والخروج</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">الجزء 8: خدمة SSH</h5>
+                            <p class="text-light">إعداد OpenSSH مع منفذ مخصص وبدء تلقائي</p>
+                            <div class="command-example">
+                                <span class="text-success">$ sudo apt install openssh-server -y</span><br>
+                                <span class="text-success">$ sudo systemctl enable ssh</span><br>
+                                <span class="text-success">$ netstat -tan | grep 2022</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">الجزء 9: مراقبة النظام</h5>
+                            <p class="text-light">استخدام top و htop لمراقبة العمليات والموارد</p>
+                            <div class="command-example">
+                                <span class="text-success">$ sudo apt install htop</span><br>
+                                <span class="text-success">$ top</span><br>
+                                <span class="text-success">$ htop</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">الجزء 10: إدارة الأقراص</h5>
+                            <p class="text-light">تحليل أقسام القرص باستخدام fdisk</p>
+                            <div class="command-example">
+                                <span class="text-success">$ sudo fdisk -l</span><br>
+                                <span class="text-muted"># عرض معلومات القرص والأقسام</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">الجزء 11: تحليل استخدام نظام الملفات</h5>
+                            <p class="text-light">مراقبة مساحة القرص باستخدام df</p>
+                            <div class="command-example">
+                                <span class="text-success">$ df -Th /</span><br>
+                                <span class="text-muted"># عرض استخدام المساحة بصيغة مقروءة</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">الجزء 12: تحليل مساحة المجلدات</h5>
+                            <p class="text-light">تتبع استهلاك التخزين باستخدام du</p>
+                            <div class="command-example">
+                                <span class="text-success">$ du -sh /home</span><br>
+                                <span class="text-success">$ du -sh /var/log</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">الجزء 13: التحليل التفاعلي لاستخدام القرص</h5>
+                            <p class="text-light">استخدام ncdu للتحليل البصري للتخزين</p>
+                            <div class="command-example">
+                                <span class="text-success">$ sudo apt install ncdu -y</span><br>
+                                <span class="text-success">$ ncdu /home</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">الجزء 14: تحليل سجلات النظام</h5>
+                            <p class="text-light">مراقبة وإدارة سجلات النظام والأمان</p>
+                            <div class="command-example">
+                                <span class="text-success">$ less /var/log/syslog</span><br>
+                                <span class="text-success">$ grep "sshd" /var/log/auth.log</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">الجزء 15: جدولة المهام</h5>
+                            <p class="text-light">إدارة المهام الآلية باستخدام Cron</p>
+                            <div class="command-example">
+                                <span class="text-success">$ crontab -e</span><br>
+                                <span class="text-muted"># */2 * * * * /usr/bin/uptime</span><br>
+                                <span class="text-success">$ crontab -l</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- أمثلة تكوين متقدمة -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3 class="text-white mb-3">أمثلة التكوين المتقدمة</h3>
+                        
+                        <h5 class="text-info">تكوين شبكة ثابتة:</h5>
+                        <div class="code-example">
+                            <span class="text-muted"># /etc/netplan/00-installer-config.yaml</span><br>
+                            <span class="text-info">network</span>:<br>
+                            &nbsp;&nbsp;<span class="text-info">version</span>: <span class="text-danger">2</span><br>
+                            &nbsp;&nbsp;<span class="text-info">ethernets</span>:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">ens33</span>:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">dhcp4</span>: <span class="text-danger">no</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">addresses</span>: [<span class="text-danger">192.168.1.100/24</span>]<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">gateway4</span>: <span class="text-danger">192.168.1.1</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">nameservers</span>:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">addresses</span>: [<span class="text-danger">8.8.8.8</span>, <span class="text-danger">1.1.1.1</span>]<br>
+                            &nbsp;&nbsp;<span class="text-info">renderer</span>: <span class="text-danger">networkd</span>
+                        </div>
+                        
+                        <h5 class="text-info mt-4">تكوين SSH آمن:</h5>
+                        <div class="code-example">
+                            <span class="text-muted"># /etc/ssh/sshd_config</span><br>
+                            <span class="text-info">Port</span> <span class="text-danger">2022</span><br>
+                            <span class="text-info">PermitRootLogin</span> <span class="text-danger">no</span><br>
+                            <span class="text-info">PasswordAuthentication</span> <span class="text-danger">yes</span><br>
+                            <span class="text-info">X11Forwarding</span> <span class="text-danger">no</span><br>
+                            <span class="text-info">MaxAuthTries</span> <span class="text-danger">3</span><br>
+                            <span class="text-info">ClientAliveInterval</span> <span class="text-danger">300</span><br>
+                            <span class="text-info">ClientAliveCountMax</span> <span class="text-danger">2</span>
+                        </div>
+                    </div>
+
+                    <!-- مراقبة واستكشاف الأخطاء -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3 class="text-white mb-3">مراقبة النظام واستكشاف الأخطاء</h3>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5 class="text-info">🔍 مراقبة العمليات</h5>
+                                <div class="command-example">
+                                    <span class="text-success">$ ps aux | grep ssh</span><br>
+                                    <span class="text-success">$ top -p 1234</span><br>
+                                    <span class="text-success">$ htop -u username</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="text-info">📊 مراقبة الموارد</h5>
+                                <div class="command-example">
+                                    <span class="text-success">$ free -h</span><br>
+                                    <span class="text-success">$ df -h</span><br>
+                                    <span class="text-success">$ iostat -x 1</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h5 class="text-info mt-4">تحليل السجلات:</h5>
+                        <div class="command-example">
+                            <span class="text-success">$ journalctl -u ssh -f</span><br>
+                            <span class="text-success">$ tail -f /var/log/syslog</span><br>
+                            <span class="text-success">$ grep -i error /var/log/syslog</span>
+                        </div>
+                        
+                        <h5 class="text-info mt-4">فحص الشبكة:</h5>
+                        <div class="command-example">
+                            <span class="text-success">$ ss -tuln</span><br>
+                            <span class="text-success">$ netstat -tulpn</span><br>
+                            <span class="text-success">$ ip addr show</span><br>
+                            <span class="text-success">$ ping -c 4 google.com</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- الشريط الجانبي -->
+                <div class="col-lg-4">
+                    <!-- معلومات التقنية -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-cogs me-2"></i>المعلومات التقنية</h4>
+                        <div class="tech-info">
+                            <div class="mb-3">
+                                <strong class="text-info">نظام التشغيل:</strong>
+                                <span class="text-light">Ubuntu Server 20.04 LTS</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">الواجهة:</strong>
+                                <span class="text-light">سطر الأوامر فقط (CLI)</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">البيئة:</strong>
+                                <span class="text-light">VirtualBox افتراضية</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">الخدمات:</strong>
+                                <span class="text-light">SSH, NTP, Cron</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">الأدوات:</strong>
+                                <span class="text-light">netplan, systemd, apt</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">التوثيق:</strong>
+                                <span class="text-light">تقرير مفصل مع أوامر ونتائج</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- المهارات المستخدمة -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-code me-2"></i>المهارات المستخدمة</h4>
+                        <div class="skills-used">
+                            <span class="tech-badge">Linux Administration</span>
+                            <span class="tech-badge">User Management</span>
+                            <span class="tech-badge">Network Configuration</span>
+                            <span class="tech-badge">Service Management</span>
+                            <span class="tech-badge">System Monitoring</span>
+                            <span class="tech-badge">Security Hardening</span>
+                            <span class="tech-badge">Troubleshooting</span>
+                            <span class="tech-badge">Automation</span>
+                        </div>
+                    </div>
+
+                    <!-- الأدوات المستخدمة -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-tools me-2"></i>الأدوات المستخدمة</h4>
+                        <ul class="text-light">
+                            <li><strong>apt</strong> - إدارة الحزم في Ubuntu</li>
+                            <li><strong>netplan</strong> - تكوين الشبكة</li>
+                            <li><strong>systemctl</strong> - إدارة خدمات systemd</li>
+                            <li><strong>ssh</strong> - الوصول الآمن عن بعد</li>
+                            <li><strong>top/htop</strong> - مراقبة العمليات</li>
+                            <li><strong>cron</strong> - جدولة المهام</li>
+                            <li><strong>vim/nano</strong> - تحرير النصوص</li>
+                            <li><strong>journalctl</strong> - عرض السجلات</li>
+                        </ul>
+                    </div>
+
+                    <!-- أفضل الممارسات -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-shield-alt me-2"></i>أفضل الممارسات المطبقة</h4>
+                        <ul class="text-light">
+                            <li>مبدأ أقل صلاحية للمستخدمين</li>
+                            <li>تحديثات أمنية منتظمة</li>
+                            <li>تكوين خدمات آمن</li>
+                            <li>مراقبة مستمرة للنظام</li>
+                            <li>نسخ احتياطية وتوثيق</li>
+                            <li>إدارة سجلات شاملة</li>
+                            <li>أتمتة المهام المتكررة</li>
+                        </ul>
+                    </div>
+
+                    <!-- النتائج المتحققة -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-trophy me-2"></i>النتائج المتحققة</h4>
+                        <ul class="text-light">
+                            <li>إعداد خادم Linux فعال وآمن</li>
+                            <li>إدارة متكاملة للمستخدمين والصلاحيات</li>
+                            <li>تكوين شبكة موثوق ومرن</li>
+                            <li>مراقبة شاملة لأداء النظام</li>
+                            <li>أتمتة المهام الإدارية</li>
+                            <li>مهارات متقدمة في استكشاف الأخطاء</li>
+                            <li>توثيق احترافي للإجراءات</li>
+                        </ul>
+                    </div>
+
+                    <!-- التطبيقات العملية -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-briefcase me-2"></i>التطبيقات العملية</h4>
+                        <ul class="text-light">
+                            <li><strong>مسؤولو الأنظمة:</strong> إدارة خوادم Linux</li>
+                            <li><strong>مهندسو الشبكات:</strong> تكوين خدمات الشبكة</li>
+                            <li><strong>مطورو DevOps:</strong> أتمتة البنية التحتية</li>
+                            <li><strong>أخصائيو الأمن:</strong> تأمين الأنظمة</li>
+                            <li><strong>الدعم الفني:</strong> استكشاف الأخطاء</li>
+                        </ul>
+                    </div>
+
+                    <!-- روابط المشروع -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-external-link-alt me-2"></i>الروابط</h4>
+                        <div class="project-links">
+                            <a href="https://github.com/mbrmj875/Linux" class="btn btn-outline-primary w-100 mb-2">
+                                <i class="fab fa-github me-2"></i>عرض الكود المصدري
+                            </a>
+                           
+                            <a href="https://github.com/mbrmj875/Linux/archive/refs/heads/main.zip" class="btn btn-outline-success w-100">
+                                <i class="fas fa-download me-2"></i>تحميل التوثيق
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

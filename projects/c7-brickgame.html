@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C7_BrickGame_v1.0 - محمد الباغر</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .project-detail-header {
+            background: linear-gradient(135deg, #0a1a2a, #0d2342);
+            padding: 4rem 0;
+            border-bottom: 2px solid #0066cc;
+        }
+        
+        .project-feature-card {
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border: 1px solid #404040;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .project-feature-card:hover {
+            border-color: #0066cc;
+            transform: translateY(-5px);
+        }
+        
+        .tech-badge {
+            background: linear-gradient(135deg, #0066cc, #0088ff);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 0.3rem;
+            display: inline-block;
+        }
+        
+        .code-example {
+            background: #1a1a1a;
+            border: 1px solid #404040;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            direction: ltr;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #00d9ff;
+            margin-bottom: 1rem;
+        }
+        
+        .tetromino-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .tetromino-piece {
+            background: #2a2a2a;
+            border: 2px solid #404040;
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .piece-preview {
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            line-height: 1.2;
+            margin: 1rem 0;
+        }
+        
+        .game-screenshot {
+            background: #0a1a2a;
+            border: 2px solid #00d9ff;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            color: #00ff00;
+        }
+        
+        .state-machine {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .state-node {
+            background: #0066cc;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            text-align: center;
+            margin: 0.5rem;
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        .state-arrow {
+            color: #00d9ff;
+            font-size: 1.5rem;
+        }
+        
+        .control-key {
+            background: #404040;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 0.2rem;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <!-- زر العودة -->
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a href="../index.html#academic-projects" class="back-button">
+                <i class="fas fa-arrow-right"></i>
+                العودة للمشاريع
+            </a>
+        </div>
+    </nav>
+
+    <!-- رأس صفحة المشروع -->
+    <section class="project-detail-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="project-badge">مشروع لغة C</div>
+                    <h1 class="display-4 fw-bold text-white mt-3">C7_BrickGame_v1.0</h1>
+                    <p class="lead text-light mb-4">لعبة Tetris كلاسيكية كاملة باستخدام واجهة الطرفية ومكتبة ncurses</p>
+                    
+                    <div class="project-meta">
+                        <span class="text-light me-4"><i class="fas fa-calendar me-2"></i>تم الانتهاء: 2024</span>
+                        <span class="text-light me-4"><i class="fas fa-code me-2"></i>لغة C + NCurses</span>
+                        <span class="text-light"><i class="fas fa-star me-2"></i>مشروع متقدم</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="tech-stack">
+                        <span class="tech-badge">C Programming</span>
+                        <span class="tech-badge">Game Development</span>
+                        <span class="tech-badge">NCurses</span>
+                        <span class="tech-badge">State Machines</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- محتوى المشروع -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <!-- المحتوى الرئيسي -->
+                <div class="col-lg-8">
+                    <!-- نظرة عامة -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <h3 class="text-white mb-3">نظرة عامة على المشروع</h3>
+                        <p class="text-light">
+                            مشروع <strong>C7_BrickGame_v1.0</strong> هو تنفيذ كامل للعبة Tetris الكلاسيكية باستخدام لغة C 
+                            ومكتبة NCurses لواجهة الطرفية. يتميز المشروع بهندسة معيارية متقدمة تفصل بين منطق اللعبة 
+                            وواجهة المستخدم، مع تطبيق آلة حالات محددة لإدارة تدفق اللعبة.
+                        </p>
+                        
+                        <div class="row mt-4 text-center">
+                            <div class="col-md-3">
+                                <h4 class="text-info">🎮 7 قطع</h4>
+                                <p class="text-light">كل قطع Tetris الكلاسيكية</p>
+                            </div>
+                            <div class="col-md-3">
+                                <h4 class="text-info">⚡ 10 مستويات</h4>
+                                <p class="text-light">تزداد الصعوبة تدريجياً</p>
+                            </div>
+                            <div class="col-md-3">
+                                <h4 class="text-info">🏆 نظام نقاط</h4>
+                                <p class="text-light">تسجيل متقدم مع أفضل نتيجة</p>
+                            </div>
+                            <div class="col-md-3">
+                                <h4 class="text-info">💾 حفظ</h4>
+                                <p class="text-light">إمكانية حفظ وحمل اللعبة</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- قطع Tetris -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shapes"></i>
+                        </div>
+                        <h3 class="text-white mb-3">قطع Tetris السبعة الكلاسيكية</h3>
+                        
+                        <div class="tetromino-grid">
+                            <!-- I Piece -->
+                            <div class="tetromino-piece">
+                                <h5 class="text-info">I Piece</h5>
+                                <div class="piece-preview">
+                                    ████
+                                </div>
+                                <span class="tech-badge">4 كتل</span>
+                            </div>
+                            
+                            <!-- J Piece -->
+                            <div class="tetromino-piece">
+                                <h5 class="text-info">J Piece</h5>
+                                <div class="piece-preview">
+                                    █<br>
+                                    ███
+                                </div>
+                                <span class="tech-badge">4 كتل</span>
+                            </div>
+                            
+                            <!-- L Piece -->
+                            <div class="tetromino-piece">
+                                <h5 class="text-info">L Piece</h5>
+                                <div class="piece-preview">
+                                    &nbsp;&nbsp;█<br>
+                                    ███
+                                </div>
+                                <span class="tech-badge">4 كتل</span>
+                            </div>
+                            
+                            <!-- O Piece -->
+                            <div class="tetromino-piece">
+                                <h5 class="text-info">O Piece</h5>
+                                <div class="piece-preview">
+                                    ██<br>
+                                    ██
+                                </div>
+                                <span class="tech-badge">4 كتل</span>
+                            </div>
+                            
+                            <!-- S Piece -->
+                            <div class="tetromino-piece">
+                                <h5 class="text-info">S Piece</h5>
+                                <div class="piece-preview">
+                                    &nbsp;██<br>
+                                    ██
+                                </div>
+                                <span class="tech-badge">4 كتل</span>
+                            </div>
+                            
+                            <!-- T Piece -->
+                            <div class="tetromino-piece">
+                                <h5 class="text-info">T Piece</h5>
+                                <div class="piece-preview">
+                                    ███<br>
+                                    &nbsp;█
+                                </div>
+                                <span class="tech-badge">4 كتل</span>
+                            </div>
+                            
+                            <!-- Z Piece -->
+                            <div class="tetromino-piece">
+                                <h5 class="text-info">Z Piece</h5>
+                                <div class="piece-preview">
+                                    ██<br>
+                                    &nbsp;██
+                                </div>
+                                <span class="tech-badge">4 كتل</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- آلة الحالات -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-sitemap"></i>
+                        </div>
+                        <h3 class="text-white mb-3">آلة الحالات المحددة (Finite State Machine)</h3>
+                        
+                        <div class="state-machine">
+                            <div class="state-node">Initial</div>
+                            <div class="state-arrow">→</div>
+                            <div class="state-node">Spawn</div>
+                            <div class="state-arrow">→</div>
+                            <div class="state-node">Moving</div>
+                            <div class="state-arrow">→</div>
+                            <div class="state-node">Shifting</div>
+                            <div class="state-arrow">→</div>
+                            <div class="state-node">Attaching</div>
+                            <div class="state-arrow">→</div>
+                            <div class="state-node">GameOver</div>
+                        </div>
+                        
+                        <div class="code-example mt-4">
+                            <span class="text-success">// تعريف حالات اللعبة</span><br>
+                            <span class="text-info">typedef enum</span> {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-warning">Initial</span>,    <span class="text-muted">// بداية اللعبة</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-warning">Spawn</span>,      <span class="text-muted">// إنشاء قطعة جديدة</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-warning">Moving</span>,     <span class="text-muted">// حركة القطعة</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-warning">Shifting</span>,   <span class="text-muted">// النزول التلقائي</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-warning">Attaching</span>,  <span class="text-muted">// تثبيت القطعة</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-warning">GameOver</span>    <span class="text-muted">// نهاية اللعبة</span><br>
+                            } <span class="text-success">GameStatus_t</span>;
+                        </div>
+                    </div>
+
+                    <!-- واجهة اللعبة -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-tv"></i>
+                        </div>
+                        <h3 class="text-white mb-3">واجهة اللعبة في الطرفية</h3>
+                            <img src="../images/bm.png" alt="#" class="profile-image">
+                        <div class="image-overlay">
+                     
+                        </div>
+                    </div>
+
+
+
+
+                    <!-- نظام التحكم -->
+                    <div class="project-feature-card">
+
+
+
+                        <div class="feature-icon">
+                            <i class="fas fa-keyboard"></i>
+                        </div>
+                        <h3 class="text-white mb-3">نظام التحكم في اللعبة</h3>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5 class="text-info">🎮 تحريك القطع</h5>
+                                <p class="text-light">
+                                    <span class="control-key">←</span> تحريك لليسار<br>
+                                    <span class="control-key">→</span> تحريك لليمين<br>
+                                    <span class="control-key">↓</span> تسريع النزول<br>
+                                    <span class="control-key">↑</span> أو <span class="control-key">Z</span> تدوير القطعة
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="text-info">⚙️ تحكم عام</h5>
+                                <p class="text-light">
+                                    <span class="control-key">P</span> إيقاف مؤقت<br>
+                                    <span class="control-key">R</span> إعادة 시작<br>
+                                    <span class="control-key">Q</span> خروج للقائمة<br>
+                                    <span class="control-key">S</span> حفظ اللعبة
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- نظام النقاط -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="text-white mb-3">نظام النقاط والمستويات</h3>
+                        
+                        <div class="code-example">
+                            <span class="text-success">// نظام تسجيل النقاط</span><br>
+                            <span class="text-info">void</span> <span class="text-warning">update_score</span>(GameState_t *gs, <span class="text-info">int</span> lines_cleared) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">switch</span> (lines_cleared) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">case</span> 1: gs->score += 100; <span class="text-info">break</span>;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">case</span> 2: gs->score += 300; <span class="text-info">break</span>;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">case</span> 3: gs->score += 700; <span class="text-info">break</span>;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">case</span> 4: gs->score += 1500; <span class="text-info">break</span>;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-success">// تحديث المستوى كل 600 نقطة</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;gs->level = (gs->score / 600) + 1;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;gs->speed = <span class="text-danger">1000</span> - (gs->level * <span class="text-danger">100</span>);<br>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <!-- الشريط الجانبي -->
+                <div class="col-lg-4">
+                    <!-- معلومات التقنية -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-cogs me-2"></i>المعلومات التقنية</h4>
+                        <div class="tech-info">
+                            <div class="mb-3">
+                                <strong class="text-info">اللغة:</strong>
+                                <span class="text-light">C (C11 Standard)</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">الواجهة:</strong>
+                                <span class="text-light">NCurses Library</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">الحقل:</strong>
+                                <span class="text-light">10×20 شبكة</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">القطع:</strong>
+                                <span class="text-light">7 قطع كلاسيكية</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">المستويات:</strong>
+                                <span class="text-light">10 مستويات</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">الاختبار:</strong>
+                                <span class="text-light">Check Framework</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- الهيكل المعماري -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-project-diagram me-2"></i>الهيكل المعماري</h4>
+                        <div class="code-example">
+                            <span class="text-success">┌─────────────────┐</span><br>
+                            <span class="text-success">│</span> <span class="text-white">Frontend</span> <span class="text-success">│</span> <span class="text-muted">// واجهة NCurses</span><br>
+                            <span class="text-success">└─────────────────┘</span><br>
+                            <span class="text-success">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↑↓</span><br>
+                            <span class="text-success">┌─────────────────┐</span><br>
+                            <span class="text-success">│</span> <span class="text-white">Backend</span> <span class="text-success">│</span> <span class="text-muted">// منطق اللعبة</span><br>
+                            <span class="text-success">└─────────────────┘</span><br>
+                            <span class="text-success">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↑↓</span><br>
+                            <span class="text-success">┌─────────────────┐</span><br>
+                            <span class="text-success">│</span> <span class="text-white">State Machine</span> <span class="text-success">│</span><br>
+                            <span class="text-success">└─────────────────┘</span>
+                        </div>
+                    </div>
+
+                    <!-- الميزات المتقدمة -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-star me-2"></i>الميزات المتقدمة</h4>
+                        <ul class="text-light">
+                            <li>معاينة القطعة التالية</li>
+                            <li>حفظ أفضل نتيجة</li>
+                            <li>إمكانية حفظ اللعبة</li>
+                            <li>اكتشاف التصادم</li>
+                            <li>تدوير القطع مع Wall Kick</li>
+                            <li>ألوان في الطرفية</li>
+                            <li>نظام القوائم</li>
+                            <li>ضبط السرعة تلقائياً</li>
+                        </ul>
+                    </div>
+
+                    <!-- الإنجازات -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-trophy me-2"></i>الإنجازات</h4>
+                        <ul class="text-light">
+                            <li>تنفيذ كامل للعبة Tetris</li>
+                            <li>هندسة معيارية متقدمة</li>
+                            <li>آلة حالات محددة</li>
+                            <li>واجهة طرفية ملونة</li>
+                            <li>اختبارات شاملة</li>
+                            <li>إدارة ذاكرة فعالة</li>
+                            <li>توثيق احترافي</li>
+                        </ul>
+                    </div>
+
+                    <!-- المهارات المستخدمة -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-code me-2"></i>المهارات المستخدمة</h4>
+                        <div class="skills-used">
+                            <span class="tech-badge">C Programming</span>
+                            <span class="tech-badge">Game Development</span>
+                            <span class="tech-badge">NCurses</span>
+                            <span class="tech-badge">State Machines</span>
+                            <span class="tech-badge">Algorithms</span>
+                            <span class="tech-badge">Memory Management</span>
+                            <span class="tech-badge">Unit Testing</span>
+                            <span class="tech-badge">Makefiles</span>
+                        </div>
+                    </div>
+
+                    <!-- روابط المشروع -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-external-link-alt me-2"></i>الروابط</h4>
+                        <div class="project-links">
+                            <a href="https://github.com/mbrmj875/BrickGame_v1" class="btn btn-outline-primary w-100 mb-2">
+                                <i class="fab fa-github me-2"></i>عرض الكود المصدري
+                            </a>
+                     
+                            <a href="https://github.com/mbrmj875/BrickGame_v1/archive/refs/heads/main.zip" class="btn btn-outline-success w-100">
+                                <i class="fas fa-download me-2"></i>تحميل وتجربة اللعبة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

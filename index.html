@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختر اللغة | Choose Language | Выберите язык</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #0066cc;
+            --dark-blue: #0a1a2a;
+            --light-blue: #00d9ff;
+            --hand-color: #4a90e2;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            direction: rtl;
+            overflow-x: hidden;
+        }
+        
+        .language-container {
+            background: linear-gradient(135deg, var(--dark-blue), #0d2342);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 2px solid var(--primary-blue);
+            box-shadow: 0 15px 35px rgba(0, 104, 255, 0.3);
+            text-align: center;
+            max-width: 650px;
+            width: 90%;
+            animation: fadeIn 0.8s ease;
+            position: relative;
+            z-index: 10;
+            margin-top: 100px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .language-container.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .hand-container {
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 250px;
+            height: 200px;
+            z-index: 17;
+        }
+        
+        .hand {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+           .finger-1 { top: 50px; left: 50px; height: 90px; animation-delay: 0.1s; }
+        .finger-2 { top: 45px; left: 85px; height: 95px; animation-delay: 0.2s; }
+        .finger-3 { top: 50px; left: 120px; height: 85px; animation-delay: 0.3s; }
+        .finger-4 { top: 60px; left: 150px; height: 70px; animation-delay: 0.4s; }
+        
+        @keyframes handAppear {
+            0% { 
+                opacity: 0;
+                transform: translateY(-100px) rotate(-10deg);
+            }
+            70% {
+                opacity: 1;
+                transform: translateY(10px) rotate(5deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotate(0);
+            }
+        }
+        
+        @keyframes thumbAppear {
+            0% { 
+                opacity: 0;
+                transform: rotate(-30deg) translateX(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: rotate(-30deg) translateX(0);
+            }
+        }
+        
+        @keyframes fingersAppear {
+            0% { 
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .logo-container {
+            position: absolute;
+            top: 60px;
+            left: 55px;
+            width: 170px;
+            height: 200px;
+            border-radius: 80%;
+            background: rgb(107, 187, 241);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(65, 194, 237, 0.7);
+            z-index: 25;
+            animation: logoPulse 2s infinite, logoAppear 1.5s 1s ease-out forwards;
+            overflow: hidden;
+            opacity: 0;
+            transform: scale(0);
+        }
+        
+        @keyframes logoAppear {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(-180deg);
+            }
+            70% {
+                opacity: 1;
+                transform: scale(1.2) rotate(10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0);
+            }
+        }
+        
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+        
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        
+        .welcome-title {
+            font-size: 2rem;
+            margin-top: 5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, var(--light-blue), #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .welcome-subtitle {
+            color: #cccccc;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        
+        .languages-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .language-card {
+            background: linear-gradient(135deg, var(--primary-blue), #0088ff);
+            color: white;
+            padding: 1.5rem 1rem;
+            border-radius: 15px;
+            border: 1px solid var(--light-blue);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .language-card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .language-card:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(135deg, #0088ff, #00a8ff);
+            box-shadow: 0 10px 25px rgba(0, 217, 255, 0.4);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .language-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .language-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .language-native {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .footer-note {
+            color: #999999;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .footer-note.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* تحسين الاستجابة */
+        @media (max-width: 768px) {
+            .language-container {
+                padding: 2rem;
+                max-width: 500px;
+            }
+            
+            .hand-container {
+                top: -0px;
+                width: 180px;
+                height: 180px;
+            }
+            
+            .hand-palm {
+                width: 110px;
+                height: 130px;
+                top: 50px;
+                left: 35px;
+            }
+            
+       
+/*             
+            .finger-1 { top: 40px; left: 45px; height: 85px; }
+            .finger-2 { top: 35px; left: 75px; height: 90px; }
+            .finger-3 { top: 40px; left: 105px; height: 80px; }
+            .finger-4 { top: 50px; left: 130px; height: 65px; }
+             */
+          .logo-container {
+                top: 30px;
+                left: 45px;
+                width: 130px;
+                height: 160px;
+            }
+            
+            .welcome-title {
+                font-size: 1.7rem;
+                margin-top: 4rem;
+            }
+            
+            .languages-grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+            
+            .language-card {
+                padding: 1.2rem 1rem;
+                flex-direction: row;
+                justify-content: flex-start;
+                gap: 1rem;
+            }
+            
+            .language-icon {
+                font-size: 1.5rem;
+                margin-bottom: 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .language-container {
+                padding: 1.5rem;
+                max-width: 400px;
+            }
+            
+            .hand-container {
+                top: -0px;
+                width: 160px;
+                height: 160px;
+            }
+            
+            .hand-palm {
+                width: 100px;
+                height: 210px;
+                top: 50px;
+                left: 35px;
+            }
+            
+          
+       
+            .logo-container {
+                top: 10px;
+                left: 20px;
+                width: 130px;
+                height: 160px;
+            }
+            
+            .welcome-title {
+                font-size: 1.5rem;
+                margin-top: 3.5rem;
+            }
+            
+            .language-card {
+                padding: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hand-container">
+        <div class="hand">
+            <div class="hand-palm"></div>
+            <div class="hand-thumb"></div>
+            <div class="hand-finger finger-1"></div>
+            <div class="hand-finger finger-2"></div>
+            <div class="hand-finger finger-3"></div>
+            <div class="hand-finger finger-4"></div>
+            <div class="logo-container">
+                <!-- استبدل هذا العنصر بالشعار الخاص بك -->
+                <img src="/images/bmn.png" alt="شعار الموقع">
+            </div>
+        </div>
+    </div>
+    
+    <div class="language-container">
+        <h1 class="welcome-title">مرحباً | Welcome | Добро пожаловать</h1>
+        <p class="welcome-subtitle">اختر لغة العرض | Choose your language | Выберите язык</p>
+        
+        <div class="languages-grid">
+            <!-- العربية -->
+            <a href="main-ar.html" class="language-card" data-lang="ar">
+                <div class="language-icon">🇸🇦</div>
+                <div class="language-name">العربية</div>
+                <div class="language-native">Arabic</div>
+            </a>
+            
+            <!-- الإنجليزية -->
+            <a href="main-en.html" class="language-card" data-lang="en">
+                <div class="language-icon">🇺🇸</div>
+                <div class="language-name">English</div>
+                <div class="language-native">English</div>
+            </a>
+            
+            <!-- الروسية -->
+            <a href="main-ru.html" class="language-card" data-lang="ru">
+                <div class="language-icon">🇷🇺</div>
+                <div class="language-name">Русский</div>
+                <div class="language-native">Russian</div>
+            </a>
+        </div>
+        
+        <p class="footer-note">
+            سيتم حفظ اختيارك | Your choice will be saved | Ваш выбор будет сохранен
+        </p>
+    </div>
+
+    <script>
+        // تأثيرات الظهور المتسلسلة
+        document.addEventListener('DOMContentLoaded', function() {
+            // إظهار الحاوية الرئيسية بعد تأخير قصير
+            setTimeout(() => {
+                document.querySelector('.language-container').classList.add('show');
+            }, 500);
+            
+            // إظهار بطاقات اللغة بشكل متسلسل
+            const languageCards = document.querySelectorAll('.language-card');
+            languageCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('show');
+                }, 1000 + (index * 200));
+            });
+            
+            // إظهار الملاحظة النهائية
+            setTimeout(() => {
+                document.querySelector('.footer-note').classList.add('show');
+            }, 2000);
+            
+            // حفظ اختيار اللغة في localStorage
+            document.querySelectorAll('.language-card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    const lang = this.getAttribute('data-lang');
+                    localStorage.setItem('preferred-language', lang);
+                    
+                    // إضافة تأثير النقر
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+            });
+            
+            // إذا كان هناك لغة محفوظة مسبقاً، تخطي هذه الصفحة
+            const savedLang = localStorage.getItem('preferred-language');
+            if (savedLang) {
+                // يمكنك تفعيل هذا لاحقاً إذا أردت تخطي صفحة الاختيار
+                // window.location.href = `index.html?lang=${savedLang}`;
+            }
+        });
+    </script>
+</body>
+</html>
