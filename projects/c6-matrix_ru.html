@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C2_s21_matrixplus - Мухаммад Аль-Бакир</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #00d9ff;
+            --dark-bg: #0a1a2a;
+            --darker-bg: #0d2342;
+            --card-bg: #1a1a1a;
+            --card-border: #404040;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        
+        .back-button {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .back-button:hover {
+            color: #ffffff;
+        }
+        
+        .project-detail-header {
+            background: linear-gradient(135deg, var(--dark-bg), var(--darker-bg));
+            padding: 4rem 0;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .project-badge {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            display: inline-block;
+            font-weight: 600;
+        }
+        
+        .project-feature-card {
+            background: linear-gradient(135deg, var(--card-bg), #2a2a2a);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .project-feature-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        .tech-badge {
+            background: linear-gradient(135deg, var(--primary-color), #0088ff);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 0.3rem;
+            display: inline-block;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+        
+        .code-example {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            direction: ltr;
+            word-wrap: break-word;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .matrix-structure {
+            background: var(--darker-bg);
+            border: 2px solid var(--secondary-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            word-wrap: break-word;
+        }
+        
+        .matrix-visualization {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 1rem 0;
+            justify-items: center;
+        }
+        
+        .matrix-cell {
+            width: 60px;
+            height: 40px;
+            background: #2a2a2a;
+            border: 1px solid var(--card-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .matrix-cell.header {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .section-padding {
+            padding: 4rem 0;
+        }
+        
+        .command-example {
+            background: #2a2a2a;
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            direction: ltr;
+            word-wrap: break-word;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .lab-step {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--secondary-color);
+            word-wrap: break-word;
+        }
+        
+        .text-wrap {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .code-line {
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+        
+        .text-cyan { color: #00ffff; }
+        .text-yellow { color: #ffff00; }
+        .text-info { color: var(--secondary-color); }
+        .text-success { color: #00ff00; }
+        .text-warning { color: #ffcc00; }
+        .text-danger { color: #ff3333; }
+        .text-light { color: #e0e0e0; }
+        .text-muted { color: #888888; }
+
+        /* تحسينات للاستجابة على الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .matrix-visualization {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .project-feature-card {
+                padding: 1.5rem;
+            }
+            
+            .code-example, .command-example {
+                padding: 1rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Кнопка возврата -->
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a href="../index.html#academic-projects" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Вернуться к проектам
+            </a>
+        </div>
+    </nav>
+
+    <!-- Заголовок страницы проекта -->
+    <section class="project-detail-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="project-badge">Проект на языке C</div>
+                    <h1 class="display-4 fw-bold text-white mt-3">C2_s21_matrixplus</h1>
+                    <p class="lead text-light mb-4">Продвинутая библиотека для обработки числовых матриц на языке C с поддержкой операций компьютерной графики</p>
+                    
+                    <div class="project-meta">
+                        <span class="text-light me-4"><i class="fas fa-calendar me-2"></i>Завершен: 2024</span>
+                        <span class="text-light me-4"><i class="fas fa-code me-2"></i>Язык C</span>
+                        <span class="text-light"><i class="fas fa-star me-2"></i>Продвинутый проект</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="tech-stack">
+                        <span class="tech-badge">Программирование на C</span>
+                        <span class="tech-badge">Линейная алгебра</span>
+                        <span class="tech-badge">Алгоритмы</span>
+                        <span class="tech-badge">Компьютерная графика</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Содержание проекта -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <!-- Основное содержание -->
+                <div class="col-lg-8">
+                    <!-- Обзор -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Обзор проекта</h3>
+                        <p class="text-light text-wrap">
+                            Проект <strong>C2_s21_matrixplus</strong> представляет собой комплексную реализацию библиотеки для работы с числовыми матрицами на языке C, 
+                            вдохновленную потребностями компьютерной графики и алгоритмов id Software для игры Doom 3. Библиотека обеспечивает высокопроизводительные 
+                            матричные операции, необходимые для преобразований в трехмерной графике и расчетах теней.
+                        </p>
+                        <div class="row mt-4 text-center">
+                            <div class="col-md-4">
+                                <h4 class="text-info">🎯 Производительность</h4>
+                                <p class="text-light">Оптимизированные алгоритмы для компьютерной графики</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h4 class="text-info">📊 Полный функционал</h4>
+                                <p class="text-light">15+ матричных операций и преобразований</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h4 class="text-info">🧮 Точность</h4>
+                                <p class="text-light">Точность до 6 десятичных знаков</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Структура данных -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Структура данных матрицы</h3>
+                        
+                        <div class="matrix-structure">
+                            <h5 class="text-warning">📐 Структура matrix_t</h5>
+                            <div class="code-example">
+                                <span class="text-info">typedef struct</span> matrix_struct {<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">double**</span> matrix;<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">int</span> rows;<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">int</span> columns;<br>
+                                } <span class="text-success">matrix_t</span>;
+                            </div>
+                            
+                            <h5 class="text-warning mt-4">🧮 Визуализация матрицы 3×3</h5>
+                            <div class="matrix-visualization">
+                                <div class="matrix-cell header">(1,1)</div>
+                                <div class="matrix-cell header">(1,2)</div>
+                                <div class="matrix-cell header">(1,3)</div>
+                                <div class="matrix-cell">A[0][0]</div>
+                                <div class="matrix-cell">A[0][1]</div>
+                                <div class="matrix-cell">A[0][2]</div>
+                                <div class="matrix-cell">A[1][0]</div>
+                                <div class="matrix-cell">A[1][1]</div>
+                                <div class="matrix-cell">A[1][2]</div>
+                            </div>
+                            
+                            <div class="row mt-3 text-center">
+                                <div class="col-md-4">
+                                    <span class="tech-badge">matrix</span>
+                                    <p class="text-light mt-2">Двумерный массив элементов</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <span class="tech-badge">rows</span>
+                                    <p class="text-light mt-2">Количество строк</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <span class="tech-badge">columns</span>
+                                    <p class="text-light mt-2">Количество столбцов</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Основные операции -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-plus-minus"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Основные матричные операции</h3>
+                        
+                        <div class="lab-step">
+                            <h5 class="text-info">🧮 Создание и управление</h5>
+                            <p class="text-light">Функции для работы с жизненным циклом матриц</p>
+                            <div class="command-example">
+                                <span class="text-success code-line">// Создание и удаление матриц</span>
+                                <span class="text-info code-line">int</span> <span class="text-warning code-line">s21_create_matrix</span>(<span class="text-info">int</span> rows, <span class="text-info">int</span> columns, matrix_t *result);
+                                <span class="text-info code-line">void</span> <span class="text-warning code-line">s21_remove_matrix</span>(matrix_t *A);
+                                <span class="text-info code-line">int</span> <span class="text-warning code-line">s21_eq_matrix</span>(matrix_t *A, matrix_t *B);
+                                <span class="text-success code-line">// Коды возврата:</span>
+                                <span class="text-muted code-line">0 = OK, 1 = Ошибка матрицы, 2 = Ошибка вычисления</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">⚖️ Арифметические операции</h5>
+                            <p class="text-light">Сложение, вычитание и умножение матриц</p>
+                            <div class="command-example">
+                                <span class="text-info code-line">int</span> <span class="text-warning code-line">s21_sum_matrix</span>(matrix_t *A, matrix_t *B, matrix_t *result);
+                                <span class="text-info code-line">int</span> <span class="text-warning code-line">s21_sub_matrix</span>(matrix_t *A, matrix_t *B, matrix_t *result);
+                                <span class="text-info code-line">int</span> <span class="text-warning code-line">s21_mult_matrix</span>(matrix_t *A, matrix_t *B, matrix_t *result);
+                                <span class="text-info code-line">int</span> <span class="text-warning code-line">s21_mult_number</span>(matrix_t *A, <span class="text-info">double</span> number, matrix_t *result);
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Продвинутые операции -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Продвинутые матричные операции</h3>
+                        
+                        <div class="lab-step">
+                            <h5 class="text-info">🔄 Транспонирование и определитель</h5>
+                            <p class="text-light">Операции для работы с квадратными матрицами</p>
+                            <div class="command-example">
+                                <span class="text-info code-line">int</span> <span class="text-warning code-line">s21_transpose</span>(matrix_t *A, matrix_t *result);
+                                <span class="text-info code-line">int</span> <span class="text-warning code-line">s21_determinant</span>(matrix_t *A, <span class="text-info">double</span> *result);
+                                <span class="text-info code-line">int</span> <span class="text-warning code-line">s21_calc_complements</span>(matrix_t *A, matrix_t *result);
+                                <span class="text-info code-line">int</span> <span class="text-warning code-line">s21_inverse_matrix</span>(matrix_t *A, matrix_t *result);
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">🎯 Пример вычисления определителя</h5>
+                            <p class="text-light">Вычисление определителя матрицы 3×3</p>
+                            <div class="code-example">
+                                <span class="text-muted code-line">// Матрица A:</span>
+                                <span class="code-line">// 1 2 3</span>
+                                <span class="code-line">// 4 5 6</span>
+                                <span class="code-line">// 7 8 9</span>
+                                <span class="text-muted code-line">// |A| = 1×(5×9 - 8×6) - 2×(4×9 - 6×7) + 3×(4×8 - 7×5)</span>
+                                <span class="text-muted code-line">// |A| = 1×(45-48) - 2×(36-42) + 3×(32-35)</span>
+                                <span class="text-muted code-line">// |A| = -3 + 12 - 9 = 0</span>
+                                <span class="text-info code-line">double</span> det;
+                                <span class="text-info code-line">int</span> status = <span class="text-warning">s21_determinant</span>(&A, &det);
+                                <span class="text-muted code-line">// det = 0.0, status = 0 (OK)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Примеры использования -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Практические примеры использования</h3>
+                        
+                        <div class="lab-step">
+                            <h5 class="text-warning">Пример 1: Графические преобразования</h5>
+                            <div class="code-example">
+                                <span class="text-primary code-line">#include "s21_matrix.h"</span>
+                                <span class="text-info code-line">void</span> graphics_transformations() {<br>
+                                <span class="code-line">&nbsp;&nbsp;matrix_t translation, rotation, scale, result;</span>
+                                <span class="text-success code-line">&nbsp;&nbsp;// Создание матрицы перемещения</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_create_matrix(4, 4, &translation);</span>
+                                <span class="code-line">&nbsp;&nbsp;translation.matrix[0][3] = 10.0; <span class="text-muted">// перемещение по X</span></span>
+                                <span class="code-line">&nbsp;&nbsp;translation.matrix[1][3] = 5.0;  <span class="text-muted">// перемещение по Y</span></span>
+                                <span class="code-line">&nbsp;&nbsp;translation.matrix[2][3] = 2.0;  <span class="text-muted">// перемещение по Z</span></span>
+                                <span class="text-success code-line">&nbsp;&nbsp;// Применение преобразований</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_mult_matrix(&translation, &rotation, &result);</span>
+                                <span class="text-success code-line">&nbsp;&nbsp;// Использование результата для рендеринга</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_remove_matrix(&translation);</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_remove_matrix(&result);</span>
+                                <span class="code-line">}</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-warning">Пример 2: Решение систем уравнений</h5>
+                            <div class="code-example">
+                                <span class="text-info code-line">void</span> solve_linear_system() {<br>
+                                <span class="code-line">&nbsp;&nbsp;matrix_t A, b, A_inv, x;</span>
+                                <span class="text-success code-line">&nbsp;&nbsp;// Создание матрицы коэффициентов</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_create_matrix(3, 3, &A);</span>
+                                <span class="code-line">&nbsp;&nbsp;A.matrix[0][0] = 2; A.matrix[0][1] = 1; A.matrix[0][2] = -1;</span>
+                                <span class="code-line">&nbsp;&nbsp;A.matrix[1][0] = -3; A.matrix[1][1] = -1; A.matrix[1][2] = 2;</span>
+                                <span class="code-line">&nbsp;&nbsp;A.matrix[2][0] = -2; A.matrix[2][1] = 1; A.matrix[2][2] = 2;</span>
+                                <span class="text-success code-line">&nbsp;&nbsp;// Создание вектора правой части</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_create_matrix(3, 1, &b);</span>
+                                <span class="code-line">&nbsp;&nbsp;b.matrix[0][0] = 8; b.matrix[1][0] = -11; b.matrix[2][0] = -3;</span>
+                                <span class="text-success code-line">&nbsp;&nbsp;// Решение: x = A^(-1) * b</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_inverse_matrix(&A, &A_inv);</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_mult_matrix(&A_inv, &b, &x);</span>
+                                <span class="text-muted code-line">&nbsp;&nbsp;// x = [2, 3, -1]^T</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_remove_matrix(&A);</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_remove_matrix(&b);</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_remove_matrix(&A_inv);</span>
+                                <span class="code-line">&nbsp;&nbsp;s21_remove_matrix(&x);</span>
+                                <span class="code-line">}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Практические случаи использования -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Практические случаи использования</h3>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="p-3">
+                                    <h5 class="text-info">🎮 Компьютерная графика</h5>
+                                    <p class="text-light text-wrap">
+                                        Преобразования в 3D-графике: перемещение, вращение, масштабирование объектов
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3">
+                                    <h5 class="text-info">🤖 Машинное обучение</h5>
+                                    <p class="text-light text-wrap">
+                                        Операции с весами нейронных сетей и преобразования данных
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3">
+                                    <h5 class="text-info">🔬 Научные расчеты</h5>
+                                    <p class="text-light text-wrap">
+                                        Решение систем линейных уравнений и вычислительные задачи
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3">
+                                    <h5 class="text-info">📊 Обработка сигналов</h5>
+                                    <p class="text-light text-wrap">
+                                        Линейные преобразования в цифровой обработке сигналов и изображений
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Боковая панель -->
+                <div class="col-lg-4">
+                    <!-- Техническая информация -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-cogs me-2"></i>Техническая информация</h4>
+                        <div class="tech-info">
+                            <div class="mb-3">
+                                <strong class="text-info">Язык:</strong>
+                                <span class="text-light">C (Стандарт C11)</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Платформа:</strong>
+                                <span class="text-light">Linux, macOS</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Библиотека:</strong>
+                                <span class="text-light">Статическая (s21_matrix.a)</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Точность:</strong>
+                                <span class="text-light">6 десятичных знаков</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Тестирование:</strong>
+                                <span class="text-light">Check Framework</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Покрытие:</strong>
+                                <span class="text-light">>80%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Все функции -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-tools me-2"></i>Реализованные функции</h4>
+                        <div class="code-example">
+                            <span class="text-success code-line">// Основные операции</span>
+                            <span class="code-line">s21_create_matrix()</span>
+                            <span class="code-line">s21_remove_matrix()</span>
+                            <span class="code-line">s21_eq_matrix()</span>
+                            <span class="text-success code-line">// Арифметические операции</span>
+                            <span class="code-line">s21_sum_matrix()</span>
+                            <span class="code-line">s21_sub_matrix()</span>
+                            <span class="code-line">s21_mult_matrix()</span>
+                            <span class="code-line">s21_mult_number()</span>
+                            <span class="text-success code-line">// Продвинутые операции</span>
+                            <span class="code-line">s21_transpose()</span>
+                            <span class="code-line">s21_determinant()</span>
+                            <span class="code-line">s21_calc_complements()</span>
+                            <span class="code-line">s21_inverse_matrix()</span>
+                        </div>
+                    </div>
+
+                    <!-- Достижения -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-trophy me-2"></i>Достижения</h4>
+                        <ul class="text-light">
+                            <li>Успешная реализация 12 функций</li>
+                            <li>Обработка всех случаев ошибок</li>
+                            <li>Оптимизация для компьютерной графики</li>
+                            <li>Всестороннее тестирование граничных случаев</li>
+                            <li>Высокая производительность операций</li>
+                            <li>Полная документация алгоритмов</li>
+                        </ul>
+                    </div>
+
+                    <!-- Использованные навыки -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-code me-2"></i>Использованные навыки</h4>
+                        <div class="skills-used">
+                            <span class="tech-badge">Программирование на C</span>
+                            <span class="tech-badge">Линейная алгебра</span>
+                            <span class="tech-badge">Алгоритмы</span>
+                            <span class="tech-badge">Структуры данных</span>
+                            <span class="tech-badge">Управление памятью</span>
+                            <span class="tech-badge">Модульное тестирование</span>
+                            <span class="tech-badge">Оптимизация</span>
+                            <span class="tech-badge">Компьютерная графика</span>
+                        </div>
+                    </div>
+
+                    <!-- Ссылки проекта -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-external-link-alt me-2"></i>Ссылки</h4>
+                        <div class="project-links">
+                            <a href="https://github.com/mbrmj875/matrix" class="btn btn-outline-primary w-100 mb-2">
+                                <i class="fab fa-github me-2"></i>Просмотр исходного кода
+                            </a>
+                      
+                            <a href="https://github.com/mbrmj875/matrix/archive/refs/heads/main.zip" class="btn btn-outline-success w-100">
+                                <i class="fas fa-download me-2"></i>Скачать проект
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

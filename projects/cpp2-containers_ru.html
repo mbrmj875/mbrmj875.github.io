@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>s21_containers - Мухаммад Аль-Бакир</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #00d9ff;
+            --dark-bg: #0a1a2a;
+            --darker-bg: #0d2342;
+            --card-bg: #1a1a1a;
+            --card-border: #404040;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        
+        .back-button {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .back-button:hover {
+            color: #ffffff;
+        }
+        
+        .project-detail-header {
+            background: linear-gradient(135deg, var(--dark-bg), var(--darker-bg));
+            padding: 4rem 0;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .project-badge {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            display: inline-block;
+            font-weight: 600;
+        }
+        
+        .project-feature-card {
+            background: linear-gradient(135deg, var(--card-bg), #2a2a2a);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .project-feature-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        .tech-badge {
+            background: linear-gradient(135deg, var(--primary-color), #0088ff);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 0.3rem;
+            display: inline-block;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+        
+        .code-example {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            direction: ltr;
+            word-wrap: break-word;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .container-structure {
+            background: var(--darker-bg);
+            border: 2px solid var(--secondary-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            word-wrap: break-word;
+        }
+        
+        .container-diagram {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 1rem 0;
+        }
+        
+        .container-type {
+            background: #2a2a2a;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .container-type.sequence {
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .container-type.associative {
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .section-padding {
+            padding: 4rem 0;
+        }
+        
+        .command-example {
+            background: #2a2a2a;
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            direction: ltr;
+            word-wrap: break-word;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .lab-step {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--secondary-color);
+            word-wrap: break-word;
+        }
+        
+        .method-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .method-table th, .method-table td {
+            border: 1px solid var(--card-border);
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .method-table th {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .method-table tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .text-wrap {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .code-line {
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+        
+        .text-cyan { color: #00ffff; }
+        .text-yellow { color: #ffff00; }
+        .text-info { color: var(--secondary-color); }
+        .text-success { color: #00ff00; }
+        .text-warning { color: #ffcc00; }
+        .text-danger { color: #ff3333; }
+        .text-light { color: #e0e0e0; }
+        .text-muted { color: #888888; }
+
+        /* تحسينات للاستجابة على الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .container-diagram {
+                grid-template-columns: 1fr;
+            }
+            
+            .project-feature-card {
+                padding: 1.5rem;
+            }
+            
+            .code-example, .command-example {
+                padding: 1rem;
+                font-size: 0.85rem;
+            }
+            
+            .method-table {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Кнопка возврата -->
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a href="../index.html#academic-projects" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Вернуться к проектам
+            </a>
+        </div>
+    </nav>
+
+    <!-- Заголовок страницы проекта -->
+    <section class="project-detail-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="project-badge">Проект на C++</div>
+                    <h1 class="display-4 fw-bold text-white mt-3">s21_containers</h1>
+                    <p class="lead text-light mb-4">Реализация библиотеки контейнеров C++ с поддержкой шаблонов, итераторов и современных возможностей C++20</p>
+                    
+                    <div class="project-meta">
+                        <span class="text-light me-4"><i class="fas fa-calendar me-2"></i>Завершен: 2024</span>
+                        <span class="text-light me-4"><i class="fas fa-code me-2"></i>C++20</span>
+                        <span class="text-light"><i class="fas fa-star me-2"></i>Продвинутый проект</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="tech-stack">
+                        <span class="tech-badge">Шаблоны C++</span>
+                        <span class="tech-badge">Структуры данных</span>
+                        <span class="tech-badge">Итераторы</span>
+                        <span class="tech-badge">STL-совместимость</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Содержание проекта -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <!-- Основное содержание -->
+                <div class="col-lg-8">
+                    <!-- Обзор -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Обзор проекта</h3>
+                        <p class="text-light text-wrap">
+                            Проект <strong>s21_containers</strong> представляет собой полную реализацию библиотеки контейнеров C++, 
+                            аналогичной Standard Template Library (STL). Библиотека включает основные и дополнительные контейнеры, 
+                            реализованные с использованием современных возможностей C++20, шаблонов и итераторов.
+                        </p>
+                        <div class="row mt-4 text-center">
+                            <div class="col-md-4">
+                                <h4 class="text-info">🎯 6+ контейнеров</h4>
+                                <p class="text-light">Основные контейнеры STL</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h4 class="text-info">⚡ Шаблоны и итераторы</h4>
+                                <p class="text-light">Современный C++ подход</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h4 class="text-info">🧪 Полное тестирование</h4>
+                                <p class="text-light">Google Test framework</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Основные контейнеры -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Основные контейнеры (Часть 1)</h3>
+                        
+                        <div class="container-structure">
+                            <h5 class="text-warning">📦 Классификация контейнеров</h5>
+                            <div class="container-diagram">
+                                <div class="container-type sequence">
+                                    <h6 class="text-info">Последовательные</h6>
+                                    <p class="text-light">list, vector, queue, stack</p>
+                                </div>
+                                <div class="container-type associative">
+                                    <h6 class="text-info">Ассоциативные</h6>
+                                    <p class="text-light">map, set</p>
+                                </div>
+                            </div>
+                            
+                            <h5 class="text-warning mt-4">🚩 Реализованные контейнеры</h5>
+                            <table class="method-table">
+                                <thead>
+                                    <tr>
+                                        <th>Контейнер</th>
+                                        <th>Тип</th>
+                                        <th>Описание</th>
+                                        <th>Особенности</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>list</code></td>
+                                        <td>Последовательный</td>
+                                        <td>Двусвязный список</td>
+                                        <td>Реализация через структуры</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>vector</code></td>
+                                        <td>Последовательный</td>
+                                        <td>Динамический массив</td>
+                                        <td>Быстрый доступ по индексу</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>queue</code></td>
+                                        <td>Адаптер</td>
+                                        <td>Очередь (FIFO)</td>
+                                        <td>На основе list/deque</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>stack</code></td>
+                                        <td>Адаптер</td>
+                                        <td>Стек (LIFO)</td>
+                                        <td>На основе list/deque</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>map</code></td>
+                                        <td>Ассоциативный</td>
+                                        <td>Ассоциативный массив</td>
+                                        <td>Красно-черное дерево</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>set</code></td>
+                                        <td>Ассоциативный</td>
+                                        <td>Множество уникальных элементов</td>
+                                        <td>Красно-черное дерево</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Дополнительные контейнеры -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-plus-circle"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Дополнительные контейнеры (Часть 2)</h3>
+                        
+                        <div class="container-structure">
+                            <h5 class="text-warning">🎁 Бонусные контейнеры</h5>
+                            <table class="method-table">
+                                <thead>
+                                    <tr>
+                                        <th>Контейнер</th>
+                                        <th>Тип</th>
+                                        <th>Описание</th>
+                                        <th>Особенности</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>array</code></td>
+                                        <td>Последовательный</td>
+                                        <td>Статический массив</td>
+                                        <td>Фиксированный размер</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>multiset</code></td>
+                                        <td>Ассоциативный</td>
+                                        <td>Множество с дубликатами</td>
+                                        <td>Красно-черное дерево</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">Пример использования array</h5>
+                            <div class="code-example">
+                                <span class="text-primary code-line">#include "s21_containersplus.h"</span>
+                                <span class="text-info code-line">int</span> main() {<br>
+                                <span class="code-line">&nbsp;&nbsp;<span class="text-muted">// Создание статического массива</span></span>
+                                <span class="code-line">&nbsp;&nbsp;s21::array<<span class="text-info">int</span>, 5> arr = {1, 2, 3, 4, 5};</span>
+                                <span class="code-line">&nbsp;&nbsp;</span>
+                                <span class="code-line">&nbsp;&nbsp;<span class="text-muted">// Доступ к элементам</span></span>
+                                <span class="code-line">&nbsp;&nbsp;std::cout << arr[0] << std::endl; <span class="text-muted">// 1</span></span>
+                                <span class="code-line">&nbsp;&nbsp;std::cout << arr.at(1) << std::endl; <span class="text-muted">// 2</span></span>
+                                <span class="code-line">&nbsp;&nbsp;std::cout << arr.front() << std::endl; <span class="text-muted">// 1</span></span>
+                                <span class="code-line">&nbsp;&nbsp;std::cout << arr.back() << std::endl; <span class="text-muted">// 5</span></span>
+                                <span class="code-line">}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Методы insert_many -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-code-branch"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Методы insert_many (Часть 3)</h3>
+                        
+                        <div class="lab-step">
+                            <h5 class="text-info">🎯 Вставка нескольких элементов</h5>
+                            <table class="method-table">
+                                <thead>
+                                    <tr>
+                                        <th>Метод</th>
+                                        <th>Контейнеры</th>
+                                        <th>Описание</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>insert_many(const_iterator pos, Args&&... args)</code></td>
+                                        <td>list, vector</td>
+                                        <td>Вставка перед позицией pos</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>insert_many_back(Args&&... args)</code></td>
+                                        <td>list, vector, queue, stack</td>
+                                        <td>Добавление в конец</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>insert_many_front(Args&&... args)</code></td>
+                                        <td>list</td>
+                                        <td>Добавление в начало</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>insert_many(Args&&... args)</code></td>
+                                        <td>map, set, multiset</td>
+                                        <td>Вставка элементов</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">Пример использования insert_many</h5>
+                            <div class="code-example">
+                                <span class="text-info code-line">void</span> insert_many_example() {<br>
+                                <span class="code-line">&nbsp;&nbsp;s21::vector<<span class="text-info">int</span>> vec = {1, 2, 3};</span>
+                                <span class="code-line">&nbsp;&nbsp;</span>
+                                <span class="code-line">&nbsp;&nbsp;<span class="text-muted">// Вставка нескольких элементов</span></span>
+                                <span class="code-line">&nbsp;&nbsp;vec.insert_many(vec.begin() + 1, 10, 20, 30);</span>
+                                <span class="code-line">&nbsp;&nbsp;<span class="text-muted">// vec = {1, 10, 20, 30, 2, 3}</span></span>
+                                <span class="code-line">&nbsp;&nbsp;</span>
+                                <span class="code-line">&nbsp;&nbsp;s21::map<<span class="text-info">int</span>, <span class="text-info">std::string</span>> m;</span>
+                                <span class="code-line">&nbsp;&nbsp;m.insert_many(</span>
+                                <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;std::pair(1, "one"),</span>
+                                <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;std::pair(2, "two"),</span>
+                                <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;std::pair(3, "three")</span>
+                                <span class="code-line">&nbsp;&nbsp;);</span>
+                                <span class="code-line">}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Итераторы -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-arrows-alt-h"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Система итераторов</h3>
+                        
+                        <div class="lab-step">
+                            <h5 class="text-info">🔄 Операции с итераторами</h5>
+                            <div class="code-example">
+                                <span class="text-muted code-line">// Основные операции итераторов</span>
+                                <span class="code-line">*iter;        <span class="text-muted">// доступ к элементу</span></span>
+                                <span class="code-line">++iter;       <span class="text-muted">// следующий элемент</span></span>
+                                <span class="code-line">--iter;       <span class="text-muted">// предыдущий элемент</span></span>
+                                <span class="code-line">iter1 == iter2; <span class="text-muted">// сравнение</span></span>
+                                <span class="code-line">iter1 != iter2; <span class="text-muted">// неравенство</span></span>
+                                <br>
+                                <span class="text-muted code-line">// Получение итераторов</span>
+                                <span class="code-line">auto begin = container.begin(); <span class="text-muted">// первый элемент</span></span>
+                                <span class="code-line">auto end = container.end();   <span class="text-muted">// после последнего</span></span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">Пример работы с итераторами</h5>
+                            <div class="code-example">
+                                <span class="text-info code-line">void</span> iterator_example() {<br>
+                                <span class="code-line">&nbsp;&nbsp;s21::list<<span class="text-info">int</span>> lst = {1, 2, 3, 4, 5};</span>
+                                <span class="code-line">&nbsp;&nbsp;</span>
+                                <span class="code-line">&nbsp;&nbsp;<span class="text-muted">// Обход с помощью итераторов</span></span>
+                                <span class="code-line">&nbsp;&nbsp;<span class="text-info">for</span> (auto it = lst.begin(); it != lst.end(); ++it) {</span>
+                                <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;std::cout << *it << " ";</span>
+                                <span class="code-line">&nbsp;&nbsp;}</span>
+                                <span class="code-line">&nbsp;&nbsp;<span class="text-muted">// Вывод: 1 2 3 4 5</span></span>
+                                <span class="code-line">&nbsp;&nbsp;</span>
+                                <span class="code-line">&nbsp;&nbsp;<span class="text-muted">// Range-based for loop (требует begin/end)</span></span>
+                                <span class="code-line">&nbsp;&nbsp;<span class="text-info">for</span> (<span class="text-info">const</span> <span class="text-info">auto</span>& item : lst) {</span>
+                                <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;std::cout << item << " ";</span>
+                                <span class="code-line">&nbsp;&nbsp;}</span>
+                                <span class="code-line">}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Архитектура проекта -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-sitemap"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Архитектура проекта</h3>
+                        
+                        <div class="lab-step">
+                            <h5 class="text-info">📁 Структура файлов</h5>
+                            <div class="code-example">
+                                <span class="text-success code-line">src/</span>
+                                <span class="code-line">├── s21_containers.h</span>
+                                <span class="code-line">│   ├── s21_list.h</span>
+                                <span class="code-line">│   ├── s21_vector.h</span>
+                                <span class="code-line">│   ├── s21_queue.h</span>
+                                <span class="code-line">│   ├── s21_stack.h</span>
+                                <span class="code-line">│   ├── s21_map.h</span>
+                                <span class="code-line">│   └── s21_set.h</span>
+                                <span class="code-line">├── s21_containersplus.h</span>
+                                <span class="code-line">│   ├── s21_array.h</span>
+                                <span class="code-line">│   └── s21_multiset.h</span>
+                                <span class="code-line">└── tests/</span>
+                                <span class="code-line">    ├── test_list.cpp</span>
+                                <span class="code-line">    ├── test_vector.cpp</span>
+                                <span class="code-line">    └── ...</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">🔧 Сборка и тестирование</h5>
+                            <div class="code-example">
+                                <span class="text-muted code-line"># Сборка и запуск тестов</span>
+                                <span class="text-success code-line">make test</span>
+                                <br>
+                                <span class="text-muted code-line"># Очистка проекта</span>
+                                <span class="text-success code-line">make clean</span>
+                                <br>
+                                <span class="text-muted code-line"># Запуск конкретного теста</span>
+                                <span class="text-success code-line">./test --gtest_filter="ListTest.*"</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Боковая панель -->
+                <div class="col-lg-4">
+                    <!-- Техническая информация -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-cogs me-2"></i>Техническая информация</h4>
+                        <div class="tech-info">
+                            <div class="mb-3">
+                                <strong class="text-info">Язык:</strong>
+                                <span class="text-light">C++ (Стандарт C++20)</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Компилятор:</strong>
+                                <span class="text-light">GCC</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Пространство имен:</strong>
+                                <span class="text-light">s21</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Тестирование:</strong>
+                                <span class="text-light">Google Test (GTest)</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Стиль кода:</strong>
+                                <span class="text-light">Google C++ Style</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Запрещено:</strong>
+                                <span class="text-light">Копирование STL</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ключевые особенности -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-tools me-2"></i>Ключевые особенности</h4>
+                        <div class="code-example">
+                            <span class="text-success code-line">// Шаблонные классы</span>
+                            <span class="code-line">template <typename T></span>
+                            <span class="code-line">class s21::list { ... };</span>
+                            <br>
+                            <span class="text-success code-line">// Система итераторов</span>
+                            <span class="code-line">begin(), end(), cbegin(), cend()</span>
+                            <br>
+                            <span class="text-success code-line">// Конструкторы</span>
+                            <span class="code-line">default, copy, move, initializer_list</span>
+                            <br>
+                            <span class="text-success code-line">// Современный C++</span>
+                            <span class="code-line">move semantics, variadic templates</span>
+                        </div>
+                    </div>
+
+                    <!-- Достижения -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-trophy me-2"></i>Достижения</h4>
+                        <ul class="text-light">
+                            <li>Реализация 8+ контейнеров</li>
+                            <li>Полная система итераторов</li>
+                            <li>Поддержка шаблонов</li>
+                            <li>Методы insert_many</li>
+                            <li>Полное покрытие тестами</li>
+                            <li>Совместимость с STL</li>
+                        </ul>
+                    </div>
+
+                    <!-- Использованные навыки -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-code me-2"></i>Использованные навыки</h4>
+                        <div class="skills-used">
+                            <span class="tech-badge">Шаблоны C++</span>
+                            <span class="tech-badge">Структуры данных</span>
+                            <span class="tech-badge">Итераторы</span>
+                            <span class="tech-badge">Управление памятью</span>
+                            <span class="tech-badge">ООП</span>
+                            <span class="tech-badge">Алгоритмы</span>
+                            <span class="tech-badge">Модульное тестирование</span>
+                            <span class="tech-badge">Makefile</span>
+                        </div>
+                    </div>
+
+                    <!-- Исторический контекст -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-history me-2"></i>Исторический контекст</h4>
+                        <p class="text-light">
+                            Проект вдохновлен ранними разработками Standard Template Library (STL) 
+                            Александром Степановым и его командой в 1990-х годах.
+                        </p>
+                        <div class="code-example mt-2">
+                            <span class="text-muted">"Imagine if any container could be described once and then used with different data types and classes."</span>
+                            <span class="text-muted">- A. Stepanov</span>
+                        </div>
+                    </div>
+
+                    <!-- Ссылки проекта -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-external-link-alt me-2"></i>Ссылки</h4>
+                        <div class="project-links">
+                            <a href="https://github.com/mbrmj875/s21_containers" class="btn btn-outline-primary w-100 mb-2">
+                                <i class="fab fa-github me-2"></i>Просмотр исходного кода
+                            </a>
+                      
+                            <a href="https://github.com/mbrmj875/s21_containers/archive/refs/heads/main.zip" class="btn btn-outline-success w-100">
+                                <i class="fas fa-download me-2"></i>Скачать проект
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

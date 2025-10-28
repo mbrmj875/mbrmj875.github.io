@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>s21_matrix+ - Мухаммад Аль-Бакир</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #00d9ff;
+            --dark-bg: #0a1a2a;
+            --darker-bg: #0d2342;
+            --card-bg: #1a1a1a;
+            --card-border: #404040;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        
+        .back-button {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .back-button:hover {
+            color: #ffffff;
+        }
+        
+        .project-detail-header {
+            background: linear-gradient(135deg, var(--dark-bg), var(--darker-bg));
+            padding: 4rem 0;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .project-badge {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            display: inline-block;
+            font-weight: 600;
+        }
+        
+        .project-feature-card {
+            background: linear-gradient(135deg, var(--card-bg), #2a2a2a);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .project-feature-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        .tech-badge {
+            background: linear-gradient(135deg, var(--primary-color), #0088ff);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 0.3rem;
+            display: inline-block;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+        
+        .code-example {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            direction: ltr;
+            word-wrap: break-word;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .matrix-structure {
+            background: var(--darker-bg);
+            border: 2px solid var(--secondary-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            word-wrap: break-word;
+        }
+        
+        .matrix-visualization {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 1rem 0;
+            justify-items: center;
+        }
+        
+        .matrix-cell {
+            width: 60px;
+            height: 40px;
+            background: #2a2a2a;
+            border: 1px solid var(--card-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .matrix-cell.header {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .section-padding {
+            padding: 4rem 0;
+        }
+        
+        .command-example {
+            background: #2a2a2a;
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            direction: ltr;
+            word-wrap: break-word;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .lab-step {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--secondary-color);
+            word-wrap: break-word;
+        }
+        
+        .method-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .method-table th, .method-table td {
+            border: 1px solid var(--card-border);
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .method-table th {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .method-table tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .text-wrap {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .code-line {
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+        
+        .text-cyan { color: #00ffff; }
+        .text-yellow { color: #ffff00; }
+        .text-info { color: var(--secondary-color); }
+        .text-success { color: #00ff00; }
+        .text-warning { color: #ffcc00; }
+        .text-danger { color: #ff3333; }
+        .text-light { color: #e0e0e0; }
+        .text-muted { color: #888888; }
+
+        /* تحسينات للاستجابة على الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .matrix-visualization {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .project-feature-card {
+                padding: 1.5rem;
+            }
+            
+            .code-example, .command-example {
+                padding: 1rem;
+                font-size: 0.85rem;
+            }
+            
+            .method-table {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Кнопка возврата -->
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a href="../index.html#academic-projects" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Вернуться к проектам
+            </a>
+        </div>
+    </nav>
+
+    <!-- Заголовок страницы проекта -->
+    <section class="project-detail-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="project-badge">Проект на C++</div>
+                    <h1 class="display-4 fw-bold text-white mt-3">s21_matrix+</h1>
+                    <p class="lead text-light mb-4">Объектно-ориентированная реализация библиотеки для работы с матрицами на C++ с перегрузкой операторов</p>
+                    
+                    <div class="project-meta">
+                        <span class="text-light me-4"><i class="fas fa-calendar me-2"></i>Завершен: 2025</span>
+                        <span class="text-light me-4"><i class="fas fa-code me-2"></i>C++20</span>
+                        <span class="text-light"><i class="fas fa-star me-2"></i>Продвинутый проект</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="tech-stack">
+                        <span class="tech-badge">ООП в C++</span>
+                        <span class="tech-badge">Перегрузка операторов</span>
+                        <span class="tech-badge">Линейная алгебра</span>
+                        <span class="tech-badge">Шаблоны проектирования</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Содержание проекта -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <!-- Основное содержание -->
+                <div class="col-lg-8">
+                    <!-- Обзор -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Обзор проекта</h3>
+                        <p class="text-light text-wrap">
+                            Проект <strong>s21_matrix+</strong> представляет собой объектно-ориентированную реализацию библиотеки для работы с матрицами на языке C++. 
+                            В отличие от процедурного подока в оригинальном проекте s21_matrix, здесь используется современный объектно-ориентированный подход 
+                            с перегрузкой операторов, конструкторами, деструкторами и обработкой исключений.
+                        </p>
+                        <div class="row mt-4 text-center">
+                            <div class="col-md-4">
+                                <h4 class="text-info">🎯 ООП подход</h4>
+                                <p class="text-light">Инкапсуляция, наследование, полиморфизм</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h4 class="text-info">⚡ Перегрузка операторов</h4>
+                                <p class="text-light">Естественный синтаксис операций</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h4 class="text-info">🛡️ Обработка ошибок</h4>
+                                <p class="text-light">Механизм исключений C++</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Структура класса -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Структура класса S21Matrix</h3>
+                        
+                        <div class="matrix-structure">
+                            <h5 class="text-warning">📐 Объявление класса</h5>
+                            <div class="code-example">
+                                <span class="text-info">class</span> <span class="text-success">S21Matrix</span> {<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">private</span>:<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">// Атрибуты</span><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">int</span> rows_, cols_;<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">double</span> **matrix_;<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">public</span>:<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">// Конструкторы и деструктор</span><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S21Matrix();<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S21Matrix(<span class="text-info">int</span> rows, <span class="text-info">int</span> cols);<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S21Matrix(<span class="text-info">const</span> S21Matrix& other);<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S21Matrix(S21Matrix&& other);<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~S21Matrix();<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">// Методы доступа</span><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">int</span> get_rows() <span class="text-info">const</span>;<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">void</span> set_rows(<span class="text-info">int</span> rows);<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">// ... другие методы</span><br>
+                                };
+                            </div>
+                            
+                            <h5 class="text-warning mt-4">🧮 Визуализация матрицы 3×3</h5>
+                            <div class="matrix-visualization">
+                                <div class="matrix-cell header">(0,0)</div>
+                                <div class="matrix-cell header">(0,1)</div>
+                                <div class="matrix-cell header">(0,2)</div>
+                                <div class="matrix-cell">matrix_[0][0]</div>
+                                <div class="matrix-cell">matrix_[0][1]</div>
+                                <div class="matrix-cell">matrix_[0][2]</div>
+                                <div class="matrix-cell">matrix_[1][0]</div>
+                                <div class="matrix-cell">matrix_[1][1]</div>
+                                <div class="matrix-cell">matrix_[1][2]</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Основные операции -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-plus-minus"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Основные матричные операции</h3>
+                        
+                        <div class="lab-step">
+                            <h5 class="text-info">🧮 Базовые методы класса</h5>
+                            <table class="method-table">
+                                <thead>
+                                    <tr>
+                                        <th>Метод</th>
+                                        <th>Описание</th>
+                                        <th>Исключительные ситуации</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>bool EqMatrix(const S21Matrix& other)</code></td>
+                                        <td>Проверяет равенство матриц</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>void SumMatrix(const S21Matrix& other)</code></td>
+                                        <td>Сложение матриц</td>
+                                        <td>Разные размеры матриц</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>void SubMatrix(const S21Matrix& other)</code></td>
+                                        <td>Вычитание матриц</td>
+                                        <td>Разные размеры матриц</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>void MulNumber(const double num)</code></td>
+                                        <td>Умножение на число</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>void MulMatrix(const S21Matrix& other)</code></td>
+                                        <td>Умножение матриц</td>
+                                        <td>Несовместимые размеры</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">🔄 Продвинутые операции</h5>
+                            <table class="method-table">
+                                <thead>
+                                    <tr>
+                                        <th>Метод</th>
+                                        <th>Описание</th>
+                                        <th>Исключительные ситуации</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>S21Matrix Transpose()</code></td>
+                                        <td>Транспонирование матрицы</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>S21Matrix CalcComplements()</code></td>
+                                        <td>Матрица алгебраических дополнений</td>
+                                        <td>Матрица не квадратная</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>double Determinant()</code></td>
+                                        <td>Вычисление определителя</td>
+                                        <td>Матрица не квадратная</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>S21Matrix InverseMatrix()</code></td>
+                                        <td>Обратная матрица</td>
+                                        <td>Определитель равен 0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Перегрузка операторов -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Перегрузка операторов</h3>
+                        
+                        <div class="lab-step">
+                            <h5 class="text-info">🎯 Арифметические операторы</h5>
+                            <table class="method-table">
+                                <thead>
+                                    <tr>
+                                        <th>Оператор</th>
+                                        <th>Описание</th>
+                                        <th>Исключительные ситуации</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>+</code></td>
+                                        <td>Сложение двух матриц</td>
+                                        <td>Разные размеры матриц</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>-</code></td>
+                                        <td>Вычитание матриц</td>
+                                        <td>Разные размеры матриц</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>*</code></td>
+                                        <td>Умножение матриц и на число</td>
+                                        <td>Несовместимые размеры</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>==</code></td>
+                                        <td>Проверка равенства матриц</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>=</code></td>
+                                        <td>Присваивание</td>
+                                        <td>-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">⚡ Составные операторы и индексация</h5>
+                            <table class="method-table">
+                                <thead>
+                                    <tr>
+                                        <th>Оператор</th>
+                                        <th>Описание</th>
+                                        <th>Исключительные ситуации</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>+=</code></td>
+                                        <td>Сложение с присваиванием</td>
+                                        <td>Разные размеры матриц</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>-=</code></td>
+                                        <td>Вычитание с присваиванием</td>
+                                        <td>Разные размеры матриц</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>*=</code></td>
+                                        <td>Умножение с присваиванием</td>
+                                        <td>Несовместимые размеры</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>(int i, int j)</code></td>
+                                        <td>Индексация элементов</td>
+                                        <td>Индекс вне матрицы</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Примеры использования -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Примеры использования</h3>
+                        
+                        <div class="lab-step">
+                            <h5 class="text-warning">Пример 1: Естественный синтаксис операций</h5>
+                            <div class="code-example">
+                                <span class="text-primary code-line">#include "s21_matrix_oop.h"</span>
+                                <span class="text-info code-line">int</span> main() {<br>
+                                <span class="code-line">&nbsp;&nbsp;<span class="text-muted">// Создание матриц</span></span>
+                                <span class="code-line">&nbsp;&nbsp;S21Matrix A(2, 2);</span>
+                                <span class="code-line">&nbsp;&nbsp;S21Matrix B(2, 2);</span>
+                                <span class="code-line">&nbsp;&nbsp;S21Matrix C(2, 2);</span>
+                                <br>
+                                <span class="code-line">&nbsp;&nbsp;<span class="text-muted">// Естественный синтаксис операций</span></span>
+                                <span class="code-line">&nbsp;&nbsp;C = A + B;</span>
+                                <span class="code-line">&nbsp;&nbsp;C = A * B;</span>
+                                <span class="code-line">&nbsp;&nbsp;C += A;</span>
+                                <span class="code-line">&nbsp;&nbsp;<span class="text-info">if</span> (A == B) {</span>
+                                <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">// ...</span></span>
+                                <span class="code-line">&nbsp;&nbsp;}</span>
+                                <span class="code-line">&nbsp;&nbsp;<span class="text-muted">// Индексация</span></span>
+                                <span class="code-line">&nbsp;&nbsp;<span class="text-info">double</span> value = A(1, 1);</span>
+                                <span class="code-line">&nbsp;&nbsp;A(1, 1) = 42.0;</span>
+                                <span class="code-line">}</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-warning">Пример 2: Обработка исключений</h5>
+                            <div class="code-example">
+                                <span class="text-info code-line">void</span> matrix_operations() {<br>
+                                <span class="code-line">&nbsp;&nbsp;<span class="text-info">try</span> {</span>
+                                <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;S21Matrix A(2, 3);</span>
+                                <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;S21Matrix B(4, 2);</span>
+                                <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;S21Matrix C = A * B; <span class="text-muted">// Ошибка: несовместимые размеры</span></span>
+                                <span class="code-line">&nbsp;&nbsp;} <span class="text-info">catch</span> (<span class="text-info">const</span> std::exception& e) {</span>
+                                <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;std::cout << <span class="text-danger">"Ошибка: "</span> << e.what() << std::endl;</span>
+                                <span class="code-line">&nbsp;&nbsp;}</span>
+                                <span class="code-line">&nbsp;&nbsp;<span class="text-info">try</span> {</span>
+                                <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;S21Matrix D(2, 2);</span>
+                                <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">double</span> det = D.Determinant(); <span class="text-muted">// OK</span></span>
+                                <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;S21Matrix rect(2, 3);</span>
+                                <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">double</span> bad_det = rect.Determinant(); <span class="text-muted">// Ошибка: не квадратная</span></span>
+                                <span class="code-line">&nbsp;&nbsp;} <span class="text-info">catch</span> (<span class="text-info">const</span> std::exception& e) {</span>
+                                <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;std::cout << <span class="text-danger">"Ошибка: "</span> << e.what() << std::endl;</span>
+                                <span class="code-line">&nbsp;&nbsp;}</span>
+                                <span class="code-line">}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Конструкторы и деструкторы -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-hammer"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Конструкторы и управление памятью</h3>
+                        
+                        <div class="lab-step">
+                            <h5 class="text-info">🏗️ Типы конструкторов</h5>
+                            <table class="method-table">
+                                <thead>
+                                    <tr>
+                                        <th>Конструктор</th>
+                                        <th>Описание</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>S21Matrix()</code></td>
+                                        <td>Конструктор по умолчанию</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>S21Matrix(int rows, int cols)</code></td>
+                                        <td>Параметризованный конструктор</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>S21Matrix(const S21Matrix& other)</code></td>
+                                        <td>Конструктор копирования</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>S21Matrix(S21Matrix&& other)</code></td>
+                                        <td>Конструктор перемещения</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>~S21Matrix()</code></td>
+                                        <td>Деструктор</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">🎯 Примеры использования конструкторов</h5>
+                            <div class="code-example">
+                                <span class="text-muted code-line">// Конструктор по умолчанию</span>
+                                <span class="code-line">S21Matrix default_matrix;</span>
+                                <br>
+                                <span class="text-muted code-line">// Параметризованный конструктор</span>
+                                <span class="code-line">S21Matrix custom_matrix(3, 4);</span>
+                                <br>
+                                <span class="text-muted code-line">// Конструктор копирования</span>
+                                <span class="code-line">S21Matrix copy_matrix = custom_matrix;</span>
+                                <br>
+                                <span class="text-muted code-line">// Конструктор перемещения</span>
+                                <span class="code-line">S21Matrix move_matrix = std::move(custom_matrix);</span>
+                                <br>
+                                <span class="text-muted code-line">// Деструктор вызывается автоматически</span>
+                                <span class="text-muted code-line">// при выходе из области видимости</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Боковая панель -->
+                <div class="col-lg-4">
+                    <!-- Техническая информация -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-cogs me-2"></i>Техническая информация</h4>
+                        <div class="tech-info">
+                            <div class="mb-3">
+                                <strong class="text-info">Язык:</strong>
+                                <span class="text-light">C++ (Стандарт C++20)</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Компилятор:</strong>
+                                <span class="text-light">GCC</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Библиотека:</strong>
+                                <span class="text-light">Статическая (s21_matrix_oop.a)</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Тестирование:</strong>
+                                <span class="text-light">Google Test (GTest)</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Стиль кода:</strong>
+                                <span class="text-light">Google C++ Style</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Запрещено:</strong>
+                                <span class="text-light">STL контейнеры</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Все методы -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-tools me-2"></i>Ключевые особенности</h4>
+                        <div class="code-example">
+                            <span class="text-success code-line">// ООП принципы</span>
+                            <span class="code-line">- Инкапсуляция</span>
+                            <span class="code-line">- Наследование</span>
+                            <span class="code-line">- Полиморфизм</span>
+                            <span class="text-success code-line">// Управление памятью</span>
+                            <span class="code-line">- Конструкторы/деструкторы</span>
+                            <span class="code-line">- Rule of Three/Five</span>
+                            <span class="code-line">- Move семантика</span>
+                            <span class="text-success code-line">// Безопасность</span>
+                            <span class="code-line">- Обработка исключений</span>
+                            <span class="code-line">- Проверки границ</span>
+                        </div>
+                    </div>
+
+                    <!-- Достижения -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-trophy me-2"></i>Достижения</h4>
+                        <ul class="text-light">
+                            <li>Полная реализация ООП подхода</li>
+                            <li>Перегрузка 10+ операторов</li>
+                            <li>Реализация Rule of Five</li>
+                            <li>Обработка всех исключительных ситуаций</li>
+                            <li>Полное покрытие тестами</li>
+                            <li>Оптимизация производительности</li>
+                        </ul>
+                    </div>
+
+                    <!-- Использованные навыки -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-code me-2"></i>Использованные навыки</h4>
+                        <div class="skills-used">
+                            <span class="tech-badge">ООП в C++</span>
+                            <span class="tech-badge">Перегрузка операторов</span>
+                            <span class="tech-badge">Шаблоны проектирования</span>
+                            <span class="tech-badge">Управление памятью</span>
+                            <span class="tech-badge">Исключения C++</span>
+                            <span class="tech-badge">Move семантика</span>
+                            <span class="tech-badge">Модульное тестирование</span>
+                            <span class="tech-badge">Линейная алгебра</span>
+                        </div>
+                    </div>
+
+                    <!-- Сравнение с C версией -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-exchange-alt me-2"></i>Сравнение с C версией</h4>
+                        <p class="text-light">
+                            Основные отличия от процедурной версии s21_matrix:
+                        </p>
+                        <ul class="text-light">
+                            <li><strong>ООП подход:</strong> Классы вместо структур</li>
+                            <li><strong>Перегрузка операторов:</strong> Естественный синтаксис</li>
+                            <li><strong>Инкапсуляция:</strong> Приватные поля и публичные методы</li>
+                            <li><strong>Исключения:</strong> Механизм try/catch вместо кодов ошибок</li>
+                            <li><strong>Управление памятью:</strong> Конструкторы/деструкторы</li>
+                        </ul>
+                    </div>
+
+                    <!-- Ссылки проекта -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-external-link-alt me-2"></i>Ссылки</h4>
+                        <div class="project-links">
+                            <a href="https://github.com/mbrmj875/s21_matrix_plus" class="btn btn-outline-primary w-100 mb-2">
+                                <i class="fab fa-github me-2"></i>Просмотр исходного кода
+                            </a>
+                      
+                            <a href="https://github.com/mbrmj875/s21_matrix_plus/archive/refs/heads/main.zip" class="btn btn-outline-success w-100">
+                                <i class="fas fa-download me-2"></i>Скачать проект
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

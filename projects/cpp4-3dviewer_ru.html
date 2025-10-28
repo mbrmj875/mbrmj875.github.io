@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3DViewer v2.0 - Мухаммад Аль-Бакир</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #00d9ff;
+            --dark-bg: #0a1a2a;
+            --darker-bg: #0d2342;
+            --card-bg: #1a1a1a;
+            --card-border: #404040;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        
+        .back-button {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .back-button:hover {
+            color: #ffffff;
+        }
+        
+        .project-detail-header {
+            background: linear-gradient(135deg, var(--dark-bg), var(--darker-bg));
+            padding: 4rem 0;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .project-badge {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            display: inline-block;
+            font-weight: 600;
+        }
+        
+        .project-feature-card {
+            background: linear-gradient(135deg, var(--card-bg), #2a2a2a);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .project-feature-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        .tech-badge {
+            background: linear-gradient(135deg, var(--primary-color), #0088ff);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 0.3rem;
+            display: inline-block;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+        
+        .code-example {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            direction: ltr;
+            word-wrap: break-word;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .architecture-structure {
+            background: var(--darker-bg);
+            border: 2px solid var(--secondary-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            word-wrap: break-word;
+        }
+        
+        .pattern-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 1rem 0;
+        }
+        
+        .pattern-card {
+            background: #2a2a2a;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        
+        .pattern-card.creational {
+            border-left: 4px solid #51cf66;
+        }
+        
+        .pattern-card.structural {
+            border-left: 4px solid #339af0;
+        }
+        
+        .pattern-card.behavioral {
+            border-left: 4px solid #cc5de8;
+        }
+        
+        .section-padding {
+            padding: 4rem 0;
+        }
+        
+        .command-example {
+            background: #2a2a2a;
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            direction: ltr;
+            word-wrap: break-word;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .lab-step {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--secondary-color);
+            word-wrap: break-word;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 1rem 0;
+        }
+        
+        .feature-card {
+            background: #2a2a2a;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .method-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .method-table th, .method-table td {
+            border: 1px solid var(--card-border);
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .method-table th {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .method-table tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .text-wrap {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        .code-line {
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+        
+        .text-cyan { color: #00ffff; }
+        .text-yellow { color: #ffff00; }
+        .text-info { color: var(--secondary-color); }
+        .text-success { color: #00ff00; }
+        .text-warning { color: #ffcc00; }
+        .text-danger { color: #ff3333; }
+        .text-light { color: #e0e0e0; }
+        .text-muted { color: #888888; }
+
+        /* تحسينات للاستجابة على الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .pattern-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .project-feature-card {
+                padding: 1.5rem;
+            }
+            
+            .code-example, .command-example {
+                padding: 1rem;
+                font-size: 0.85rem;
+            }
+            
+            .method-table {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Кнопка возврата -->
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a href="../index.html#academic-projects" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Вернуться к проектам
+            </a>
+        </div>
+    </nav>
+
+    <!-- Заголовок страницы проекта -->
+    <section class="project-detail-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="project-badge">Проект на C++</div>
+                    <h1 class="display-4 fw-bold text-white mt-3">3DViewer v2.0</h1>
+                    <p class="lead text-light mb-4">Продвинутое приложение для просмотра 3D wireframe моделей с поддержкой паттернов проектирования и современного GUI</p>
+                    
+                    <div class="project-meta">
+                        <span class="text-light me-4"><i class="fas fa-calendar me-2"></i>Завершен: 2024</span>
+                        <span class="text-light me-4"><i class="fas fa-code me-2"></i>C++20</span>
+                        <span class="text-light"><i class="fas fa-star me-2"></i>Продвинутый проект</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="tech-stack">
+                        <span class="tech-badge">Паттерны проектирования</span>
+                        <span class="tech-badge">3D графика</span>
+                        <span class="tech-badge">GUI разработка</span>
+                        <span class="tech-badge">ООП</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Содержание проекта -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <!-- Основное содержание -->
+                <div class="col-lg-8">
+                    <!-- Обзор -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-cube"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Обзор проекта</h3>
+                        <p class="text-light text-wrap">
+                            Проект <strong>3DViewer v2.0</strong> представляет собой усовершенствованную версию приложения для просмотра 
+                            3D wireframe моделей, разработанную с использованием современных паттернов проектирования и архитектурных принципов. 
+                            Приложение поддерживает загрузку моделей из OBJ файлов и выполнение аффинных преобразований.
+                        </p>
+                        <div class="row mt-4 text-center">
+                            <div class="col-md-4">
+                                <h4 class="text-info">🎯 3D Визуализация</h4>
+                                <p class="text-light">Просмотр wireframe моделей</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h4 class="text-info">🏗️ Паттерны проектирования</h4>
+                                <p class="text-light">3+ архитектурных паттерна</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h4 class="text-info">⚡ Производительность</h4>
+                                <p class="text-light">До 1 млн вершин без задержек</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Паттерны проектирования -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shapes"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Паттерны проектирования</h3>
+                        
+                        <div class="architecture-structure">
+                            <h5 class="text-warning">🎯 Три основные категории паттернов</h5>
+                            <div class="pattern-grid">
+                                <div class="pattern-card creational">
+                                    <h6 class="text-success">Порождающие</h6>
+                                    <p class="text-light">Создание объектов</p>
+                                    <ul class="text-light">
+                                        <li>Фабричный метод</li>
+                                        <li>Абстрактная фабрика</li>
+                                        <li>Строитель</li>
+                                        <li>Прототип</li>
+                                        <li>Одиночка</li>
+                                    </ul>
+                                </div>
+                                <div class="pattern-card structural">
+                                    <h6 class="text-info">Структурные</h6>
+                                    <p class="text-light">Компоновка классов и объектов</p>
+                                    <ul class="text-light">
+                                        <li>Адаптер</li>
+                                        <li>Фасад ✓</li>
+                                        <li>Мост</li>
+                                        <li>Компоновщик</li>
+                                        <li>Декоратор</li>
+                                    </ul>
+                                </div>
+                                <div class="pattern-card behavioral">
+                                    <h6 class="text-warning">Поведенческие</h6>
+                                    <p class="text-light">Взаимодействие объектов</p>
+                                    <ul class="text-light">
+                                        <li>Стратегия ✓</li>
+                                        <li>Команда ✓</li>
+                                        <li>Наблюдатель</li>
+                                        <li>Состояние</li>
+                                        <li>Посетитель</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <h5 class="text-warning mt-4">🚩 Реализованные паттерны в проекте</h5>
+                            <table class="method-table">
+                                <thead>
+                                    <tr>
+                                        <th>Паттерн</th>
+                                        <th>Категория</th>
+                                        <th>Применение в проекте</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Фасад</strong></td>
+                                        <td>Структурный</td>
+                                        <td>Упрощенный интерфейс для сложной системы 3D рендеринга</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Стратегия</strong></td>
+                                        <td>Поведенческий</td>
+                                        <td>Различные алгоритмы рендеринга и преобразований</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Команда</strong></td>
+                                        <td>Поведенческий</td>
+                                        <td>Обработка пользовательских действий и преобразований</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Наблюдатель</td>
+                                        <td>Поведенческий</td>
+                                        <td>Уведомления об изменениях в модели</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Фабричный метод</td>
+                                        <td>Порождающий</td>
+                                        <td>Создание различных типов рендереров</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Основной функционал -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Основной функционал (Часть 1)</h3>
+                        
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <h6 class="text-info">📁 Загрузка моделей</h6>
+                                <p class="text-light">Поддержка OBJ файлов (вершины и поверхности)</p>
+                            </div>
+                            <div class="feature-card">
+                                <h6 class="text-info">🔄 Перемещение</h6>
+                                <p class="text-light">По осям X, Y, Z на заданное расстояние</p>
+                            </div>
+                            <div class="feature-card">
+                                <h6 class="text-info">🔄 Вращение</h6>
+                                <p class="text-light">Вокруг осей X, Y, Z на заданный угол</p>
+                            </div>
+                            <div class="feature-card">
+                                <h6 class="text-info">📐 Масштабирование</h6>
+                                <p class="text-light">Увеличение/уменьшение модели</p>
+                            </div>
+                            <div class="feature-card">
+                                <h6 class="text-info">📊 Информация</h6>
+                                <p class="text-light">Имя файла, количество вершин и ребер</p>
+                            </div>
+                            <div class="feature-card">
+                                <h6 class="text-info">⚡ Производительность</h6>
+                                <p class="text-light">До 1 млн вершин без замираний интерфейса</p>
+                            </div>
+                        </div>
+
+                        <div class="lab-step mt-4">
+                            <h5 class="text-info">Пример архитектуры с паттерном Фасад</h5>
+                            <div class="code-example">
+                                <span class="text-info code-line">class</span> <span class="text-success">ViewerFacade</span> {<br>
+                                <span class="code-line"><span class="text-info">private</span>:</span>
+                                <span class="code-line">&nbsp;&nbsp;ModelLoader* loader_;</span>
+                                <span class="code-line">&nbsp;&nbsp;TransformEngine* transformer_;</span>
+                                <span class="code-line">&nbsp;&nbsp;Renderer* renderer_;</span>
+                                <span class="code-line"><span class="text-info">public</span>:</span>
+                                <span class="code-line">&nbsp;&nbsp;<span class="text-info">bool</span> loadModel(<span class="text-info">const</span> std::string& filename) {</span>
+                                <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-info">return</span> loader_->load(filename);</span>
+                                <span class="code-line">&nbsp;&nbsp;}</span>
+                                <span class="code-line">&nbsp;&nbsp;<span class="text-info">void</span> rotateModel(<span class="text-info">double</span> x, <span class="text-info">double</span> y, <span class="text-info">double</span> z) {</span>
+                                <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;transformer_->rotate(x, y, z);</span>
+                                <span class="code-line">&nbsp;&nbsp;}</span>
+                                <span class="code-line">&nbsp;&nbsp;<span class="text-info">void</span> render() {</span>
+                                <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;renderer_->draw();</span>
+                                <span class="code-line">&nbsp;&nbsp;}</span>
+                                <span class="code-line">};</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Бонусные возможности -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Бонусные возможности</h3>
+                        
+                        <div class="lab-step">
+                            <h5 class="text-info">🎛️ Настройки отображения (Часть 2)</h5>
+                            <div class="code-example">
+                                <span class="text-muted code-line">// Типы проекций</span>
+                                <span class="code-line">- Параллельная проекция</span>
+                                <span class="code-line">- Центральная проекция</span>
+                                <br>
+                                <span class="text-muted code-line">// Настройки ребер</span>
+                                <span class="code-line">- Сплошные / пунктирные</span>
+                                <span class="code-line">- Цвет и толщина</span>
+                                <br>
+                                <span class="text-muted code-line">// Настройки вершин</span>
+                                <span class="code-line">- Отсутствие / круг / квадрат</span>
+                                <span class="code-line">- Цвет и размер</span>
+                                <br>
+                                <span class="text-muted code-line">// Фон</span>
+                                <span class="code-line">- Произвольный цвет</span>
+                                <span class="code-line">- Сохранение настроек между запусками</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">🎬 Запись и экспорт (Часть 3)</h5>
+                            <div class="code-example">
+                                <span class="text-muted code-line">// Сохранение изображений</span>
+                                <span class="code-line">- Формат BMP</span>
+                                <span class="code-line">- Формат JPEG</span>
+                                <br>
+                                <span class="text-muted code-line">// Запись анимаций</span>
+                                <span class="code-line">- GIF анимации 640x480</span>
+                                <span class="code-line">- 10 кадров в секунду</span>
+                                <span class="code-line">- Длительность 5 секунд</span>
+                                <span class="code-line">- Преобразования объекта в реальном времени</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Архитектура MVC -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-sitemap"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Архитектура MVC</h3>
+                        
+                        <div class="lab-step">
+                            <h5 class="text-info">🎯 Принципы разделения ответственности</h5>
+                            <table class="method-table">
+                                <thead>
+                                    <tr>
+                                        <th>Компонент</th>
+                                        <th>Ответственность</th>
+                                        <th>Запрещено</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Model</strong></td>
+                                        <td>Бизнес-логика, данные, преобразования</td>
+                                        <td>Код интерфейса</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>View</strong></td>
+                                        <td>Отображение, обработка UI событий</td>
+                                        <td>Бизнес-логика</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Controller</strong></td>
+                                        <td>Тонкий слой управления, модификация модели</td>
+                                        <td>Логика интерфейса и бизнеса</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">Пример тонкого контроллера</h5>
+                            <div class="code-example">
+                                <span class="text-info code-line">class</span> <span class="text-success">ModelController</span> {<br>
+                                <span class="code-line"><span class="text-info">private</span>:</span>
+                                <span class="code-line">&nbsp;&nbsp;Model* model_;</span>
+                                <span class="code-line"><span class="text-info">public</span>:</span>
+                                <span class="code-line">&nbsp;&nbsp;<span class="text-info">void</span> handleRotation(<span class="text-info">double</span> x, <span class="text-info">double</span> y, <span class="text-info">double</span> z) {</span>
+                                <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;model_->rotate(x, y, z); <span class="text-muted">// Только вызов метода модели</span></span>
+                                <span class="code-line">&nbsp;&nbsp;}</span>
+                                <span class="code-line">&nbsp;&nbsp;<span class="text-info">void</span> handleTranslation(<span class="text-info">double</span> x, <span class="text-info">double</span> y, <span class="text-info">double</span> z) {</span>
+                                <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;model_->translate(x, y, z); <span class="text-muted">// Только вызов метода модели</span></span>
+                                <span class="code-line">&nbsp;&nbsp;}</span>
+                                <span class="code-line">};</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Технические требования -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Технические требования</h3>
+                        
+                        <div class="lab-step">
+                            <h5 class="text-info">📋 Основные требования</h5>
+                            <div class="code-example">
+                                <span class="text-muted code-line">// Язык и стандарт</span>
+                                <span class="code-line">- C++20 стандарт</span>
+                                <span class="code-line">- Компилятор GCC</span>
+                                <br>
+                                <span class="text-muted code-line">// GUI библиотеки</span>
+                                <span class="code-line">- Linux: GTK+, CEF, Qt, JUCE</span>
+                                <span class="code-line">- Mac: GTK+, CEF, Qt, JUCE, SFML, Nanogui, Nngui</span>
+                                <br>
+                                <span class="text-muted code-line">// Производительность</span>
+                                <span class="code-line">- Модели до 1,000,000 вершин</span>
+                                <span class="code-line">- Отсутствие замираний интерфейса (>0.5 сек)</span>
+                                <br>
+                                <span class="text-muted code-line">// Тестирование</span>
+                                <span class="code-line">- Модульные тесты для загрузки моделей</span>
+                                <span class="code-line">- Тесты аффинных преобразований</span>
+                                <span class="code-line">- Покрытие ключевых модулей</span>
+                            </div>
+                        </div>
+
+                        <div class="lab-step">
+                            <h5 class="text-info">🔧 Сборка и развертывание</h5>
+                            <div class="code-example">
+                                <span class="text-muted code-line"># Стандартные цели Makefile</span>
+                                <span class="text-success code-line">make all</span>
+                                <span class="text-success code-line">make install</span>
+                                <span class="text-success code-line">make uninstall</span>
+                                <span class="text-success code-line">make clean</span>
+                                <span class="text-success code-line">make dvi</span>
+                                <span class="text-success code-line">make dist</span>
+                                <span class="text-success code-line">make test</span>
+                                <br>
+                                <span class="text-muted code-line"># Пространство имен</span>
+                                <span class="code-line">s21::</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Боковая панель -->
+                <div class="col-lg-4">
+                    <!-- Техническая информация -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-cogs me-2"></i>Техническая информация</h4>
+                        <div class="tech-info">
+                            <div class="mb-3">
+                                <strong class="text-info">Язык:</strong>
+                                <span class="text-light">C++ (Стандарт C++20)</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">GUI библиотеки:</strong>
+                                <span class="text-light">Qt, GTK+ или другие</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Пространство имен:</strong>
+                                <span class="text-light">s21</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Тестирование:</strong>
+                                <span class="text-light">Модульные тесты</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Форматы:</strong>
+                                <span class="text-light">OBJ, BMP, JPEG, GIF</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Паттерны:</strong>
+                                <span class="text-light">3+ различных паттерна</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ключевые особенности -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-tools me-2"></i>Ключевые особенности</h4>
+                        <div class="code-example">
+                            <span class="text-success code-line">// Архитектурные принципы</span>
+                            <span class="code-line">- MVC паттерн</span>
+                            <span class="code-line">- Тонкие контроллеры</span>
+                            <span class="code-line">- Разделение ответственности</span>
+                            <br>
+                            <span class="text-success code-line">// Функциональность</span>
+                            <span class="code-line">- Аффинные преобразования</span>
+                            <span class="code-line">- Настройки отображения</span>
+                            <span class="code-line">- Запись анимаций</span>
+                        </div>
+                    </div>
+
+                    <!-- Достижения -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-trophy me-2"></i>Достижения</h4>
+                        <ul class="text-light">
+                            <li>Реализация 3+ паттернов проектирования</li>
+                            <li>Архитектура MVC с тонкими контроллерами</li>
+                            <li>Поддержка больших моделей (до 1M вершин)</li>
+                            <li>Настраиваемый рендеринг</li>
+                            <li>Экспорт изображений и анимаций</li>
+                            <li>Полное покрытие тестами</li>
+                        </ul>
+                    </div>
+
+                    <!-- Использованные навыки -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-code me-2"></i>Использованные навыки</h4>
+                        <div class="skills-used">
+                            <span class="tech-badge">Паттерны проектирования</span>
+                            <span class="tech-badge">3D графика</span>
+                            <span class="tech-badge">GUI разработка</span>
+                            <span class="tech-badge">ООП в C++</span>
+                            <span class="tech-badge">Аффинные преобразования</span>
+                            <span class="tech-badge">Тестирование</span>
+                            <span class="tech-badge">Makefile</span>
+                            <span class="tech-badge">Архитектура MVC</span>
+                        </div>
+                    </div>
+
+                    <!-- Исторический контекст -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-history me-2"></i>Исторический контекст</h4>
+                        <p class="text-light">
+                            Проект вдохновлен ранними разработками в области компьютерной графики и анимации, 
+                            включая работы Pixar над первыми 3D мультфильмами в 1990-х годах.
+                        </p>
+                        <div class="code-example mt-2">
+                            <span class="text-muted">"It will be a cartoon about toys... The natural shape of the toys will lend itself perfectly to the low-poly 3D models"</span>
+                            <span class="text-muted">- John Lasseter, Pixar</span>
+                        </div>
+                    </div>
+
+                    <!-- Ссылки проекта -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-external-link-alt me-2"></i>Ссылки</h4>
+                        <div class="project-links">
+                            <a href="https://github.com/mbrmj875/3dviewer_v2" class="btn btn-outline-primary w-100 mb-2">
+                                <i class="fab fa-github me-2"></i>Просмотр исходного кода
+                            </a>
+                      
+                            <a href="https://github.com/mbrmj875/3dviewer_v2/archive/refs/heads/main.zip" class="btn btn-outline-success w-100">
+                                <i class="fas fa-download me-2"></i>Скачать проект
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

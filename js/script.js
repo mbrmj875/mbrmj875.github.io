@@ -85,7 +85,7 @@ function updateLanguageUI(lang) {
 
 function updatePageTitle(lang) {
     const titles = {
-        'ar': 'محمد الباقر | مطور برمجيات وهندسة ذكاء اصطناعي',
+        'ar': 'Мухаммад Аль-Багер | Разработка ПО и ИИ',
         'en': 'Muhammad Al-Bagher | Software & AI Engineering',
         'ru': 'Мухаммад Аль-Багер | Разработка ПО и ИИ'
     };
@@ -252,7 +252,7 @@ function initTypewriter() {
     
     const currentLang = localStorage.getItem('selectedLang') || 'ar';
     const names = {
-        'ar': 'محمد الباقر',
+        'ar': 'Мухаммад Аль-Багер',
         'en': 'Muhammad Al-Bagher',
         'ru': 'Мухаммад Аль-Багер'
     };
