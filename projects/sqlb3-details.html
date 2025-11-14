@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Day 02 - Relational Algebra & JOINs</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0a1a2a;
+            --secondary-color: #0d2342;
+            --accent-color: #0066cc;
+            --highlight-color: #00d9ff;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0f0f0f;
+            color: #e0e0e0;
+            line-height: 1.6;
+            text-align: left;
+        }
+        
+        .project-detail-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 4rem 0;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        .project-feature-card {
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border: 1px solid #404040;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .project-feature-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-5px);
+        }
+        
+        .tech-badge {
+            background: linear-gradient(135deg, var(--accent-color), #0088ff);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 0.3rem;
+            display: inline-block;
+        }
+        
+        .code-example {
+            background: #1a1a1a;
+            border: 1px solid #404040;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            direction: ltr;
+            text-align: left;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--highlight-color);
+            margin-bottom: 1rem;
+        }
+        
+        .database-structure {
+            background: var(--secondary-color);
+            border: 2px solid var(--highlight-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .back-button {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+        
+        .back-button:hover {
+            color: var(--highlight-color);
+        }
+        
+        .exercise-card {
+            background: #1e1e1e;
+            border-left: 4px solid var(--accent-color);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .exercise-number {
+            background: var(--accent-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+        
+        .schema-image {
+            max-width: 100%;
+            border-radius: 10px;
+            border: 1px solid #404040;
+        }
+        
+        .table-info {
+            background: #2a2a2a;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .table-name {
+            color: var(--highlight-color);
+            font-weight: bold;
+        }
+
+        .project-badge {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .section-padding {
+            padding: 4rem 0;
+        }
+
+        /* Relational Algebra Tree Styles */
+        .algebra-tree {
+            background: #1a1a1a;
+            border: 2px solid #404040;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .tree-node {
+            display: inline-block;
+            background: #2a2a2a;
+            border: 2px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 0.5rem;
+            min-width: 100px;
+            position: relative;
+        }
+
+        .tree-operator {
+            background: #0d2342;
+            border: 2px solid var(--highlight-color);
+        }
+
+        .tree-relation {
+            background: #1e3a5f;
+            border: 2px solid #00d9ff;
+        }
+
+        .tree-arrow {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin: 0.5rem 0;
+        }
+
+        .tree-level {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .tree-connection {
+            width: 2px;
+            height: 20px;
+            background: var(--accent-color);
+            margin: 0 auto;
+        }
+
+        .pseudo-code {
+            background: #1a1a1a;
+            border: 2px solid var(--accent-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .join-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .join-type {
+            background: #2a2a2a;
+            border: 1px solid #404040;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .join-icon {
+            font-size: 2rem;
+            color: var(--highlight-color);
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a href="../index.html#academic-projects" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Назад к проектам
+            </a>
+        </div>
+    </nav>
+
+    <!-- Project Header -->
+    <section class="project-detail-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="project-badge">SQL Проект</div>
+                    <h1 class="display-4 fw-bold text-white mt-3">SQL Day 02 - Реляционная алгебра и JOIN операции</h1>
+                    <p class="lead text-light mb-4">Изучение основ реляционной алгебры и различных типов JOIN операций в PostgreSQL</p>
+                    
+                    <div class="project-meta">
+                        <span class="text-light me-4"><i class="fas fa-database me-2"></i>PostgreSQL</span>
+                        <span class="text-light me-4"><i class="fas fa-project-diagram me-2"></i>Relational Algebra</span>
+                        <span class="text-light"><i class="fas fa-star me-2"></i>Продвинутый уровень</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="tech-stack">
+                        <span class="tech-badge">JOIN</span>
+                        <span class="tech-badge">CTE</span>
+                        <span class="tech-badge">Algebra</span>
+                        <span class="tech-badge">Optimization</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Content -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <!-- Main Content -->
+                <div class="col-lg-8">
+                    <!-- Relational Algebra -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Реляционная алгебра и дерево выражений</h3>
+                            <div class="text-center mb-4">
+                            <img src="/images/Screenshot 2025-11-13 at 14.58.18.png" alt="Database Schema" class="schema-image">
+                        </div>
+                        <!-- Relational Algebra Tree -->
+                        <div class="algebra-tree">
+                            <div class="tree-level">
+                                <div class="tree-node tree-operator">
+                                    <div class="tree-title">SELECT *</div>
+                                    <div class="tree-subtitle">σ (WHERE clause)</div>
+                                </div>
+                            </div>
+                            <div class="tree-connection"></div>
+                            <div class="tree-level">
+                                <div class="tree-node tree-operator">
+                                    <div class="tree-title">CROSS JOIN</div>
+                                    <div class="tree-subtitle">×</div>
+                                </div>
+                            </div>
+                            <div class="tree-connection"></div>
+                            <div class="tree-level">
+                                <div class="tree-node tree-relation">
+                                    <div class="tree-title">Relation R</div>
+                                </div>
+                                <div class="tree-node tree-relation">
+                                    <div class="tree-title">Relation S</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="text-light mt-4">
+                            Это дерево выражений соответствует SQL запросу:
+                        </p>
+                        <div class="code-example">
+                            SELECT *<br>
+                            FROM R CROSS JOIN S<br>
+                            WHERE clause
+                        </div>
+
+                        <h5 class="text-warning mt-4">Псевдокод операции JOIN</h5>
+                        <div class="pseudo-code">
+                            FOR r in R LOOP<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;FOR s in S LOOP<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if r.id = s.r_id then add(r,s)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;END;<br>
+                            END;
+                        </div>
+                    </div>
+
+                    <!-- Join Types -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Типы JOIN операций в реляционной алгебре</h3>
+                        
+                        <div class="join-types">
+                            <div class="join-type">
+                                <div class="join-icon">
+                                    <i class="fas fa-arrows-alt-h"></i>
+                                </div>
+                                <h5 class="text-info">Natural Join</h5>
+                                <p class="text-light">Естественное соединение по общим атрибутам</p>
+                            </div>
+                            <div class="join-type">
+                                <div class="join-icon">
+                                    <i class="fas fa-filter"></i>
+                                </div>
+                                <h5 class="text-info">Theta Join</h5>
+                                <p class="text-light">Соединение с условием θ</p>
+                            </div>
+                            <div class="join-type">
+                                <div class="join-icon">
+                                    <i class="fas fa-half-circle"></i>
+                                </div>
+                                <h5 class="text-info">Semi Join</h5>
+                                <p class="text-light">Полусоединение</p>
+                            </div>
+                            <div class="join-type">
+                                <div class="join-icon">
+                                    <i class="fas fa-ban"></i>
+                                </div>
+                                <h5 class="text-info">Anti Join</h5>
+                                <p class="text-light">Анти-соединение</p>
+                            </div>
+                            <div class="join-type">
+                                <div class="join-icon">
+                                    <i class="fas fa-arrow-left"></i>
+                                </div>
+                                <h5 class="text-info">Left Join</h5>
+                                <p class="text-light">Левое внешнее соединение</p>
+                            </div>
+                            <div class="join-type">
+                                <div class="join-icon">
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                                <h5 class="text-info">Right Join</h5>
+                                <p class="text-light">Правое внешнее соединение</p>
+                            </div>
+                            <div class="join-type">
+                                <div class="join-icon">
+                                    <i class="fas fa-arrows-alt-h"></i>
+                                </div>
+                                <h5 class="text-info">Full Join</h5>
+                                <p class="text-light">Полное внешнее соединение</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Database Structure -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-sitemap"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Структура базы данных</h3>
+                           <div class="text-center mb-4">
+                            <img src="/images/vbn.png" alt="Database Schema" class="schema-image">
+                        </div>
+                        <div class="database-structure">
+                            <div class="table-info">
+                                <h6 class="table-name">pizzeria</h6>
+                                <p class="text-light mb-1">- id: bigint (первичный ключ)</p>
+                                <p class="text-light mb-1">- name: varchar</p>
+                                <p class="text-light">- rating: numeric</p>
+                            </div>
+                            
+                            <div class="table-info">
+                                <h6 class="table-name">person</h6>
+                                <p class="text-light mb-1">- id: bigint (первичный ключ)</p>
+                                <p class="text-light mb-1">- name: varchar</p>
+                                <p class="text-light mb-1">- age: integer</p>
+                                <p class="text-light mb-1">- gender: varchar</p>
+                                <p class="text-light">- address: varchar</p>
+                            </div>
+                            
+                            <div class="table-info">
+                                <h6 class="table-name">menu</h6>
+                                <p class="text-light mb-1">- id: bigint (первичный ключ)</p>
+                                <p class="text-light mb-1">- pizzeria_id: bigint (внешний ключ)</p>
+                                <p class="text-light mb-1">- pizza_name: varchar</p>
+                                <p class="text-light">- price: numeric</p>
+                            </div>
+
+                            <div class="table-info">
+                                <h6 class="table-name">person_visits</h6>
+                                <p class="text-light mb-1">- id: bigint (первичный ключ)</p>
+                                <p class="text-light mb-1">- person_id: bigint (внешний ключ)</p>
+                                <p class="text-light mb-1">- pizzeria_id: bigint (внешний ключ)</p>
+                                <p class="text-light">- visit_date: date</p>
+                            </div>
+
+                            <div class="table-info">
+                                <h6 class="table-name">person_order</h6>
+                                <p class="text-light mb-1">- id: bigint (первичный ключ)</p>
+                                <p class="text-light mb-1">- person_id: bigint (внешний ключ)</p>
+                                <p class="text-light mb-1">- menu_id: bigint (внешний ключ)</p>
+                                <p class="text-light">- order_date: date</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Exercises -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Практические упражнения</h3>
+                        
+                        <!-- Exercise 00 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">00</div>
+                                <h4 class="text-white mb-0">Упражнение 00: Движение влево, движение вправо</h4>
+                            </div>
+                            <p class="text-light">Написать SQL запрос, который возвращает список пиццерий с соответствующим рейтингом, которые не были посещены людьми.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT pz.name, pz.rating<br>
+                                FROM pizzeria pz<br>
+                                LEFT JOIN person_visits pv ON pz.id = pv.pizzeria_id<br>
+                                WHERE pv.pizzeria_id IS NULL;
+                            </div>
+                        </div>
+                        
+                        <!-- Exercise 01 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">01</div>
+                                <h4 class="text-white mb-0">Упражнение 01: Поиск пропущенных данных</h4>
+                            </div>
+                            <p class="text-light">Найти пропущенные дни с 1 по 10 января 2022 года для посещений людей с идентификаторами 1 или 2.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT generate_series('2022-01-01'::date, <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;'2022-01-10'::date, '1 day'::interval)::date AS missing_date<br>
+                                EXCEPT<br>
+                                SELECT visit_date<br>
+                                FROM person_visits<br>
+                                WHERE person_id IN (1, 2)<br>
+                                ORDER BY missing_date;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 02 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">02</div>
+                                <h4 class="text-white mb-0">Упражнение 02: FULL означает 'полностью заполнен'</h4>
+                            </div>
+                            <p class="text-light">Вернуть полный список имен людей и пиццерий с 1 по 3 января 2022 года.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT <br>
+                                &nbsp;&nbsp;COALESCE(p.name, '-') AS person_name,<br>
+                                &nbsp;&nbsp;pv.visit_date,<br>
+                                &nbsp;&nbsp;COALESCE(pz.name, '-') AS pizzeria_name<br>
+                                FROM person p<br>
+                                FULL JOIN person_visits pv ON p.id = pv.person_id<br>
+                                FULL JOIN pizzeria pz ON pv.pizzeria_id = pz.id<br>
+                                WHERE pv.visit_date BETWEEN '2022-01-01' AND '2022-01-03'<br>
+                                &nbsp;&nbsp;OR pv.visit_date IS NULL<br>
+                                ORDER BY person_name, visit_date, pizzeria_name;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 03 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">03</div>
+                                <h4 class="text-white mb-0">Упражнение 03: Преобразование в CTE</h4>
+                            </div>
+                            <p class="text-light">Переписать SQL из Упражнения 01 с использованием CTE (Common Table Expression).</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                WITH date_series AS (<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;SELECT generate_series('2022-01-01'::date, <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'2022-01-10'::date, '1 day'::interval)::date AS day<br>
+                                )<br>
+                                SELECT day AS missing_date<br>
+                                FROM date_series<br>
+                                LEFT JOIN person_visits pv ON date_series.day = pv.visit_date <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;AND pv.person_id IN (1, 2)<br>
+                                WHERE pv.visit_date IS NULL<br>
+                                ORDER BY missing_date;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 04 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">04</div>
+                                <h4 class="text-white mb-0">Упражнение 04: Поиск любимых пицц</h4>
+                            </div>
+                            <p class="text-light">Найти информацию о всех возможных названиях пиццерий и ценах на грибную или пепперони пиццу.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT m.pizza_name, pz.name AS pizzeria_name, m.price<br>
+                                FROM menu m<br>
+                                JOIN pizzeria pz ON m.pizzeria_id = pz.id<br>
+                                WHERE m.pizza_name IN ('mushroom pizza', 'pepperoni pizza')<br>
+                                ORDER BY m.pizza_name, pz.name;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 05 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">05</div>
+                                <h4 class="text-white mb-0">Упражнение 05: Исследование данных о людях</h4>
+                            </div>
+                            <p class="text-light">Найти имена всех женщин старше 25 лет.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT name<br>
+                                FROM person<br>
+                                WHERE gender = 'female' AND age > 25<br>
+                                ORDER BY name;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 06 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">06</div>
+                                <h4 class="text-white mb-0">Упражнение 06: Любимые пиццы Дениса и Анны</h4>
+                            </div>
+                            <p class="text-light">Найти все названия пицц (и соответствующие названия пиццерий), заказанные Денисом или Анной.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT m.pizza_name, pz.name AS pizzeria_name<br>
+                                FROM person_order po<br>
+                                JOIN person p ON po.person_id = p.id<br>
+                                JOIN menu m ON po.menu_id = m.id<br>
+                                JOIN pizzeria pz ON m.pizzeria_id = pz.id<br>
+                                WHERE p.name IN ('Denis', 'Anna')<br>
+                                ORDER BY m.pizza_name, pz.name;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 07 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">07</div>
+                                <h4 class="text-white mb-0">Упражнение 07: Самая дешевая пиццерия для Дмитрия</h4>
+                            </div>
+                            <p class="text-light">Найти название пиццерии, которую Дмитрий посетил 8 января 2022 года и мог съесть пиццу дешевле 800 рублей.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT pz.name<br>
+                                FROM person_visits pv<br>
+                                JOIN pizzeria pz ON pv.pizzeria_id = pz.id<br>
+                                JOIN menu m ON pz.id = m.pizzeria_id<br>
+                                JOIN person p ON pv.person_id = p.id<br>
+                                WHERE p.name = 'Dmitriy'<br>
+                                &nbsp;&nbsp;AND pv.visit_date = '2022-01-08'<br>
+                                &nbsp;&nbsp;AND m.price < 800;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 08 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">08</div>
+                                <h4 class="text-white mb-0">Упражнение 08: Продолжение исследования данных</h4>
+                            </div>
+                            <p class="text-light">Найти имена всех мужчин из Москвы или Самары, которые заказали пепперони или грибную пиццу.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT DISTINCT p.name<br>
+                                FROM person p<br>
+                                JOIN person_order po ON p.id = po.person_id<br>
+                                JOIN menu m ON po.menu_id = m.id<br>
+                                WHERE p.gender = 'male'<br>
+                                &nbsp;&nbsp;AND p.address IN ('Moscow', 'Samara')<br>
+                                &nbsp;&nbsp;AND m.pizza_name IN ('pepperoni pizza', 'mushroom pizza')<br>
+                                ORDER BY p.name DESC;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 09 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">09</div>
+                                <h4 class="text-white mb-0">Упражнение 09: Кто любит сыр и пепперони?</h4>
+                            </div>
+                            <p class="text-light">Найти имена всех женщин, которые заказали и пепперони, и сырную пиццу.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT p.name<br>
+                                FROM person p<br>
+                                WHERE p.gender = 'female'<br>
+                                &nbsp;&nbsp;AND EXISTS (<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;SELECT 1 FROM person_order po<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;JOIN menu m ON po.menu_id = m.id<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;WHERE po.person_id = p.id<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AND m.pizza_name = 'pepperoni pizza'<br>
+                                &nbsp;&nbsp;)<br>
+                                &nbsp;&nbsp;AND EXISTS (<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;SELECT 1 FROM person_order po<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;JOIN menu m ON po.menu_id = m.id<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;WHERE po.person_id = p.id<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AND m.pizza_name = 'cheese pizza'<br>
+                                &nbsp;&nbsp;)<br>
+                                ORDER BY p.name;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 10 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">10</div>
+                                <h4 class="text-white mb-0">Упражнение 10: Найти людей из одного города</h4>
+                            </div>
+                            <p class="text-light">Найти имена людей, которые живут по одному адресу (в одном городе).</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT <br>
+                                &nbsp;&nbsp;p1.name AS person_name1,<br>
+                                &nbsp;&nbsp;p2.name AS person_name2,<br>
+                                &nbsp;&nbsp;p1.address AS common_address<br>
+                                FROM person p1<br>
+                                JOIN person p2 ON p1.address = p2.address<br>
+                                WHERE p1.id > p2.id<br>
+                                ORDER BY person_name1, person_name2, common_address;
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+                    <!-- Technical Information -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-cogs me-2"></i>Техническая информация</h4>
+                        <div class="tech-info">
+                            <div class="mb-3">
+                                <strong class="text-info">База данных:</strong>
+                                <span class="text-light">PostgreSQL</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Стандарт SQL:</strong>
+                                <span class="text-light">ANSI SQL</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Количество упражнений:</strong>
+                                <span class="text-light">10 упражнений</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Уровень:</strong>
+                                <span class="text-light">Продвинутый</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Фокус:</strong>
+                                <span class="text-light">Реляционная алгебра</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Relational Algebra Concepts -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-sitemap me-2"></i>Концепции реляционной алгебры</h4>
+                        <div class="code-example">
+                            <span class="text-success">-- Базовые операции</span><br>
+                            σ (selection) - выборка<br>
+                            π (projection) - проекция<br>
+                            × (cross join) - декартово произведение<br>
+                            ⋈ (natural join) - естественное соединение<br>
+                            ∪ (union) - объединение<br>
+                            − (difference) - разность<br><br>
+                            
+                            <span class="text-success">-- Производные операции</span><br>
+                            θ-join (theta join)<br>
+                            semi-join<br>
+                            anti-join<br>
+                            outer joins
+                        </div>
+                    </div>
+
+                    <!-- Key Concepts -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-lightbulb me-2"></i>Ключевые концепции</h4>
+                        <ul class="text-light">
+                            <li>Деревья реляционных выражений</li>
+                            <li>Оптимизация планов запросов</li>
+                            <li>Семантика SQL запросов</li>
+                            <li>Различные типы JOIN операций</li>
+                            <li>Использование CTE</li>
+                            <li>Генерация последовательностей дат</li>
+                            <li>Работа с NULL значениями</li>
+                        </ul>
+                    </div>
+
+                    <!-- Skills Used -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-code me-2"></i>Использованные навыки</h4>
+                        <div class="skills-used">
+                            <span class="tech-badge">LEFT JOIN</span>
+                            <span class="tech-badge">FULL JOIN</span>
+                            <span class="tech-badge">CTE</span>
+                            <span class="tech-badge">EXISTS</span>
+                            <span class="tech-badge">generate_series</span>
+                            <span class="tech-badge">COALESCE</span>
+                            <span class="tech-badge">Relational Algebra</span>
+                            <span class="tech-badge">Query Optimization</span>
+                        </div>
+                    </div>
+
+                    <!-- Project Links -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-external-link-alt me-2"></i>Ссылки</h4>
+                        <div class="project-links">
+                            <a href="https://github.com/mbrmj875/SQLB/blob/main/SQLB3_Retrieving_data.ID_574089-1/src/SQLQuery_1.sql" class="btn btn-outline-primary w-100 mb-2">
+                                <i class="fab fa-github me-2"></i>Исходный код
+                            </a>
+                            <a href="https://github.com/mbrmj875/SQLB/archive/refs/heads/main.zip" class="btn btn-outline-success w-100">
+                                <i class="fas fa-download me-2"></i>Скачать проект
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

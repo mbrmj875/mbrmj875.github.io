@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Day 03 - Relational Theory & DML Operations</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0a1a2a;
+            --secondary-color: #0d2342;
+            --accent-color: #0066cc;
+            --highlight-color: #00d9ff;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0f0f0f;
+            color: #e0e0e0;
+            line-height: 1.6;
+            text-align: left;
+        }
+        
+        .project-detail-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 4rem 0;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        .project-feature-card {
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border: 1px solid #404040;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .project-feature-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-5px);
+        }
+        
+        .tech-badge {
+            background: linear-gradient(135deg, var(--accent-color), #0088ff);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 0.3rem;
+            display: inline-block;
+        }
+        
+        .code-example {
+            background: #1a1a1a;
+            border: 1px solid #404040;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            direction: ltr;
+            text-align: left;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--highlight-color);
+            margin-bottom: 1rem;
+        }
+        
+        .database-structure {
+            background: var(--secondary-color);
+            border: 2px solid var(--highlight-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .back-button {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+        
+        .back-button:hover {
+            color: var(--highlight-color);
+        }
+        
+        .exercise-card {
+            background: #1e1e1e;
+            border-left: 4px solid var(--accent-color);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .exercise-number {
+            background: var(--accent-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+        
+        .schema-image {
+            max-width: 100%;
+            border-radius: 10px;
+            border: 1px solid #404040;
+        }
+        
+        .table-info {
+            background: #2a2a2a;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .table-name {
+            color: var(--highlight-color);
+            font-weight: bold;
+        }
+
+        .project-badge {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .section-padding {
+            padding: 4rem 0;
+        }
+
+        /* Relational Theory Styles */
+        .relational-theory {
+            background: #1a1a1a;
+            border: 2px solid #404040;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .theory-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border-left: 4px solid var(--accent-color);
+            background: #2a2a2a;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .theory-title {
+            color: var(--highlight-color);
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .math-notation {
+            background: #0d2342;
+            border: 1px solid var(--highlight-color);
+            border-radius: 5px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .operation-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .operation-column {
+            background: #2a2a2a;
+            border: 1px solid #404040;
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .column-title {
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .operation-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a href="../index.html#academic-projects" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Назад к проектам
+            </a>
+        </div>
+    </nav>
+
+    <!-- Project Header -->
+    <section class="project-detail-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="project-badge">SQL Проект</div>
+                    <h1 class="display-4 fw-bold text-white mt-3">SQL Day 03 - Теория отношений и DML операции</h1>
+                    <p class="lead text-light mb-4">Математические основы реляционных баз данных и операции INSERT, UPDATE, DELETE</p>
+                    
+                    <div class="project-meta">
+                        <span class="text-light me-4"><i class="fas fa-database me-2"></i>PostgreSQL</span>
+                        <span class="text-light me-4"><i class="fas fa-calculator me-2"></i>Relational Theory</span>
+                        <span class="text-light"><i class="fas fa-star me-2"></i>Продвинутый уровень</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="tech-stack">
+                        <span class="tech-badge">DML</span>
+                        <span class="tech-badge">INSERT</span>
+                        <span class="tech-badge">UPDATE</span>
+                        <span class="tech-badge">DELETE</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Content -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <!-- Main Content -->
+                <div class="col-lg-8">
+                    <!-- Relational Theory -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Теория отношений - математическая основа баз данных</h3>
+                                  <div class="image-container">
+                            <img src="/images/D03_02.png" alt="Clean Architecture" class="explanation-image">
+                            <div class="image-caption"></div>
+                        </div>
+                        <div class="relational-theory">
+                            <div class="theory-section">
+                        
+
+                                <h4 class="theory-title">Оператор INSERT с математической точки зрения</h4>
+                                <div class="operation-comparison">
+                                    <div class="operation-column">
+                                        <div class="column-title">Математическая запись</div>
+                                        <div class="math-notation">
+                                            INSERT rel RELATION {<br>
+                                            &nbsp;&nbsp;TUPLE {<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;A INTEGER(4),<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;B INTEGER(4), <br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;C STRING ('Hello')<br>
+                                            &nbsp;&nbsp;}<br>
+                                            };
+                                        </div>
+                                    </div>
+                                    <div class="operation-column">
+                                        <div class="column-title">Через UNION</div>
+                                        <div class="math-notation">
+                                            rel := rel UNION <br>
+                                            RELATION {<br>
+                                            &nbsp;&nbsp;TUPLE {<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;A INTEGER(4),<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;B INTEGER(7),<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;C STRING ('Hello')<br>
+                                            &nbsp;&nbsp;}<br>
+                                            };
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="theory-section">
+                                <h4 class="theory-title">Оператор DELETE с математической точки зрения</h4>
+                                <div class="operation-comparison">
+                                    <div class="operation-column">
+                                        <div class="column-title">Прямой способ</div>
+                                        <div class="math-notation">
+                                            DELETE rel <br>
+                                            WHERE A = 1;
+                                        </div>
+                                    </div>
+                                    <div class="operation-column">
+                                        <div class="column-title">Через присваивание</div>
+                                        <div class="math-notation">
+                                            rel := rel <br>
+                                            WHERE NOT (A = 1);
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="theory-section">
+                                <h4 class="theory-title">Оператор UPDATE с математической точки зрения</h4>
+                                <div class="operation-comparison">
+                                    <div class="operation-column">
+                                        <div class="column-title">Прямой способ</div>
+                                        <div class="math-notation">
+                                            UPDATE rel <br>
+                                            WHERE A = 1 {<br>
+                                            &nbsp;&nbsp;B := 23 * A,<br>
+                                            &nbsp;&nbsp;C := 'String #4'<br>
+                                            };
+                                        </div>
+                                    </div>
+                                    <div class="operation-column">
+                                        <div class="column-title">Через CTE и множества</div>
+                                        <div class="math-notation">
+                                            rel := WITH<br>
+                                            &nbsp;&nbsp;(rel WHERE A = 1) AS T1,<br>
+                                            &nbsp;&nbsp;(EXTEND T1 ADD <br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;(23*A AS NEW_B, <br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;'String #4' AS NEW_C)) AS T2,<br>
+                                            &nbsp;&nbsp;T2 {ALL BUT B,C} AS T3,<br>
+                                            &nbsp;&nbsp;(T3 RENAME <br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;(NEW_B AS B, NEW_C AS C)) AS T4:<br>
+                                            &nbsp;&nbsp;(S MINUS T1) UNION T4;
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="text-light mt-4">
+                            <strong>UPDATE = DELETE + INSERT</strong> - это фундаментальное понятие в реляционных базах данных. 
+                            При обновлении данных старая версия строки помечается как "Tombstone" (надгробие), 
+                            а новая версия вставляется в таблицу. Большое количество Tombstones может негативно 
+                            повлиять на производительность (TPS метрику).
+                        </p>
+                    </div>
+
+                    <!-- Database Structure -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-sitemap"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Структура базы данных</h3>
+                        
+                        <div class="text-center mb-4">
+                            <img src="/images/vbn.png" alt="Database Schema" class="schema-image">
+                        </div>
+                        
+                        <div class="database-structure">
+                            <h5 class="text-warning">📊 Основные таблицы базы данных</h5>
+                            
+                            <div class="table-info">
+                                <h6 class="table-name">pizzeria</h6>
+                                <p class="text-light mb-1">- id: первичный ключ</p>
+                                <p class="text-light mb-1">- name: название пиццерии</p>
+                                <p class="text-light">- rating: средний рейтинг (0-5)</p>
+                            </div>
+                            
+                            <div class="table-info">
+                                <h6 class="table-name">person</h6>
+                                <p class="text-light mb-1">- id: первичный ключ</p>
+                                <p class="text-light mb-1">- name: имя</p>
+                                <p class="text-light mb-1">- age: возраст</p>
+                                <p class="text-light mb-1">- gender: пол</p>
+                                <p class="text-light">- address: адрес</p>
+                            </div>
+                            
+                            <div class="table-info">
+                                <h6 class="table-name">menu</h6>
+                                <p class="text-light mb-1">- id: первичный ключ</p>
+                                <p class="text-light mb-1">- pizzeria_id: внешний ключ</p>
+                                <p class="text-light mb-1">- pizza_name: название пиццы</p>
+                                <p class="text-light">- price: цена</p>
+                            </div>
+
+                            <div class="table-info">
+                                <h6 class="table-name">person_visits</h6>
+                                <p class="text-light mb-1">- id: первичный ключ</p>
+                                <p class="text-light mb-1">- person_id: внешний ключ</p>
+                                <p class="text-light mb-1">- pizzeria_id: внешний ключ</p>
+                                <p class="text-light">- visit_date: дата посещения</p>
+                            </div>
+
+                            <div class="table-info">
+                                <h6 class="table-name">person_order</h6>
+                                <p class="text-light mb-1">- id: первичный ключ</p>
+                                <p class="text-light mb-1">- person_id: внешний ключ</p>
+                                <p class="text-light mb-1">- menu_id: внешний ключ</p>
+                                <p class="text-light">- order_date: дата заказа</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Exercises -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Практические упражнения</h3>
+                        
+                        <!-- Exercise 00 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">00</div>
+                                <h4 class="text-white mb-0">Упражнение 00: Найдем подходящие цены для Кейт</h4>
+                            </div>
+                            <p class="text-light">Вернуть список названий пицц, цен, названий пиццерий и дат посещений для Кейт с ценами от 800 до 1000 рублей.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT <br>
+                                &nbsp;&nbsp;m.pizza_name,<br>
+                                &nbsp;&nbsp;m.price,<br>
+                                &nbsp;&nbsp;pz.name AS pizzeria_name,<br>
+                                &nbsp;&nbsp;pv.visit_date<br>
+                                FROM person_visits pv<br>
+                                JOIN pizzeria pz ON pv.pizzeria_id = pz.id<br>
+                                JOIN menu m ON pz.id = m.pizzeria_id<br>
+                                JOIN person p ON pv.person_id = p.id<br>
+                                WHERE p.name = 'Kate'<br>
+                                &nbsp;&nbsp;AND m.price BETWEEN 800 AND 1000<br>
+                                ORDER BY m.pizza_name, m.price, pz.name;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 01 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">01</div>
+                                <h4 class="text-white mb-0">Упражнение 01: Найдем забытые меню</h4>
+                            </div>
+                            <p class="text-light">Найти все идентификаторы меню, которые никто не заказывал.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT id AS menu_id<br>
+                                FROM menu<br>
+                                WHERE id NOT IN (<br>
+                                &nbsp;&nbsp;SELECT DISTINCT menu_id<br>
+                                &nbsp;&nbsp;FROM person_order<br>
+                                )<br>
+                                ORDER BY menu_id;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 02 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">02</div>
+                                <h4 class="text-white mb-0">Упражнение 02: Найдем забытые пиццы и пиццерии</h4>
+                            </div>
+                            <p class="text-light">Показать названия пицц из пиццерий, которые никто не заказывал.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT <br>
+                                &nbsp;&nbsp;m.pizza_name,<br>
+                                &nbsp;&nbsp;m.price,<br>
+                                &nbsp;&nbsp;pz.name AS pizzeria_name<br>
+                                FROM menu m<br>
+                                JOIN pizzeria pz ON m.pizzeria_id = pz.id<br>
+                                WHERE m.id NOT IN (<br>
+                                &nbsp;&nbsp;SELECT DISTINCT menu_id<br>
+                                &nbsp;&nbsp;FROM person_order<br>
+                                )<br>
+                                ORDER BY m.pizza_name, m.price;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 03 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">03</div>
+                                <h4 class="text-white mb-0">Упражнение 03: Сравним посещения</h4>
+                            </div>
+                            <p class="text-light">Найти пиццерии, которые чаще посещались женщинами или мужчинами.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                (SELECT pz.name AS pizzeria_name<br>
+                                FROM person_visits pv<br>
+                                JOIN pizzeria pz ON pv.pizzeria_id = pz.id<br>
+                                JOIN person p ON pv.person_id = p.id<br>
+                                WHERE p.gender = 'female'<br>
+                                EXCEPT ALL<br>
+                                SELECT pz.name<br>
+                                FROM person_visits pv<br>
+                                JOIN pizzeria pz ON pv.pizzeria_id = pz.id<br>
+                                JOIN person p ON pv.person_id = p.id<br>
+                                WHERE p.gender = 'male')<br>
+                                UNION ALL<br>
+                                (SELECT pz.name<br>
+                                FROM person_visits pv<br>
+                                JOIN pizzeria pz ON pv.pizzeria_id = pz.id<br>
+                                JOIN person p ON pv.person_id = p.id<br>
+                                WHERE p.gender = 'male'<br>
+                                EXCEPT ALL<br>
+                                SELECT pz.name<br>
+                                FROM person_visits pv<br>
+                                JOIN pizzeria pz ON pv.pizzeria_id = pz.id<br>
+                                JOIN person p ON pv.person_id = p.id<br>
+                                WHERE p.gender = 'female')<br>
+                                ORDER BY pizzeria_name;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 04 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">04</div>
+                                <h4 class="text-white mb-0">Упражнение 04: Сравним заказы</h4>
+                            </div>
+                            <p class="text-light">Найти объединение пиццерий, которые заказывали только женщины и только мужчины.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                (SELECT pz.name AS pizzeria_name<br>
+                                FROM person_order po<br>
+                                JOIN menu m ON po.menu_id = m.id<br>
+                                JOIN pizzeria pz ON m.pizzeria_id = pz.id<br>
+                                JOIN person p ON po.person_id = p.id<br>
+                                WHERE p.gender = 'female'<br>
+                                EXCEPT<br>
+                                SELECT pz.name<br>
+                                FROM person_order po<br>
+                                JOIN menu m ON po.menu_id = m.id<br>
+                                JOIN pizzeria pz ON m.pizzeria_id = pz.id<br>
+                                JOIN person p ON po.person_id = p.id<br>
+                                WHERE p.gender = 'male')<br>
+                                UNION<br>
+                                (SELECT pz.name<br>
+                                FROM person_order po<br>
+                                JOIN menu m ON po.menu_id = m.id<br>
+                                JOIN pizzeria pz ON m.pizzeria_id = pz.id<br>
+                                JOIN person p ON po.person_id = p.id<br>
+                                WHERE p.gender = 'male'<br>
+                                EXCEPT<br>
+                                SELECT pz.name<br>
+                                FROM person_order po<br>
+                                JOIN menu m ON po.menu_id = m.id<br>
+                                JOIN pizzeria pz ON m.pizzeria_id = pz.id<br>
+                                JOIN person p ON po.person_id = p.id<br>
+                                WHERE p.gender = 'female')<br>
+                                ORDER BY pizzeria_name;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 05 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">05</div>
+                                <h4 class="text-white mb-0">Упражнение 05: Посетил, но не сделал заказ</h4>
+                            </div>
+                            <p class="text-light">Найти пиццерии, которые Андрей посетил, но не сделал заказ.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT pz.name AS pizzeria_name<br>
+                                FROM person_visits pv<br>
+                                JOIN pizzeria pz ON pv.pizzeria_id = pz.id<br>
+                                JOIN person p ON pv.person_id = p.id<br>
+                                WHERE p.name = 'Andrey'<br>
+                                EXCEPT<br>
+                                SELECT pz.name<br>
+                                FROM person_order po<br>
+                                JOIN menu m ON po.menu_id = m.id<br>
+                                JOIN pizzeria pz ON m.pizzeria_id = pz.id<br>
+                                JOIN person p ON po.person_id = p.id<br>
+                                WHERE p.name = 'Andrey'<br>
+                                ORDER BY pizzeria_name;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 06 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">06</div>
+                                <h4 class="text-white mb-0">Упражнение 06: Найдем пиццы с одинаковой ценой</h4>
+                            </div>
+                            <p class="text-light">Найти одинаковые названия пицц с одинаковой ценой из разных пиццерий.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT <br>
+                                &nbsp;&nbsp;m1.pizza_name,<br>
+                                &nbsp;&nbsp;pz1.name AS pizzeria_name_1,<br>
+                                &nbsp;&nbsp;pz2.name AS pizzeria_name_2,<br>
+                                &nbsp;&nbsp;m1.price<br>
+                                FROM menu m1<br>
+                                JOIN menu m2 ON m1.pizza_name = m2.pizza_name <br>
+                                &nbsp;&nbsp;AND m1.price = m2.price<br>
+                                &nbsp;&nbsp;AND m1.pizzeria_id != m2.pizzeria_id<br>
+                                JOIN pizzeria pz1 ON m1.pizzeria_id = pz1.id<br>
+                                JOIN pizzeria pz2 ON m2.pizzeria_id = pz2.id<br>
+                                WHERE m1.id > m2.id<br>
+                                ORDER BY m1.pizza_name;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 07 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">07</div>
+                                <h4 class="text-white mb-0">Упражнение 07: Приготовим новый тип пиццы</h4>
+                            </div>
+                            <p class="text-light">Добавить новую пиццу "greek pizza" в ресторан "Dominos".</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                INSERT INTO menu (id, pizzeria_id, pizza_name, price)<br>
+                                VALUES (19, 2, 'greek pizza', 800);
+                            </div>
+                        </div>
+
+                        <!-- Exercise 08 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">08</div>
+                                <h4 class="text-white mb-0">Упражнение 08: Динамическое добавление пиццы</h4>
+                            </div>
+                            <p class="text-light">Добавить "Sicilian pizza" с автоматическим расчетом ID.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                INSERT INTO menu (id, pizzeria_id, pizza_name, price)<br>
+                                VALUES (<br>
+                                &nbsp;&nbsp;(SELECT MAX(id) + 1 FROM menu),<br>
+                                &nbsp;&nbsp;(SELECT id FROM pizzeria WHERE name = 'Dominos'),<br>
+                                &nbsp;&nbsp;'Sicilian pizza', <br>
+                                &nbsp;&nbsp;900<br>
+                                );
+                            </div>
+                        </div>
+
+                        <!-- Exercise 09 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">09</div>
+                                <h4 class="text-white mb-0">Упражнение 09: Новые посещения</h4>
+                            </div>
+                            <p class="text-light">Зарегистрировать новые посещения Дениса и Ирины в Dominos.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                INSERT INTO person_visits (id, person_id, pizzeria_id, visit_date)<br>
+                                VALUES (<br>
+                                &nbsp;&nbsp;(SELECT MAX(id) + 1 FROM person_visits),<br>
+                                &nbsp;&nbsp;(SELECT id FROM person WHERE name = 'Denis'),<br>
+                                &nbsp;&nbsp;(SELECT id FROM pizzeria WHERE name = 'Dominos'),<br>
+                                &nbsp;&nbsp;'2022-02-24'<br>
+                                ), (<br>
+                                &nbsp;&nbsp;(SELECT MAX(id) + 2 FROM person_visits),<br>
+                                &nbsp;&nbsp;(SELECT id FROM person WHERE name = 'Irina'),<br>
+                                &nbsp;&nbsp;(SELECT id FROM pizzeria WHERE name = 'Dominos'),<br>
+                                &nbsp;&nbsp;'2022-02-24'<br>
+                                );
+                            </div>
+                        </div>
+
+                        <!-- Exercise 10 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">10</div>
+                                <h4 class="text-white mb-0">Упражнение 10: Новые заказы</h4>
+                            </div>
+                            <p class="text-light">Зарегистрировать новые заказы "Sicilian pizza" от Дениса и Ирины.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                INSERT INTO person_order (id, person_id, menu_id, order_date)<br>
+                                VALUES (<br>
+                                &nbsp;&nbsp;(SELECT MAX(id) + 1 FROM person_order),<br>
+                                &nbsp;&nbsp;(SELECT id FROM person WHERE name = 'Denis'),<br>
+                                &nbsp;&nbsp;(SELECT id FROM menu WHERE pizza_name = 'Sicilian pizza'),<br>
+                                &nbsp;&nbsp;'2022-02-24'<br>
+                                ), (<br>
+                                &nbsp;&nbsp;(SELECT MAX(id) + 2 FROM person_order),<br>
+                                &nbsp;&nbsp;(SELECT id FROM person WHERE name = 'Irina'),<br>
+                                &nbsp;&nbsp;(SELECT id FROM menu WHERE pizza_name = 'Sicilian pizza'),<br>
+                                &nbsp;&nbsp;'2022-02-24'<br>
+                                );
+                            </div>
+                        </div>
+
+                        <!-- Exercise 11 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">11</div>
+                                <h4 class="text-white mb-0">Упражнение 11: "Улучшим" цену для клиентов</h4>
+                            </div>
+                            <p class="text-light">Изменить цену "greek pizza" на -10% от текущей.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                UPDATE menu<br>
+                                SET price = price * 0.9<br>
+                                WHERE pizza_name = 'greek pizza';
+                            </div>
+                        </div>
+
+                        <!-- Exercise 12 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">12</div>
+                                <h4 class="text-white mb-0">Упражнение 12: Приходят новые заказы!</h4>
+                            </div>
+                            <p class="text-light">Зарегистрировать заказы "greek pizza" от всех людей на 25 февраля 2022.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                INSERT INTO person_order (id, person_id, menu_id, order_date)<br>
+                                SELECT <br>
+                                &nbsp;&nbsp;gs,<br>
+                                &nbsp;&nbsp;p.id,<br>
+                                &nbsp;&nbsp;(SELECT id FROM menu WHERE pizza_name = 'greek pizza'),<br>
+                                &nbsp;&nbsp;'2022-02-25'<br>
+                                FROM <br>
+                                &nbsp;&nbsp;person p,<br>
+                                &nbsp;&nbsp;generate_series(<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;(SELECT MAX(id) + 1 FROM person_order),<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;(SELECT MAX(id) FROM person_order) + <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(SELECT COUNT(*) FROM person)<br>
+                                &nbsp;&nbsp;) AS gs<br>
+                                WHERE gs = (SELECT MAX(id) FROM person_order) + <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;(SELECT row_number() OVER () FROM person LIMIT 1 OFFSET gs - <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;(SELECT MAX(id) + 1 FROM person_order));
+                            </div>
+                        </div>
+
+                        <!-- Exercise 13 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">13</div>
+                                <h4 class="text-white mb-0">Упражнение 13: Возврат денег клиентам</h4>
+                            </div>
+                            <p class="text-light">Удалить новые заказы и "greek pizza" из меню.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                <span class="text-success">-- 1. Удаляем заказы</span><br>
+                                DELETE FROM person_order<br>
+                                WHERE order_date = '2022-02-25'<br>
+                                &nbsp;&nbsp;AND menu_id = (SELECT id FROM menu WHERE pizza_name = 'greek pizza');<br><br>
+
+                                <span class="text-success">-- 2. Удаляем пиццу из меню</span><br>
+                                DELETE FROM menu<br>
+                                WHERE pizza_name = 'greek pizza';
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+                    <!-- Technical Information -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-cogs me-2"></i>Техническая информация</h4>
+                        <div class="tech-info">
+                            <div class="mb-3">
+                                <strong class="text-info">База данных:</strong>
+                                <span class="text-light">PostgreSQL</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Тип операций:</strong>
+                                <span class="text-light">DML (Data Manipulation)</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Количество упражнений:</strong>
+                                <span class="text-light">13 упражнений</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Уровень:</strong>
+                                <span class="text-light">Продвинутый</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Фокус:</strong>
+                                <span class="text-light">Теория отношений</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DML Operations -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-database me-2"></i>DML Операции</h4>
+                        <div class="code-example">
+                            <span class="text-success">-- INSERT</span><br>
+                            INSERT INTO table (col1, col2)<br>
+                            VALUES (val1, val2);<br><br>
+
+                            <span class="text-success">-- UPDATE</span><br>
+                            UPDATE table<br>
+                            SET col1 = new_val<br>
+                            WHERE condition;<br><br>
+
+                            <span class="text-success">-- DELETE</span><br>
+                            DELETE FROM table<br>
+                            WHERE condition;<br><br>
+
+                            <span class="text-success">-- SELECT + INSERT</span><br>
+                            INSERT INTO table<br>
+                            SELECT ... FROM ...;
+                        </div>
+                    </div>
+
+                    <!-- Key Concepts -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-lightbulb me-2"></i>Ключевые концепции</h4>
+                        <ul class="text-light">
+                            <li>Математические основы реляционных БД</li>
+                            <li>Теория отношений Кодда</li>
+                            <li>Операции INSERT/UPDATE/DELETE</li>
+                            <li>Концепция Tombstone</li>
+                            <li>Множественные операции</li>
+                            <li>Динамические идентификаторы</li>
+                            <li>Пакетные операции с данными</li>
+                        </ul>
+                    </div>
+
+                    <!-- Skills Used -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-code me-2"></i>Использованные навыки</h4>
+                        <div class="skills-used">
+                            <span class="tech-badge">INSERT</span>
+                            <span class="tech-badge">UPDATE</span>
+                            <span class="tech-badge">DELETE</span>
+                            <span class="tech-badge">UNION</span>
+                            <span class="tech-badge">EXCEPT</span>
+                            <span class="tech-badge">generate_series</span>
+                            <span class="tech-badge">Subqueries</span>
+                            <span class="tech-badge">Relational Theory</span>
+                        </div>
+                    </div>
+
+                    <!-- Project Links -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-external-link-alt me-2"></i>Ссылки</h4>
+                        <div class="project-links">
+                            <a href="https://github.com/mbrmj875/SQLB/blob/main/SQLB4_DML.ID_574090-1/src/SQLQuery_1.sql" class="btn btn-outline-primary w-100 mb-2">
+                                <i class="fab fa-github me-2"></i>Исходный код
+                            </a>
+                            <a href="https://github.com/mbrmj875/SQLB/archive/refs/heads/main.zip" class="btn btn-outline-success w-100">
+                                <i class="fas fa-download me-2"></i>Скачать проект
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

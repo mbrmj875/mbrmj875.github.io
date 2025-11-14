@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Day 05 - Виртуальные таблицы и материализованные представления</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0a1a2a;
+            --secondary-color: #0d2342;
+            --accent-color: #0066cc;
+            --highlight-color: #00d9ff;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0f0f0f;
+            color: #e0e0e0;
+            line-height: 1.6;
+            text-align: left;
+        }
+        
+        .project-detail-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 4rem 0;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        .project-feature-card {
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border: 1px solid #404040;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .project-feature-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-5px);
+        }
+        
+        .tech-badge {
+            background: linear-gradient(135deg, var(--accent-color), #0088ff);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 0.3rem;
+            display: inline-block;
+        }
+        
+        .code-example {
+            background: #1a1a1a;
+            border: 1px solid #404040;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            direction: ltr;
+            text-align: left;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--highlight-color);
+            margin-bottom: 1rem;
+        }
+        
+        .database-structure {
+            background: var(--secondary-color);
+            border: 2px solid var(--highlight-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .back-button {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+        
+        .back-button:hover {
+            color: var(--highlight-color);
+        }
+        
+        .exercise-card {
+            background: #1e1e1e;
+            border-left: 4px solid var(--accent-color);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .exercise-number {
+            background: var(--accent-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+        
+        .schema-image {
+            max-width: 100%;
+            border-radius: 10px;
+            border: 1px solid #404040;
+        }
+        
+        .table-info {
+            background: #2a2a2a;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .table-name {
+            color: var(--highlight-color);
+            font-weight: bold;
+        }
+
+        .project-badge {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .section-padding {
+            padding: 4rem 0;
+        }
+
+        .comparison-table {
+            background: #1a1a1a;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 2rem 0;
+        }
+
+        .comparison-header {
+            background: var(--secondary-color);
+            padding: 1rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 1px solid #404040;
+        }
+
+        .comparison-cell {
+            padding: 1rem;
+            border-right: 1px solid #404040;
+        }
+
+        .comparison-cell:last-child {
+            border-right: none;
+        }
+
+        .architecture-diagram {
+            background: #1a1a1a;
+            border: 2px solid var(--accent-color);
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .arch-level {
+            background: #2a2a2a;
+            border: 1px solid #404040;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .arch-title {
+            font-weight: bold;
+            color: var(--highlight-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .arch-arrow {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin: 0.5rem 0;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .explanation-image {
+            max-width: 100%;
+            border-radius: 10px;
+            border: 1px solid #404040;
+            margin-bottom: 1rem;
+        }
+
+        .image-caption {
+            color: #aaa;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a href="../index.html#academic-projects" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Назад к проектам
+            </a>
+        </div>
+    </nav>
+
+    <!-- Project Header -->
+    <section class="project-detail-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="project-badge">SQL Проект</div>
+                    <h1 class="display-4 fw-bold text-white mt-3">SQL Day 05 - Виртуальные таблицы и материализованные представления</h1>
+                    <p class="lead text-light mb-4">Изучение виртуальных таблиц, материализованных представлений и их применение в PostgreSQL</p>
+                    
+                    <div class="project-meta">
+                        <span class="text-light me-4"><i class="fas fa-database me-2"></i>PostgreSQL</span>
+                        <span class="text-light me-4"><i class="fas fa-eye me-2"></i>Views</span>
+                        <span class="text-light"><i class="fas fa-sync-alt me-2"></i>Materialized Views</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="tech-stack">
+                        <span class="tech-badge">VIEW</span>
+                        <span class="tech-badge">MATERIALIZED VIEW</span>
+                        <span class="tech-badge">REFRESH</span>
+                        <span class="tech-badge">SET THEORY</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Content -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <!-- Main Content -->
+                <div class="col-lg-8">
+                    <!-- Introduction -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Виртуальные таблицы и материализованные представления</h3>
+                        
+                        <p class="text-light">
+                            Зачем нам нужны виртуальные таблицы и материализованные представления в базах данных? Базы данных - это просто таблицы, не так ли? Нет, не совсем. Базы данных похожи на объектно-ориентированные языки. Помните, в Java у вас много абстракций (мы имеем в виду Java интерфейсы). Нам нужна абстракция для достижения "чистой архитектуры" и изменения объектов с минимальным влиянием на зависимости.
+                        </p>
+
+                        <p class="text-light">
+                            Более того, в реляционных базах данных существует специфический архитектурный шаблон под названием ANSI/SPARK. Этот шаблон делит объекты на три уровня:
+                        </p>
+
+                        <ul class="text-light">
+                            <li>Внешний уровень</li>
+                            <li>Концептуальный уровень</li>
+                            <li>Внутренний уровень</li>
+                        </ul>
+
+                        <p class="text-light">
+                            Поэтому мы можем сказать, что виртуальные таблицы и материализованные представления являются физическими интерфейсами между таблицами с данными и пользователем/приложением.
+                        </p>
+                    </div>
+
+                    <!-- View vs Materialized View -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Разница между View и Materialized View</h3>
+                        
+                        <div class="image-container">
+                            <img src="/images/bnnnnn.png" alt="View vs Materialized View" class="explanation-image">
+                            <div class="image-caption">Сравнение поведения View и Materialized View</div>
+                        </div>
+
+                        <div class="comparison-table">
+                            <div class="comparison-row">
+                                <div class="comparison-cell comparison-header">Аспект</div>
+                                <div class="comparison-cell comparison-header">View</div>
+                                <div class="comparison-cell comparison-header">Materialized View</div>
+                            </div>
+                            <div class="comparison-row">
+                                <div class="comparison-cell">Свежесть данных</div>
+                                <div class="comparison-cell">Всегда актуальные данные</div>
+                                <div class="comparison-cell">Требует обновления (REFRESH)</div>
+                            </div>
+                            <div class="comparison-row">
+                                <div class="comparison-cell">Производительность</div>
+                                <div class="comparison-cell">Медленнее (выполняет запрос каждый раз)</div>
+                                <div class="comparison-cell">Быстрее (предварительно вычисленные данные)</div>
+                            </div>
+                            <div class="comparison-row">
+                                <div class="comparison-cell">Изменения данных</div>
+                                <div class="comparison-cell">Может работать с INSERT/UPDATE/DELETE</div>
+                                <div class="comparison-cell">Только для чтения (ReadOnly)</div>
+                            </div>
+                            <div class="comparison-row">
+                                <div class="comparison-cell">Индексы</div>
+                                <div class="comparison-cell">Не может иметь собственные индексы</div>
+                                <div class="comparison-cell">Может иметь пользовательские индексы</div>
+                            </div>
+                            <div class="comparison-row">
+                                <div class="comparison-cell">Триггеры</div>
+                                <div class="comparison-cell">Может иметь "Instead Of" триггеры</div>
+                                <div class="comparison-cell">Ограниченная поддержка триггеров</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Clean Architecture -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Чистая архитектура в базах данных</h3>
+                        
+                        <div class="image-container">
+                            <img src="/images/Screenshot 2025-11-13 at 16.00.01.png" alt="Clean Architecture" class="explanation-image">
+                            <div class="image-caption">Архитектура Clean Architecture</div>
+                        </div>
+
+                        <div class="architecture-diagram">
+                            <div class="arch-level">
+                                <div class="arch-title">Внешний уровень (External Level)</div>
+                                <div>View, Materialized View</div>
+                            </div>
+                            <div class="arch-arrow">↓</div>
+                            <div class="arch-level">
+                                <div class="arch-title">Концептуальный уровень (Conceptual Level)</div>
+                                <div>Таблицы, связи, ограничения</div>
+                            </div>
+                            <div class="arch-arrow">↓</div>
+                            <div class="arch-level">
+                                <div class="arch-title">Внутренний уровень (Internal Level)</div>
+                                <div>Физическое хранение, индексы</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Database Structure -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-sitemap"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Структура базы данных</h3>
+                        
+                        <div class="image-container">
+                            <img src="/images/vbn.png" alt="Database Schema" class="explanation-image">
+                            <div class="image-caption">Схема базы данных пиццерии</div>
+                        </div>
+
+                        <div class="database-structure">
+                            <div class="table-info">
+                                <h6 class="table-name">pizzeria</h6>
+                                <p class="text-light mb-1">- id: bigint (первичный ключ)</p>
+                                <p class="text-light mb-1">- name: varchar</p>
+                                <p class="text-light">- rating: numeric</p>
+                            </div>
+                            
+                            <div class="table-info">
+                                <h6 class="table-name">person</h6>
+                                <p class="text-light mb-1">- id: bigint (первичный ключ)</p>
+                                <p class="text-light mb-1">- name: varchar</p>
+                                <p class="text-light mb-1">- age: integer</p>
+                                <p class="text-light mb-1">- gender: varchar</p>
+                                <p class="text-light">- address: varchar</p>
+                            </div>
+                            
+                            <div class="table-info">
+                                <h6 class="table-name">menu</h6>
+                                <p class="text-light mb-1">- id: bigint (первичный ключ)</p>
+                                <p class="text-light mb-1">- pizzeria_id: bigint (внешний ключ)</p>
+                                <p class="text-light mb-1">- pizza_name: varchar</p>
+                                <p class="text-light">- price: numeric</p>
+                            </div>
+
+                            <div class="table-info">
+                                <h6 class="table-name">person_visits</h6>
+                                <p class="text-light mb-1">- id: bigint (первичный ключ)</p>
+                                <p class="text-light mb-1">- person_id: bigint (внешний ключ)</p>
+                                <p class="text-light mb-1">- pizzeria_id: bigint (внешний ключ)</p>
+                                <p class="text-light">- visit_date: date</p>
+                            </div>
+
+                            <div class="table-info">
+                                <h6 class="table-name">person_order</h6>
+                                <p class="text-light mb-1">- id: bigint (первичный ключ)</p>
+                                <p class="text-light mb-1">- person_id: bigint (внешний ключ)</p>
+                                <p class="text-light mb-1">- menu_id: bigint (внешний ключ)</p>
+                                <p class="text-light">- order_date: date</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Exercises -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Практические упражнения</h3>
+                        
+                        <!-- Exercise 00 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">00</div>
+                                <h4 class="text-white mb-0">Упражнение 00: Создадим отдельные представления для людей</h4>
+                            </div>
+                            <p class="text-light">Создайте 2 представления базы данных (с атрибутами, аналогичными исходной таблице) на основе простой фильтрации по полу людей. Установите соответствующие имена для представлений: v_persons_female и v_persons_male.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                CREATE VIEW v_persons_female AS<br>
+                                SELECT * FROM person WHERE gender = 'female';<br><br>
+                                
+                                CREATE VIEW v_persons_male AS<br>
+                                SELECT * FROM person WHERE gender = 'male';
+                            </div>
+                        </div>
+                        
+                        <!-- Exercise 01 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">01</div>
+                                <h4 class="text-white mb-0">Упражнение 01: От частей к общему представлению</h4>
+                            </div>
+                            <p class="text-light">Используйте 2 представления из упражнения #00 и напишите SQL для получения имен женщин и мужчин в одном списке. Упорядочите по имени человека.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT name FROM v_persons_female<br>
+                                UNION ALL<br>
+                                SELECT name FROM v_persons_male<br>
+                                ORDER BY name;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 02 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">02</div>
+                                <h4 class="text-white mb-0">Упражнение 02: "Сохраним" сгенерированные даты в одном месте</h4>
+                            </div>
+                            <p class="text-light">Создайте представление базы данных v_generated_dates, которое должно "хранить" сгенерированные даты с 1 по 31 января 2022 года в типе DATE. Не забудьте упорядочить по столбцу generated_date.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                CREATE VIEW v_generated_dates AS<br>
+                                SELECT generate_series('2022-01-01'::date, <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;'2022-01-31'::date, '1 day'::interval)::date AS generated_date<br>
+                                ORDER BY generated_date;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 03 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">03</div>
+                                <h4 class="text-white mb-0">Упражнение 03: Найдем пропущенные дни посещений с помощью представления</h4>
+                            </div>
+                            <p class="text-light">Напишите SQL-запрос, который возвращает пропущенные дни для посещений людей в январе 2022 года. Используйте представление v_generated_dates для этой задачи и отсортируйте результат по столбцу missing_date.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT generated_date AS missing_date<br>
+                                FROM v_generated_dates<br>
+                                EXCEPT<br>
+                                SELECT visit_date<br>
+                                FROM person_visits<br>
+                                ORDER BY missing_date;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 04 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">04</div>
+                                <h4 class="text-white mb-0">Упражнение 04: Найдем что-то из теории множеств</h4>
+                            </div>
+                            <p class="text-light">Напишите SQL-запрос, который удовлетворяет формуле (R - S)∪(S - R). Где R - таблица person_visits с фильтром на 2 января 2022 года, S - также таблица person_visits, но с другим фильтром на 6 января 2022 года. Выполните вычисления с множествами по столбцу person_id, и этот столбец будет единственным в результате. Отсортируйте результат по столбцу person_id и представьте ваш окончательный SQL в представлении базы данных v_symmetric_union.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                CREATE VIEW v_symmetric_union AS<br>
+                                (SELECT person_id FROM person_visits<br>
+                                &nbsp;&nbsp;WHERE visit_date = '2022-01-02'<br>
+                                &nbsp;&nbsp;EXCEPT<br>
+                                &nbsp;&nbsp;SELECT person_id FROM person_visits<br>
+                                &nbsp;&nbsp;WHERE visit_date = '2022-01-06')<br>
+                                UNION<br>
+                                (SELECT person_id FROM person_visits<br>
+                                &nbsp;&nbsp;WHERE visit_date = '2022-01-06'<br>
+                                &nbsp;&nbsp;EXCEPT<br>
+                                &nbsp;&nbsp;SELECT person_id FROM person_visits<br>
+                                &nbsp;&nbsp;WHERE visit_date = '2022-01-02')<br>
+                                ORDER BY person_id;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 05 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">05</div>
+                                <h4 class="text-white mb-0">Упражнение 05: Рассчитаем цену со скидкой для каждого человека</h4>
+                            </div>
+                            <p class="text-light">Создайте представление базы данных v_price_with_discount, которое возвращает заказы человека с именем человека, названием пиццы, реальной ценой и вычисляемым столбцом discount_price (с примененной 10% скидкой и удовлетворяющим формуле price - price*0.1). Отсортируйте результат по именам людей и названиям пицц и преобразуйте столбец discount_price в целочисленный тип.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                CREATE VIEW v_price_with_discount AS<br>
+                                SELECT p.name, m.pizza_name, m.price, <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;(m.price - m.price * 0.1)::integer AS discount_price<br>
+                                FROM person_order po<br>
+                                JOIN person p ON po.person_id = p.id<br>
+                                JOIN menu m ON po.menu_id = m.id<br>
+                                ORDER BY p.name, m.pizza_name;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 06 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">06</div>
+                                <h4 class="text-white mb-0">Упражнение 06: Материализация из виртуализации</h4>
+                            </div>
+                            <p class="text-light">Создайте материализованное представление mv_dmitriy_visits_and_eats (с включенными данными) на основе SQL-запроса, который находит название пиццерии, где Дмитрий посетил 8 января 2022 года и мог есть пиццу дешевле 800 рублей.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                CREATE MATERIALIZED VIEW mv_dmitriy_visits_and_eats AS<br>
+                                SELECT pz.name<br>
+                                FROM person_visits pv<br>
+                                JOIN pizzeria pz ON pv.pizzeria_id = pz.id<br>
+                                JOIN menu m ON pz.id = m.pizzeria_id<br>
+                                JOIN person p ON pv.person_id = p.id<br>
+                                WHERE p.name = 'Dmitriy'<br>
+                                &nbsp;&nbsp;AND pv.visit_date = '2022-01-08'<br>
+                                &nbsp;&nbsp;AND m.price < 800;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 07 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">07</div>
+                                <h4 class="text-white mb-0">Упражнение 07: Обновим наше состояние</h4>
+                            </div>
+                            <p class="text-light">Обновите данные в нашем материализованном представлении mv_dmitriy_visits_and_eats из упражнения #06. Перед этим действием создайте еще одно посещение Дмитрия, которое удовлетворяет SQL-условию материализованного представления, кроме пиццерии, которую мы видим в результате из упражнения #06. После добавления нового посещения обновите состояние данных для mv_dmitriy_visits_and_eats.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                <span class="text-success">-- Сначала добавим новое посещение</span><br>
+                                INSERT INTO person_visits (id, person_id, pizzeria_id, visit_date)<br>
+                                VALUES (<br>
+                                &nbsp;&nbsp;(SELECT MAX(id) + 1 FROM person_visits),<br>
+                                &nbsp;&nbsp;(SELECT id FROM person WHERE name = 'Dmitriy'),<br>
+                                &nbsp;&nbsp;(SELECT id FROM pizzeria WHERE name != 'Papa Johns'),<br>
+                                &nbsp;&nbsp;'2022-01-08'<br>
+                                );<br><br>
+                                
+                                <span class="text-success">-- Затем обновим материализованное представление</span><br>
+                                REFRESH MATERIALIZED VIEW mv_dmitriy_visits_and_eats;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 08 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">08</div>
+                                <h4 class="text-white mb-0">Упражнение 08: Просто очистим нашу базу данных</h4>
+                            </div>
+                            <p class="text-light">После всех наших упражнений у нас есть несколько виртуальных таблиц и материализованное представление. Давайте удалим их!</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                DROP VIEW IF EXISTS v_persons_female;<br>
+                                DROP VIEW IF EXISTS v_persons_male;<br>
+                                DROP VIEW IF EXISTS v_generated_dates;<br>
+                                DROP VIEW IF EXISTS v_symmetric_union;<br>
+                                DROP VIEW IF EXISTS v_price_with_discount;<br>
+                                DROP MATERIALIZED VIEW IF EXISTS mv_dmitriy_visits_and_eats;
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+                    <!-- Technical Information -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-cogs me-2"></i>Техническая информация</h4>
+                        <div class="tech-info">
+                            <div class="mb-3">
+                                <strong class="text-info">База данных:</strong>
+                                <span class="text-light">PostgreSQL</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Стандарт SQL:</strong>
+                                <span class="text-light">ANSI SQL</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Количество упражнений:</strong>
+                                <span class="text-light">8 упражнений</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Уровень:</strong>
+                                <span class="text-light">Продвинутый</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Фокус:</strong>
+                                <span class="text-light">Представления и материализованные представления</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- View Concepts -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-eye me-2"></i>Концепции представлений</h4>
+                        <div class="code-example">
+                            <span class="text-success">-- Создание представления</span><br>
+                            CREATE VIEW view_name AS<br>
+                            SELECT ... FROM ... WHERE ...;<br><br>
+                            
+                            <span class="text-success">-- Создание материализованного представления</span><br>
+                            CREATE MATERIALIZED VIEW mv_name AS<br>
+                            SELECT ... FROM ... WHERE ...;<br><br>
+                            
+                            <span class="text-success">-- Обновление материализованного представления</span><br>
+                            REFRESH MATERIALIZED VIEW mv_name;<br><br>
+                            
+                            <span class="text-success">-- Удаление представления</span><br>
+                            DROP VIEW view_name;<br><br>
+                            
+                            <span class="text-success">-- Удаление материализованного представления</span><br>
+                            DROP MATERIALIZED VIEW mv_name;
+                        </div>
+                    </div>
+
+                    <!-- Key Concepts -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-lightbulb me-2"></i>Ключевые концепции</h4>
+                        <ul class="text-light">
+                            <li>Виртуальные таблицы (Views)</li>
+                            <li>Материализованные представления (Materialized Views)</li>
+                            <li>Теория множеств в SQL</li>
+                            <li>Генерация последовательностей дат</li>
+                            <li>Операции UNION, EXCEPT</li>
+                            <li>Обновление материализованных представлений</li>
+                            <li>Архитектура ANSI/SPARK</li>
+                        </ul>
+                    </div>
+
+                    <!-- Skills Used -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-code me-2"></i>Использованные навыки</h4>
+                        <div class="skills-used">
+                            <span class="tech-badge">CREATE VIEW</span>
+                            <span class="tech-badge">MATERIALIZED VIEW</span>
+                            <span class="tech-badge">REFRESH</span>
+                            <span class="tech-badge">UNION</span>
+                            <span class="tech-badge">EXCEPT</span>
+                            <span class="tech-badge">generate_series</span>
+                            <span class="tech-badge">DROP VIEW</span>
+                        </div>
+                    </div>
+
+                    <!-- Project Links -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-external-link-alt me-2"></i>Ссылки</h4>
+                        <div class="project-links">
+                            <a href="https://github.com/mbrmj875/SQLB/blob/main/SQLB5_Snapshots.ID_574092-1/src/SQLQuery_1.sql" class="btn btn-outline-primary w-100 mb-2">
+                                <i class="fab fa-github me-2"></i>Исходный код
+                            </a>
+                            <a href="https://github.com/mbrmj875/SQLB/archive/refs/heads/main.zip" class="btn btn-outline-success w-100">
+                                <i class="fas fa-download me-2"></i>Скачать проект
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

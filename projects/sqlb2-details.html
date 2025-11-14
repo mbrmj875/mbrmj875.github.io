@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Day 01 - Set Operations</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0a1a2a;
+            --secondary-color: #0d2342;
+            --accent-color: #0066cc;
+            --highlight-color: #00d9ff;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0f0f0f;
+            color: #e0e0e0;
+            line-height: 1.6;
+            text-align: left;
+        }
+        
+        .project-detail-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 4rem 0;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        .project-feature-card {
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border: 1px solid #404040;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .project-feature-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-5px);
+        }
+        
+        .tech-badge {
+            background: linear-gradient(135deg, var(--accent-color), #0088ff);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 0.3rem;
+            display: inline-block;
+        }
+        
+        .code-example {
+            background: #1a1a1a;
+            border: 1px solid #404040;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            direction: ltr;
+            text-align: left;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--highlight-color);
+            margin-bottom: 1rem;
+        }
+        
+        .database-structure {
+            background: var(--secondary-color);
+            border: 2px solid var(--highlight-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .back-button {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+        
+        .back-button:hover {
+            color: var(--highlight-color);
+        }
+        
+        .exercise-card {
+            background: #1e1e1e;
+            border-left: 4px solid var(--accent-color);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .exercise-number {
+            background: var(--accent-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+        
+        .schema-image {
+            max-width: 100%;
+            border-radius: 10px;
+            border: 1px solid #404040;
+        }
+        
+        .table-info {
+            background: #2a2a2a;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .table-name {
+            color: var(--highlight-color);
+            font-weight: bold;
+        }
+
+        .project-badge {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .section-padding {
+            padding: 4rem 0;
+        }
+
+        .set-operation {
+            background: #1a1a1a;
+            border: 2px solid #404040;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .operation-title {
+            color: var(--highlight-color);
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .visual-representation {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .set-circle {
+            width: 150px;
+            height: 150px;
+            border: 3px solid var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem;
+            position: relative;
+        }
+
+        .set-a {
+            background: rgba(0, 102, 204, 0.2);
+        }
+
+        .set-b {
+            background: rgba(0, 217, 255, 0.2);
+        }
+
+        /* New styles for set operations diagram */
+        .set-operations-diagram {
+            background: #1a1a1a;
+            border: 2px solid #404040;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .query-block {
+            display: inline-block;
+            background: #2a2a2a;
+            border: 2px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 0.5rem;
+            min-width: 120px;
+        }
+
+        .query-title {
+            font-weight: bold;
+            color: var(--highlight-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .query-content {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .operation-arrow {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin: 0 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .operation-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .result-block {
+            background: #0d2342;
+            border: 2px solid var(--highlight-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 0.5rem;
+            min-width: 120px;
+        }
+
+        .operation-section {
+            margin: 2rem 0;
+            padding: 1rem;
+            border-left: 4px solid var(--accent-color);
+            background: #2a2a2a;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .operation-name {
+            color: var(--highlight-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a href="../index.html#academic-projects" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Назад к проектам
+            </a>
+        </div>
+    </nav>
+
+    <!-- Project Header -->
+    <section class="project-detail-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="project-badge">SQL Проект</div>
+                    <h1 class="display-4 fw-bold text-white mt-3">SQL Day 01 - Операции с множествами</h1>
+                    <p class="lead text-light mb-4">Изучение операций UNION, INTERSECT, EXCEPT и JOIN в PostgreSQL</p>
+                    
+                    <div class="project-meta">
+                        <span class="text-light me-4"><i class="fas fa-database me-2"></i>PostgreSQL</span>
+                        <span class="text-light me-4"><i class="fas fa-code me-2"></i>SQL Set Operations</span>
+                        <span class="text-light"><i class="fas fa-star me-2"></i>Средний уровень</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="tech-stack">
+                        <span class="tech-badge">UNION</span>
+                        <span class="tech-badge">INTERSECT</span>
+                        <span class="tech-badge">EXCEPT</span>
+                        <span class="tech-badge">JOIN</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Content -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <!-- Main Content -->
+                <div class="col-lg-8">
+                    <!-- Overview -->
+                     
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+
+                        <h3 class="text-white mb-3">Визуализация операций с множествами</h3>
+                          <div class="text-center mb-4">
+                            <img src="/images/Screenshot 2025-11-13 at 17.18.22.png" alt="Database Schema" class="schema-image">
+                        </div>
+                        <!-- Set Operations Diagram -->
+                        <div class="set-operations-diagram">
+                            <div class="operation-section">
+                                <div class="operation-name">UNION - Объединение</div>
+                                <div class="operation-row">
+                                    <div class="query-block">
+                                        <div class="query-title">Query 1</div>
+                                        <div class="query-content">A, B, C</div>
+                                    </div>
+                                    <div class="query-block">
+                                        <div class="query-title">Query 2</div>
+                                        <div class="query-content">B, C, D</div>
+                                    </div>
+                                </div>
+                                <div class="operation-row">
+                                    <div class="operation-arrow">
+                                        <i class="fas fa-arrow-down"></i>
+                                    </div>
+                                </div>
+                                <div class="operation-row">
+                                    <div class="result-block">
+                                        <div class="query-title">UNION</div>
+                                        <div class="query-content">A, B, C, D</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="operation-section">
+                                <div class="operation-name">INTERSECT - Пересечение</div>
+                                <div class="operation-row">
+                                    <div class="query-block">
+                                        <div class="query-title">Query 1</div>
+                                        <div class="query-content">A, B, C</div>
+                                    </div>
+                                    <div class="query-block">
+                                        <div class="query-title">Query 2</div>
+                                        <div class="query-content">B, C, D</div>
+                                    </div>
+                                </div>
+                                <div class="operation-row">
+                                    <div class="operation-arrow">
+                                        <i class="fas fa-arrow-down"></i>
+                                    </div>
+                                </div>
+                                <div class="operation-row">
+                                    <div class="result-block">
+                                        <div class="query-title">INTERSECT</div>
+                                        <div class="query-content">B, C</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="operation-section">
+                                <div class="operation-name">EXCEPT - Разность</div>
+                                <div class="operation-row">
+                                    <div class="query-block">
+                                        <div class="query-title">Query 1</div>
+                                        <div class="query-content">A, B, C</div>
+                                    </div>
+                                    <div class="query-block">
+                                        <div class="query-title">Query 2</div>
+                                        <div class="query-content">B, C, D</div>
+                                    </div>
+                                </div>
+                                <div class="operation-row">
+                                    <div class="operation-arrow">
+                                        <i class="fas fa-arrow-down"></i>
+                                    </div>
+                                </div>
+                                <div class="operation-row">
+                                    <div class="result-block">
+                                        <div class="query-title">EXCEPT</div>
+                                        <div class="query-content">A</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="text-light mt-4">
+                            В реляционных базах данных множества используются для различных операций, включая 
+                            <strong>UNION</strong>, <strong>INTERSECT</strong>, и <strong>EXCEPT</strong>. 
+                            Эти операции позволяют комбинировать результаты нескольких запросов и находить 
+                            пересечения или различия между наборами данных.
+                        </p>
+
+                        <div class="visual-representation">
+                            <div class="set-circle set-a">
+                                <span>Множество A</span>
+                            </div>
+                            <div class="set-circle set-b">
+                                <span>Множество B</span>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-md-4">
+                                <div class="set-operation">
+                                    <h5 class="operation-title">UNION</h5>
+                                    <p class="text-light">Объединение двух множеств</p>
+                                    <div class="code-example">
+                                        SELECT ...<br>
+                                        UNION<br>
+                                        SELECT ...
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="set-operation">
+                                    <h5 class="operation-title">INTERSECT</h5>
+                                    <p class="text-light">Пересечение двух множеств</p>
+                                    <div class="code-example">
+                                        SELECT ...<br>
+                                        INTERSECT<br>
+                                        SELECT ...
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="set-operation">
+                                    <h5 class="operation-title">EXCEPT</h5>
+                                    <p class="text-light">Разность двух множеств</p>
+                                    <div class="code-example">
+                                        SELECT ...<br>
+                                        EXCEPT<br>
+                                        SELECT ...
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Database Structure -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-sitemap"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Структура базы данных</h3>
+                        
+                        <div class="text-center mb-4">
+                            <img src="/images/vbn.png" alt="Database Schema" class="schema-image">
+                        </div>
+                        
+                        <div class="database-structure">
+                            <h5 class="text-warning">📊 Основные таблицы базы данных</h5>
+                            
+                            <div class="table-info">
+                                <h6 class="table-name">pizzeria</h6>
+                                <p class="text-light mb-1">- id: первичный ключ</p>
+                                <p class="text-light mb-1">- name: название пиццерии</p>
+                                <p class="text-light">- rating: средний рейтинг</p>
+                            </div>
+                            
+                            <div class="table-info">
+                                <h6 class="table-name">person</h6>
+                                <p class="text-light mb-1">- id: первичный ключ</p>
+                                <p class="text-light mb-1">- name: имя</p>
+                                <p class="text-light mb-1">- age: возраст</p>
+                                <p class="text-light mb-1">- gender: пол</p>
+                                <p class="text-light">- address: адрес</p>
+                            </div>
+                            
+                            <div class="table-info">
+                                <h6 class="table-name">menu</h6>
+                                <p class="text-light mb-1">- id: первичный ключ</p>
+                                <p class="text-light mb-1">- pizzeria_id: внешний ключ</p>
+                                <p class="text-light mb-1">- pizza_name: название пиццы</p>
+                                <p class="text-light">- price: цена</p>
+                            </div>
+
+                            <div class="table-info">
+                                <h6 class="table-name">person_visits</h6>
+                                <p class="text-light mb-1">- id: первичный ключ</p>
+                                <p class="text-light mb-1">- person_id: внешний ключ</p>
+                                <p class="text-light mb-1">- pizzeria_id: внешний ключ</p>
+                                <p class="text-light">- visit_date: дата посещения</p>
+                            </div>
+
+                            <div class="table-info">
+                                <h6 class="table-name">person_order</h6>
+                                <p class="text-light mb-1">- id: первичный ключ</p>
+                                <p class="text-light mb-1">- person_id: внешний ключ</p>
+                                <p class="text-light mb-1">- menu_id: внешний ключ</p>
+                                <p class="text-light">- order_date: дата заказа</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Exercises -->
+                    <div class="project-feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <h3 class="text-white mb-3">Практические упражнения</h3>
+                        
+                        <!-- Exercise 00 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">00</div>
+                                <h4 class="text-white mb-0">Упражнение 00: Танец UNION</h4>
+                            </div>
+                            <p class="text-light">Написать SQL запрос, который возвращает идентификатор меню и названия пицц из таблицы menu, а также идентификатор человека и имя из таблицы person в одном глобальном списке.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT id AS object_id, pizza_name AS object_name<br>
+                                FROM menu<br>
+                                UNION<br>
+                                SELECT id, name<br>
+                                FROM person<br>
+                                ORDER BY object_id, object_name;
+                            </div>
+                        </div>
+                        
+                        <!-- Exercise 01 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">01</div>
+                                <h4 class="text-white mb-0">Упражнение 01: Танец UNION с подзапросом</h4>
+                            </div>
+                            <p class="text-light">Модифицировать SQL запрос из "Упражнения 00", удалив столбец object_id и изменив порядок сортировки.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT name AS object_name<br>
+                                FROM person<br>
+                                UNION ALL<br>
+                                SELECT pizza_name<br>
+                                FROM menu<br>
+                                ORDER BY object_name;
+                            </div>
+                        </div>
+                        
+                        <!-- Exercise 02 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">02</div>
+                                <h4 class="text-white mb-0">Упражнение 02: Дубликаты или не дубликаты</h4>
+                            </div>
+                            <p class="text-light">Написать SQL запрос, который возвращает уникальные названия пицц из таблицы menu, отсортированные по убыванию.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT pizza_name<br>
+                                FROM menu<br>
+                                UNION<br>
+                                SELECT pizza_name<br>
+                                FROM menu<br>
+                                ORDER BY pizza_name DESC;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 03 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">03</div>
+                                <h4 class="text-white mb-0">Упражнение 03: "Скрытые" insights</h4>
+                            </div>
+                            <p class="text-light">Найти идентификаторы людей, которые посетили и заказали пиццу в один и тот же день.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT order_date AS action_date, person_id<br>
+                                FROM person_order<br>
+                                INTERSECT<br>
+                                SELECT visit_date, person_id<br>
+                                FROM person_visits<br>
+                                ORDER BY action_date, person_id DESC;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 04 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">04</div>
+                                <h4 class="text-white mb-0">Упражнение 04: Разность мультимножеств</h4>
+                            </div>
+                            <p class="text-light">Найти разность значений person_id между таблицами person_order и person_visits для 7 января 2022 года.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT person_id<br>
+                                FROM person_order<br>
+                                WHERE order_date = '2022-01-07'<br>
+                                EXCEPT ALL<br>
+                                SELECT person_id<br>
+                                FROM person_visits<br>
+                                WHERE visit_date = '2022-01-07';
+                            </div>
+                        </div>
+
+                        <!-- Exercise 05 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">05</div>
+                                <h4 class="text-white mb-0">Упражнение 05: Декартово произведение</h4>
+                            </div>
+                            <p class="text-light">Вернуть все возможные комбинации между таблицами person и pizzeria.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT *<br>
+                                FROM person<br>
+                                CROSS JOIN pizzeria<br>
+                                ORDER BY person.id, pizzeria.id;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 06 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">06</div>
+                                <h4 class="text-white mb-0">Упражнение 06: "Скрытые" insights с именами</h4>
+                            </div>
+                            <p class="text-light">Модифицировать запрос из Упражнения 03 для возврата имен людей вместо идентификаторов.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT action_date, name AS person_name<br>
+                                FROM (<br>
+                                &nbsp;&nbsp;SELECT visit_date AS action_date, person_id<br>
+                                &nbsp;&nbsp;FROM person_visits<br>
+                                &nbsp;&nbsp;INTERSECT<br>
+                                &nbsp;&nbsp;SELECT order_date, person_id<br>
+                                &nbsp;&nbsp;FROM person_order<br>
+                                ) AS actions<br>
+                                JOIN person ON person.id = actions.person_id<br>
+                                ORDER BY action_date, person_name DESC;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 07 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">07</div>
+                                <h4 class="text-white mb-0">Упражнение 07: Просто сделаем JOIN</h4>
+                            </div>
+                            <p class="text-light">Вернуть дату заказа и соответствующую информацию о человеке.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT order_date, <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;name || ' (age:' || age || ')' AS person_information<br>
+                                FROM person_order<br>
+                                JOIN person ON person.id = person_order.person_id<br>
+                                ORDER BY order_date, person_information;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 08 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">08</div>
+                                <h4 class="text-white mb-0">Упражнение 08: Миграция на NATURAL JOIN</h4>
+                            </div>
+                            <p class="text-light">Переписать SQL запрос из Упражнения 07 с использованием NATURAL JOIN.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT order_date, <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;name || ' (age:' || age || ')' AS person_information<br>
+                                FROM person_order<br>
+                                NATURAL JOIN person<br>
+                                ORDER BY order_date, person_information;
+                            </div>
+                        </div>
+
+                        <!-- Exercise 09 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">09</div>
+                                <h4 class="text-white mb-0">Упражнение 09: IN против EXISTS</h4>
+                            </div>
+                            <p class="text-light">Написать 2 SQL запроса для возврата списка пиццерий, которые не были посещены людьми.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение с IN:</span><br>
+                                SELECT name<br>
+                                FROM pizzeria<br>
+                                WHERE id NOT IN (<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;SELECT DISTINCT pizzeria_id <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;FROM person_visits<br>
+                                );<br><br>
+
+                                <span class="text-success">-- Решение с EXISTS:</span><br>
+                                SELECT name<br>
+                                FROM pizzeria<br>
+                                WHERE NOT EXISTS (<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;SELECT 1 <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;FROM person_visits <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;WHERE person_visits.pizzeria_id = pizzeria.id<br>
+                                );
+                            </div>
+                        </div>
+
+                        <!-- Exercise 10 -->
+                        <div class="exercise-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="exercise-number">10</div>
+                                <h4 class="text-white mb-0">Упражнение 10: Глобальный JOIN</h4>
+                            </div>
+                            <p class="text-light">Вернуть список имен людей, которые заказали пиццу из соответствующей пиццерии.</p>
+                            <div class="code-example">
+                                <span class="text-success">-- Решение:</span><br>
+                                SELECT <br>
+                                &nbsp;&nbsp;p.name AS person_name,<br>
+                                &nbsp;&nbsp;m.pizza_name, <br>
+                                &nbsp;&nbsp;pz.name AS pizzeria_name<br>
+                                FROM person_order po<br>
+                                JOIN person p ON p.id = po.person_id<br>
+                                JOIN menu m ON m.id = po.menu_id<br>
+                                JOIN pizzeria pz ON pz.id = m.pizzeria_id<br>
+                                ORDER BY person_name, pizza_name, pizzeria_name;
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+                    <!-- Technical Information -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-cogs me-2"></i>Техническая информация</h4>
+                        <div class="tech-info">
+                            <div class="mb-3">
+                                <strong class="text-info">База данных:</strong>
+                                <span class="text-light">PostgreSQL</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Стандарт SQL:</strong>
+                                <span class="text-light">ANSI SQL</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Количество упражнений:</strong>
+                                <span class="text-light">10 упражнений</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Уровень:</strong>
+                                <span class="text-light">Средний</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong class="text-info">Фокус:</strong>
+                                <span class="text-light">Операции с множествами</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Set Operations -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-sitemap me-2"></i>Операции с множествами</h4>
+                        <div class="code-example">
+                            <span class="text-success">-- UNION (объединение)</span><br>
+                            SELECT ... UNION SELECT ...<br><br>
+                            
+                            <span class="text-success">-- UNION ALL (с дубликатами)</span><br>
+                            SELECT ... UNION ALL SELECT ...<br><br>
+                            
+                            <span class="text-success">-- INTERSECT (пересечение)</span><br>
+                            SELECT ... INTERSECT SELECT ...<br><br>
+                            
+                            <span class="text-success">-- EXCEPT (разность)</span><br>
+                            SELECT ... EXCEPT SELECT ...<br><br>
+                            
+                            <span class="text-success">-- EXCEPT ALL (с дубликатами)</span><br>
+                            SELECT ... EXCEPT ALL SELECT ...
+                        </div>
+                    </div>
+
+                    <!-- Key Concepts -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-lightbulb me-2"></i>Ключевые концепции</h4>
+                        <ul class="text-light">
+                            <li>Объединение результатов запросов</li>
+                            <li>Поиск общих элементов</li>
+                            <li>Нахождение различий между наборами</li>
+                            <li>Работа с дубликатами</li>
+                            <li>Декартово произведение</li>
+                            <li>Различные типы JOIN операций</li>
+                            <li>Сравнение IN и EXISTS</li>
+                        </ul>
+                    </div>
+
+                    <!-- Skills Used -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-code me-2"></i>Использованные навыки</h4>
+                        <div class="skills-used">
+                            <span class="tech-badge">UNION</span>
+                            <span class="tech-badge">INTERSECT</span>
+                            <span class="tech-badge">EXCEPT</span>
+                            <span class="tech-badge">JOIN</span>
+                            <span class="tech-badge">NATURAL JOIN</span>
+                            <span class="tech-badge">CROSS JOIN</span>
+                            <span class="tech-badge">IN</span>
+                            <span class="tech-badge">EXISTS</span>
+                        </div>
+                    </div>
+
+                    <!-- Project Links -->
+                    <div class="project-feature-card">
+                        <h4 class="text-white mb-3"><i class="fas fa-external-link-alt me-2"></i>Ссылки</h4>
+                        <div class="project-links">
+                            <a href="https://github.com/mbrmj875/SQLB/blob/main/SQLB2_Retrieving_data.ID_574087-1/src/SQLQuery_1.sql" class="btn btn-outline-primary w-100 mb-2">
+                                <i class="fab fa-github me-2"></i>Исходный код
+                            </a>
+                            <a href="https://github.com/mbrmj875/SQLB/archive/refs/heads/main.zip" class="btn btn-outline-success w-100">
+                                <i class="fas fa-download me-2"></i>Скачать проект
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
